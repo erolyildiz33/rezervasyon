@@ -20,7 +20,7 @@
           placeholder="Masa Çalışma Saati Ekleyiniz."
         />
         <input
-          type="price"
+          type="text"
          
          
           class="form-control"
@@ -28,13 +28,13 @@
           placeholder="Rezervasyon fiyatı ekleyiniz."
         />
         <input
-          type="price"         
+          type="text"         
           class="form-control"
           v-model="price"
           placeholder="Masanın kaç kişilik olduğunu ekleyiniz"
         />
         <input
-          type="price"
+          type="text"
          
          
           class="form-control"
@@ -77,6 +77,7 @@ export default {
       time: "",
       view:[],
        view2:[],
+       price:[],
      
     }
   },
