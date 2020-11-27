@@ -213,7 +213,7 @@ export default {
     socket.emit("hello");
   },
   mounted() {
-    axios.get(`http://divan.local/api/working-hours`).then((res) => {
+    axios.get(`http://localhost/api/working-hours`).then((res) => {
       console.log(res.data);
       this.workingHours = res.data;
     });
@@ -229,7 +229,7 @@ export default {
         this.workingHour != 0
       ) {
         axios
-          .post(`http://divan.local/api/appointment-store`, {
+          .post(`http://localhost/api/appointment-store`, {
             fullName: this.name,
             phone: this.phone,
             email: this.email,
@@ -270,7 +270,7 @@ export default {
     },
     selectDate: function () {
       axios
-        .get(`http://divan.local/api/working-hours/${this.date}`)
+        .get(`http://localhost/api/working-hours/${this.date}`)
         .then((res) => {
           this.workingHours = res.data;
           this.workingHour = 0;

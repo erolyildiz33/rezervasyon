@@ -40,7 +40,7 @@
             }
         },
         created(){
-          axios.get(`http://divan.local/api/working-list`).then((res)=>{
+          axios.get(`http://localhost/api/working-list`).then((res)=>{
 
               this.monday = (typeof res.data.monday !== 'undefined') ?  res.data.monday : [];
               this.tuesday = (typeof res.data.tuesday !== 'undefined') ?  res.data.tuesday : [];
@@ -63,7 +63,7 @@
 
             },
             store:function(){
-               axios.post('http://divan.local/api/working-store',{
+               axios.post('http://localhost/api/working-store',{
                    monday:this.monday,
                    tuesday:this.tuesday,
                    wednesday:this.wednesday,

@@ -72,7 +72,7 @@
             {
 
                 if(this.code!=null) {
-                    axios.post(`http://divan.local/api/appointment-detail`, {
+                    axios.post(`http://localhost/api/appointment-detail`, {
                         code: this.code
                     })
                         .then((res) => {

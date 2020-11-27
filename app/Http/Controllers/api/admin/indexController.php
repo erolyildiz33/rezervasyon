@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\api\admin;
 
-use App\Appointment;
-use App\AppointmentNote;
-use App\WorkingHours;
+use App\Models\Appointment;
+use App\Models\AppointmentNote;
+use App\Models\WorkingHours;
+use App\Models\Table;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

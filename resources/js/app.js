@@ -34,7 +34,7 @@ Vue.component('admin-appointment-modal',require('./components/Admin/AdminAppoint
 
 Vue.component('appointment-form',require('./components/RandevuFormComponent').default);
 Vue.component('appointment-detail',require('./components/RandevuDetailComponent').default);
-
+Vue.component('pagination',require('laravel-vue-pagination'));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

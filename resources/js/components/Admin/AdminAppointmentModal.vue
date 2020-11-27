@@ -80,7 +80,7 @@
         },
         methods:{
             store:function () {
-                axios.post(`http://divan.local/api/admin/detail`,{
+                axios.post(`http://localhost/api/admin/detail`,{
                     id:this.modalId,
                     text:this.text
                 }).then((res)=>{
@@ -93,7 +93,7 @@
                 })
             },
             getData:function () {
-                axios.get(`http://divan.local/api/admin/detail/${this.modalId}`)
+                axios.get(`http://localhost/api/admin/detail/${this.modalId}`)
                     .then((res)=>{
                         this.data = res.data.data;
                         this.comment = res.data.comment;

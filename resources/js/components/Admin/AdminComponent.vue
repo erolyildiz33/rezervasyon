@@ -106,7 +106,7 @@
         },
         methods:{
             updateCancel(id) {
-                axios.post(`http://divan.local/api/admin/process`,{
+                axios.post(`http://localhost/api/admin/process`,{
                     type:2,
                     id:id
                 })
@@ -115,7 +115,7 @@
                     })
             },
             updateOkey(id){
-                axios.post(`http://divan.local/api/admin/process`,{
+                axios.post(`http://localhost/api/admin/process`,{
                     type:1,
                     id:id
                 })
@@ -123,7 +123,7 @@
                         this.getData();
                     })
             },
-            getData(url='http://divan.local/api/admin/all'){
+            getData(url='http://localhost/api/admin/all'){
                 axios.get(url)
                     .then(res => {
                         this.waiting = res.data.waiting;
@@ -134,19 +134,19 @@
                     });
             },
             waitingData(page){
-                this.getData(`http://divan.local/api/admin/all?waiting_page=${page}`);
+                this.getData(`http://localhost/api/admin/all?waiting_page=${page}`);
             },
             listData(page){
-                this.getData(`http://divan.local/api/admin/all?list_page=${page}`);
+                this.getData(`http://localhost/api/admin/all?list_page=${page}`);
             },
             todayData(page){
-                this.getData(`http://divan.local/api/admin/all?today_page=${page}`);
+                this.getData(`http://localhost/api/admin/all?today_page=${page}`);
             },
             lastData(page){
-                this.getData(`http://divan.local/api/admin/all?last_page=${page}`);
+                this.getData(`http://localhost/api/admin/all?last_page=${page}`);
             },
             cancelData(page){
-                this.getData(`http://divan.local/api/admin/all?cancel_page=${page}`);
+                this.getData(`http://localhost/api/admin/all?cancel_page=${page}`);
             }
         }
     }

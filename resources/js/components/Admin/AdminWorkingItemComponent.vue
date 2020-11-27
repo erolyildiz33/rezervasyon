@@ -84,7 +84,7 @@ export default {
 
     this.isShowButton = false;
     this.isShowTime = false;
-    axios.get(`http://divan.local/api/table-list`).then((res) => {
+    axios.get(`http://localhost/api/table-list`).then((res) => {
       this.tables = res.data;
     });
   },

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Appointment;
-use App\AppointmentNote;
-use App\Tables;
-use App\WorkingHours;
+use App\Models\Appointment;
+use App\Models\AppointmentNote;
+use App\Models\Table;
+use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -93,12 +93,12 @@ class indexController extends Controller
     {
         $all = $request->except('_token');
 
-        Tables::query()->delete();
+        Table::query()->delete();
         foreach($all as $k => $v)
         {
             foreach($v as $key => $value )
             {
-                Tables::create([
+                Table::create([
 
                     'tablename'=>$value
                 ]);
@@ -122,7 +122,7 @@ class indexController extends Controller
     public function getTableList()
     {
         $returnArray = array();
-        $data = Tables::all();
+        $data = Table::all();
         foreach($data as $k => $v)
         {
             array_push($returnArray,array('id'=>$v->id,'tablename'=>$v->tablename));

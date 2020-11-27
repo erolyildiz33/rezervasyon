@@ -22,6 +22,8 @@ class CreateAppointmentsTable extends Migration
             $table->integer('workingHour');
             $table->text('text');
             $table->integer('notification_type')->default(0);
+            $table->integer('isActive')->default(0);
+            $table->integer('isSend')->default(0);
             $table->timestamps();
         });
     }

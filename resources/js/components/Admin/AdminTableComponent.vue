@@ -31,7 +31,7 @@ export default
         }
     },
     created(){
-        axios.get(`http://divan.local/api/table-list`).then((res)=>{
+        axios.get(`http://localhost/api/table-list`).then((res)=>{
             var myvar=[];
             $.each(res.data,function (index,value){
                 myvar.push(value[0]);
@@ -49,7 +49,7 @@ this.tables=myvar;
         },
 
         store:function(){
-            axios.post(`http://divan.local/api/table-store`,{
+            axios.post(`http://localhost/api/table-store`,{
                 tablename:this.tables,
 
             })
