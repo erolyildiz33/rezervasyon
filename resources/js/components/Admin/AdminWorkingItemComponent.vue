@@ -76,8 +76,8 @@ export default {
       isShow: false,
       time: "",
       view:[],
-       view2:[],
-       price:[],
+      view2:[],
+      price:[],
      
     }
   },
@@ -106,8 +106,7 @@ export default {
     },
     addTime: function () {
         this.view.push(this.time);
-        this.view2[this.selected]=this.view;        
-        console.log(this.view2);
+        this.view2[this.selected]=this.view;
       this.$emit("add", { text: this.time,text:this.view2 });
       this.time = "";
       this.isShow = false;
