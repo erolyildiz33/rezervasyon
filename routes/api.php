@@ -25,6 +25,7 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/working-store','indexController@getWorkingStore');
    Route::get('/working-list','indexController@getWorkingList');
    Route::post('/table-store','indexController@getTableStore');
+   Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list','indexController@getTableList');
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){

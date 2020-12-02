@@ -36,7 +36,7 @@ class indexController extends Controller
            $v['isActive']=false;
            else
            $v['isActive']=true;
-           }         
+           }
            else{
            $v['isActive']=false;
            }
@@ -89,23 +89,20 @@ class indexController extends Controller
 
         return response()->json($all);
     }
+    public function getTableDelete(Request $request){
+        $all = $request->except('_token');
+        Table::where('id',$all['id'])->delete();
+        echo "ok";
+    }
     public function getTableStore(Request $request)
     {
         $all = $request->except('_token');
+        $id= Table::insertGetId([
 
-        Table::query()->delete();
-        foreach($all as $k => $v)
-        {
-            foreach($v as $key => $value )
-            {
-                Table::create([
-
-                    'tablename'=>$value
+                    'tablename'=>$all['tablename']
                 ]);
-            }
-        }
-
-        return response()->json($all);
+        echo json_encode(array('id'=>$id,'tablename'=>$all['tablename']));
+       // return response()->json($all);
     }
 
     public function getWorkingList()

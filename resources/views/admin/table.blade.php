@@ -1,4 +1,4 @@
 @extends('layouts.admin')
 @section('content')
-    <admin-table></admin-table>
+    <admin-table-item></admin-table-item>
 @endsection
