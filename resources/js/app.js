@@ -22,6 +22,7 @@ Vue.component('admin-working',require('./components/Admin/AdminWorkingComponent'
 Vue.component('admin-working-item',require('./components/Admin/AdminWorkingItemComponent').default);
 Vue.component('admin-table',require('./components/Admin/AdminTableComponent').default);
 Vue.component('admin-table-item',require('./components/Admin/AdminTableItemComponent').default);
+Vue.component('table-preview',require('./components/Admin/TablesPreview').default);
 
 
 

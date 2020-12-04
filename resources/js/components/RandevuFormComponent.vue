@@ -77,22 +77,22 @@
                       </div>
                       <div class="row property-filter">
                         <div class="col-lg-4 col-md-6 mix all house">
-                          <div class="property-item">
+                          <div class="property-item"  :v-for="item in masalar" >
                             <div
                               class="pi-pic set-bg"
                               data-setbg="/img/property/property-1.jpg"
                             >
-                              <div class="label">Masa 1</div>
-                              <img src="img/roof.jpg">
+                              <div class="label">{{item.tablename}}</div>
+                              <img :src="item.image">
                             </div>
                             <div class="pi-text">
                              
                               <div class="pt-price">
-                                50 TL
+                                {{item.price}}
                               </div>
-                              <h5>6 Kişilik</h5>
+                              <h5>{{item.person}}</h5>
                               <p>
-                                <span class="icon_pin_alt"></span> İç Mekan
+                                <span class="icon_pin_alt"></span> {{item.map}}
                               </p>
                               <ul>
                                 <li>
@@ -207,16 +207,23 @@ export default {
       minDate: new Date().toISOString().slice(0, 10),
       date: new Date().toISOString().slice(0, 10),
       workingHours: [],
+      masalar:[],
     };
   },
   created() {
     socket.emit("hello");
+      axios.get(`http://localhost/api/table-list`).then((res) => {
+
+                this.masalar = res.data;
+            });
+    
   },
   mounted() {
     axios.get(`http://localhost/api/working-hours`).then((res) => {
       console.log(res.data);
       this.workingHours = res.data;
     });
+    
   },
   methods: {
     store: function () {

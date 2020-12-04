@@ -17,6 +17,7 @@ class CreateWorkingHoursTable extends Migration
             $table->bigIncrements('id');
             $table->string('hours');
             $table->string('day');
+            $table->integer('table_id');
             $table->timestamps();
         });
     }

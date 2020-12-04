@@ -16,6 +16,10 @@ class CreateTablesTable extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tablename');
+            $table->string('price');
+            $table->string('person');
+            $table->string('map');
+            $table->string('image');
             $table->timestamps();
         });
     }

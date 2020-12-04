@@ -809,7 +809,7 @@ ol {
   margin-bottom: 40px;
 }
 .property-item .pi-pic {
-  height: 240px;
+  height: auto;
   position: relative;
   margin-bottom: 25px;
 }
