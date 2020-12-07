@@ -29,7 +29,7 @@
                                     <span>Tarih</span>:<span>{{ data.date }}</span>
                                 </div>
                                 <div>
-                                    <span>Saat</span>:<span>{{ data.working }}</span>
+                                    <span>Saat</span>:<span>{{ data.workingHour }}</span>
                                 </div>
                                 <div>
                                     <span>Bildirim Tipi</span>:<span>{{ data.notification }}</span>

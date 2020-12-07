@@ -1,59 +1,111 @@
+ 
 <template>
-    <div>
+  <div>
     <div class="row">
-            <div v-for="item in data"  @click="openModal(item.id)" class="col-md-4">
-                <div class="card appointment-card">
-                    <span class="appointment-number">Randevu
-
-                        <span class="new-appointment bg-yellow" v-if="item.isActive == 0">Yeni</span>
-                        <span class="new-appointment bg-green" v-if="item.isActive == 1">Onaylı</span>
-                        <span class="new-appointment" v-if="item.isActive == 2">İptal Edilen</span>
-
-                    </span>
-                    <div class="appointment-detail">
-                        <span>{{item.fullName}}</span>
-                        <span>{{item.phone}}</span>
-                        <span>{{item.date}}</span>
-                        <span>{{ item.working}}</span>
-
-                    </div>
-
-                    <div class="appointment-buttons" v-if="!item.isActive">
-                        <button @click="appointmentOkey(item.id)">Onayla</button>
-                        <button @click="appointmentCancel(item.id)">İptal Et</button>
-                    </div>
-                </div>
-            </div>
+      <div id="table">
+        <bootstrap-table
+          :columns="columns"
+          :data="data"
+          :options="options"
+        ></bootstrap-table>
+      </div>
     </div>
-    <admin-appointment-modal :modalId="showModalId" v-if="showModal" @close="showModal = false"></admin-appointment-modal>
-    </div>
+
+    <admin-appointment-modal
+      :modalId="showModalId"
+      v-if="showModal"
+      @close="showModal = false"
+    ></admin-appointment-modal>
+  </div>
 </template>
 
 <script>
-    export default
-    {
-        props:['data'],
-        data(){
-            return{
-                showModalId:0,
-                showModal:false
-            }
-        },
-        created()
+export default {
+  props: ["data"],
+ 
+  data() {
+    return {
+      showModalId: 0,
+      showModal: false,
+      columns: [
         {
-
+          title: "Sıra No",
+          formatter: function (value, row, index) {
+            return index + 1;
+          },
         },
-        methods:{
-            appointmentOkey:function (id) {
-                this.$emit('updateOkey',id)
-            },
-            appointmentCancel:function (id) {
-                this.$emit('updateCancel',id)
-            },
-            openModal:function (id) {
-                this.showModalId = id;
-                this.showModal = true
+        {
+          title: "Adı Soyadı",
+          field: "fullName",
+        },
+        {
+          title: "Telefon",
+          field: "phone",
+        },
+        {
+          title: "Mail",
+          field: "email",
+        },
+        {
+          title: "Tarih",
+          field: "date",
+        },
+        {
+          title: "Saat",
+          field: "workingHour",
+        },
+        {
+          title: "Notu",
+          field: "text",
+        },
+        {
+          title: "İşlem",
+          formatter: (value, row) => {
+            if (row.isActive == 0) {
+              return '<a class="btn btn-default" href="http://localhost/api/admin/process/1/'+row.id+'">Onayla</a><a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>';
+            } else if (row.isActive == 1) {
+              return '<span class="bg-green">Onaylı</span>';
+            } else if (row.isActive == 2) {
+              return '<span class="bg-danger">İptal Edilen</span>';
             }
-        }
-    }
+          },
+        },
+      ],
+      options: {
+        search: true,
+        showColumns: true,
+        
+      },
+    };
+  },
+   components: {
+    BootstrapTable,
+  },
+
+  created() {},
+  methods: {
+    appointmentOkey: function (id) {
+      axios.post(`http://localhost/api/admin/process`,{
+                    type:1,
+                    id:id
+                })
+                    .then((res)=>{
+                     
+                    })
+    },
+    appointmentCancel: function (id) {
+      axios.post(`http://localhost/api/admin/process`,{
+                    type:2,
+                    id:id
+                })
+                    .then((res)=>{
+                     
+                    })
+    },
+    openModal: function (id) {
+      this.showModalId = id;
+      this.showModal = true;
+    },
+  },
+};
 </script>

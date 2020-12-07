@@ -29,7 +29,7 @@ Route::group(['namespace'=>'api'],function (){
    Route::get('/table-list','indexController@getTableList');
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
-       Route::post('/process','indexController@process');
+       Route::get('/process/{isActive}/{id}','indexController@process');
        Route::get('/all','indexController@all');
        Route::get('/detail/{id}','indexController@detail');
        Route::post('/detail','indexController@detailStore');

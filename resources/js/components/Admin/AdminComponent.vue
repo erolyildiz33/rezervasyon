@@ -2,11 +2,9 @@
 
     <div class="container">
 
-
-
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="waiting" aria-selected="true">Onay Bekleyen Randevular</a>
+            <li class="nav-item active">
+                <a class="nav-link" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="waiting" aria-selected="true">Onay Bekleyen Randevular</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Günü Gelen Randevular</a>
@@ -22,11 +20,12 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+            <div class="tab-pane fade in active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+               
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="waiting.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        <pagination :data="waiting" @pagination-change-page="waitingData"></pagination>
+                        
                     </div>
                 </div>
             </div>
@@ -35,7 +34,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="today.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        <pagination :data="today" @pagination-change-page="todayData"></pagination>
+                        
                     </div>
                 </div>
             </div>
@@ -44,7 +43,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="list.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        <pagination :data="list" @pagination-change-page="listData"></pagination>
+                        
                     </div>
                 </div>
             </div>
@@ -52,7 +51,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="last.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        <pagination :data="last" @pagination-change-page="lastData"></pagination>
+                        
                     </div>
                 </div>
             </div>
@@ -60,7 +59,7 @@
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="cancel.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        <pagination :data="cancel" @pagination-change-page="cancelData"></pagination>
+                        
                     </div>
                 </div>
 
@@ -70,7 +69,7 @@
 
 
 </template>
-
+ 
 <script>
     import  io from  'socket.io-client';
     var socket = io('http://localhost:3000');
