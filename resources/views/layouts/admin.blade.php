@@ -19,9 +19,14 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+ 
     <!-- Styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="/dist/bootstrap-table.min.css" rel="stylesheet">
+
+
+
+    
 </head>
 <body>
     <div id="app">
@@ -76,6 +81,11 @@
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="/dist/bootstrap-table.min.js"></script>
+    <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
 </body>
 </html>
 

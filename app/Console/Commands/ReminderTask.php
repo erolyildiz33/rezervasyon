@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Appointment;
-use App\WorkingHours;
+use App\Models\Appointment;
+use App\Models\WorkingHours;
 use Illuminate\Console\Command;
 use Mail;
 class ReminderTask extends Command
