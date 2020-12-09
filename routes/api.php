@@ -23,7 +23,7 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/appointment-detail','indexController@appointmentDetail');
    Route::post('/appointment-store','indexController@appointmentStore');
    Route::post('/working-store','indexController@getWorkingStore');
-   Route::get('/working-list','indexController@getWorkingList');
+   Route::get('/working-list/{id?}','indexController@getWorkingList');
    Route::post('/table-store','indexController@getTableStore');
    Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list','indexController@getTableList');

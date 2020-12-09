@@ -9,6 +9,8 @@ use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use function GuzzleHttp\Promise\all;
+
 class indexController extends Controller
 {
     public function getWorkingHours($date = '')
@@ -63,36 +65,33 @@ class indexController extends Controller
             $returnArray['message'] = "Veri Eklenemedi bizimle iletişime geçiniz";
         }
         return response()->json($returnArray);
-
     }
 
     public function getWorkingStore(Request $request)
     {
         $all = $request->except('_token');
 
-        WorkingHours::query()->delete();
-        foreach ($all as $k => $v) {
-            foreach ($v as $key => $value) {
+        foreach ($all['masalar'] as $k => $v) {
+
+            if (!WorkingHours::where('day', $all['day'])->where('hours', $all['time'])->where('table_id', $v)->count() > 0) {
                 WorkingHours::create([
-                    'day' => $k,
-                    'hours' => $value
+                    'day' => $all['day'],
+                    'hours' => $all['time'],
+                    'table_id' => $v,
                 ]);
             }
         }
-
-        return response()->json($all);
     }
 
     public function getTableDelete(Request $request)
     {
         $all = $request->except('_token');
-        $resim=Table::where('id', $all['id'])->get('image');
-        $file=public_path('uploads').DIRECTORY_SEPARATOR.$resim[0]['image'];
-        if (file_exists($file)){
-           unlink($file) ;
+        $resim = Table::where('id', $all['id'])->get('image');
+        $file = public_path('uploads') . DIRECTORY_SEPARATOR . $resim[0]['image'];
+        if (file_exists($file)) {
+            unlink($file);
         }
         Table::where('id', $all['id'])->delete();
-
     }
 
     public function getTableStore(Request $request)
@@ -100,11 +99,11 @@ class indexController extends Controller
         $all = $request->except('_token');
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
-        $uri =  substr($all['image'] ,strpos($all['image'] ,",")+1);
-        $filename=md5($timestamp).".jpg";
-        $pathfile=public_path('uploads').DIRECTORY_SEPARATOR.$filename;
+        $uri =  substr($all['image'], strpos($all['image'], ",") + 1);
+        $filename = md5($timestamp) . ".jpg";
+        $pathfile = public_path('uploads') . DIRECTORY_SEPARATOR . $filename;
         file_put_contents($pathfile, base64_decode($uri));
-        $image=$filename;
+        $image = $filename;
         $id = Table::create([
             'tablename' => $all['tablename'],
             'price' => $all['price'],
@@ -113,18 +112,57 @@ class indexController extends Controller
             'image' => $image,
         ]);
         echo  $id;
-
     }
 
-    public function getWorkingList()
+    public function getWorkingList($id=null)
     {
-        $returnArray = [];
-        $data = WorkingHours::all();
-        foreach ($data as $k => $v) {
-            $returnArray[$v['day']][] = $v['hours'];
-        }
 
-        return response()->json($returnArray);
+        $returnArray = [];
+        if($id!=null)
+        {$data = WorkingHours::where('day', $id)->get();}
+        else{
+            $data=WorkingHours::all();
+        }
+        foreach ($data as $k => $v) {
+            if($v['day']=="Pazartesi")
+            {
+                $gun='monday';
+            }
+            elseif($v['day']=="Salı")
+            {
+                $gun='tuesday';
+            }
+            elseif($v['day']=="Çarşamba")
+            {
+                $gun='wednesday';
+            }
+            elseif($v['day']=="Perşembe")
+            {
+                $gun='thursday';
+            }
+            elseif($v['day']=="Cuma")
+            {
+                $gun='friday';
+            }
+            elseif($v['day']=="Cumartesi")
+            {
+                $gun='saturday';
+            }
+            elseif($v['day']=="Pazar")
+            {
+                $gun='sunday';
+            }
+            $table[$v['table_id']][] = $v['hours'];
+
+            $returnArray[$gun] = $table;
+        }
+        $responsecode = 200;
+        
+        $header = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
+        return response()->json($returnArray, $responsecode, $header,JSON_UNESCAPED_UNICODE);
     }
 
     public function getTableList()
@@ -169,8 +207,5 @@ class indexController extends Controller
         $returnArray['info'] = $info[0];
         $returnArray['note'] = AppointmentNote::where('appointmentId', $info[0]['id'])->orderBy('id', 'desc')->get();
         return response()->json($returnArray);
-
     }
-
-
 }
