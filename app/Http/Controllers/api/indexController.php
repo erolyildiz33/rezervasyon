@@ -152,12 +152,15 @@ class indexController extends Controller
             {
                 $gun='sunday';
             }
-            $table[$v['table_id']][] = $v['hours'];
+            Table::where('id',$v['table_id'])->get('tablename');
+            $tb=(Table::where('id',$v['table_id'])->get('tablename')[0]->tablename);
+            $table[$tb][] = $v['hours'];
 
             $returnArray[$gun] = $table;
+
         }
         $responsecode = 200;
-        
+
         $header = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'
