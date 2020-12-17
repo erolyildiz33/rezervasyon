@@ -51,7 +51,10 @@ class indexController extends Controller
         $returnArray = [];
         $returnArray['status'] = false;
         $all = $request->except('_token');
-        $control = Appointment::where('date', $all['date'])->where('workingHour', $all['workingHour'])->count();
+        $mydate=date('Y-m-d',strtotime($all['date']));
+       
+       $all['date']=$mydate;
+        $control = Appointment::where('date', $all['date'])->count();
         if ($control != 0) {
             $returnArray['message'] = "Bu Randevu tarihi doludur.";
             return response()->json($returnArray);

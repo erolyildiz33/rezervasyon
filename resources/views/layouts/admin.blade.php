@@ -47,11 +47,12 @@
                             <li>
                                 <a href="{{ route('admin.index') }}">Yönetim Paneli</a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.working') }}">Çalışma Saati Tanımlama</a>
-                            </li>
+                          
                             <li>
                                 <a href="{{ route('admin.table') }}">Masa Tanımlama</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.rezerv') }}">Rezervasyon Tanımla</a>
                             </li>
                             <li>
                                 <a  href="{{ route('logout') }}"

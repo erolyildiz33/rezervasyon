@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Appointment;
 use App\Models\WorkingHours;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 use Mail;
 class ReminderTask extends Command
 {
@@ -54,11 +55,11 @@ class ReminderTask extends Command
                   'name'=>$v['fullName'],
                   'email'=>$v['email'],
                   'date'=>$v['date'],
-                  'time'=>WorkingHours::getString($v['workingHour']),
+                  'time'=>Appointment::getString($v['time']),
                   'code'=>$v['code']
                 ];
                 try {
-                    Mail::send('email', $data, function ($message) use ($data) {
+                    FacadesMail::send('email', $data, function ($message) use ($data) {
                         $message->to($data['email'], $data['name'])->subject('Rezervasyon Hatırlatma');
                         $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
                     });

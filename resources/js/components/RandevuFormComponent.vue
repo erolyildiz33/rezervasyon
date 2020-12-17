@@ -33,6 +33,7 @@
               />
             </div>
           </div>
+
           <div class="col-md-4">
             <div class="form-group">
               <input
@@ -44,96 +45,44 @@
               />
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
+
+          <div class="col-md-4">
+            <date-picker
+              :min="minDate"
+             
+              v-model="date"
+              format="DD-MM-YYYY dddd"
+              :disabled-date="notBeforeToday"
+              type="date"
+              ><span> Tarihi</span></date-picker
+            >
+          </div>
+          <div class="col-md-4">
+            <date-picker
+              v-model="timevalue"
+              :time-picker-options="{
+                start: '11:30',
+                step: '00:05',
+                end: '23:30',
+              }"
+              format="H:mm"
+              type="time"
+              placeholder="Geliş Saatinizi belirleyiniz"
+            ></date-picker>
+          </div>
+          <div class="col-md-4">
             <div class="form-group">
               <input
+                type="text"
                 class="form-control"
-                :min="minDate"
-                @change="selectDate"
-                v-model="date"
-                type="date"
+                v-model="body"
+                placeholder="Kaç kişi olacağınızı yazınız"
               />
-              <div class="row">
-                <div class="col-lg-12">
-                  <section
-                    class="property-section latest-property-section spad"
-                  >
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <div class="property-controls">
-                            <ul>
-                              <li data-filter="all">Tümü</li>
-                              <li data-filter=".apart">Balkon</li>
-                              <li data-filter=".house">Sahne</li>
-                              <li data-filter=".office">Bar</li>
-                              <li data-filter=".hotel">Bistro</li>
-                              <li data-filter=".restaurent">Kapalı</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row property-filter">
-                        <div class="col-lg-4 col-md-6 mix all house">
-                          <div class="property-item">
-                            <div
-                              class="pi-pic set-bg"
-                              data-setbg="/img/property/property-1.jpg"
-                            >
-                              <div class="label">Masa 1</div>
-                              <img src="img/roof.jpg">
-                            </div>
-                            <div class="pi-text">
-                             
-                              <div class="pt-price">
-                                50 TL
-                              </div>
-                              <h5>6 Kişilik</h5>
-                              <p>
-                                <span class="icon_pin_alt"></span> İç Mekan
-                              </p>
-                              <ul>
-                                <li>
-                                  <i class="fa fa-object-group"></i> Daha önce
-                                  12 kişi tercih etti
-                                </li>
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <ul class="select-time-ul">
-                                      <li
-                                        v-for="item in workingHours"
-                                        v-bind:class="[
-                                          item.isActive ? 'active': 'passive',
-                                        ]"
-                                        class="select-time"
-                                        :key="item.id"
-                                      >
-                                      
-                                        <input
-                                          v-if="item.isActive"
-                                          type="radio"
-                                          v-model="workingHour"
-                                          v-bind:value="item.id"
-                                        />
-                                        <span>{{ item.hours }}</span>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
             </div>
           </div>
         </div>
+
+       
 
         <div class="container">
           <div class="row">
@@ -194,19 +143,22 @@
 import io from "socket.io-client";
 var socket = io("http://localhost:3000");
 export default {
+  name: "FixedTimeList",
   data() {
     return {
       completeForm: true,
       errors: [],
       notification_type: null,
-      workingHour: 0,
+     
       name: null,
       email: null,
+      body: null,
       phone: null,
       text: null,
-      minDate: new Date().toISOString().slice(0, 10),
-      date: new Date().toISOString().slice(0, 10),
-      workingHours: [],
+      minDate: new Date(),
+      date: new Date(),
+      
+      timevalue: null,
     };
   },
   created() {
@@ -219,23 +171,38 @@ export default {
     });
   },
   methods: {
+    notBeforeToday(date) {
+      return date < new Date(new Date().setHours(0, 0, 0, 0));
+    },
+    getTime: function (e) {
+     var c = new Date(e);
+      var curr_hour = c.getHours() ;
+      var curr_min = c.getMinutes();
+      return curr_hour + ":" + curr_min;
+    },
     store: function () {
+     
       if (
         this.notification_type != null &&
         this.name != null &&
-        this.email != null &&
-        this.validEmail(this.email) &&
+        
+        this.validEmail(this.email)!=false &&
+        this.body != null &&
         this.phone != null &&
-        this.workingHour != 0
+        this.getTime(this.timevalue) != null 
+        
       ) {
+        console.log(this.getTime(this.timevalue))
         axios
           .post(`http://localhost/api/appointment-store`, {
             fullName: this.name,
             phone: this.phone,
             email: this.email,
-            date: this.date,
+            body: this.body,
+            date: new Date(this.date).toLocaleDateString(),
             text: this.text,
-            workingHour: this.workingHour,
+            time: this.getTime(this.timevalue),
+            
             notification_type: this.notification_type,
           })
           .then((res) => {
@@ -259,23 +226,26 @@ export default {
       if (!this.email || !this.validEmail(this.email)) {
         this.errors.push("Email Girilmelidir ve Formatı Doğru olmalıdır");
       }
+      if (!this.body) {
+        this.errors.push("Kişi sayısı girilmelidir");
+      }
 
       if (!this.phone) {
         this.errors.push("Telefon numarası Girilmelidir");
       }
 
-      if (!this.workingHour) {
+      if (!this.getTime(this.timevalue)) {
         this.errors.push("Çalışma saati seçilmelidir");
       }
     },
-    selectDate: function () {
+    /*selectDate: function () {
       axios
         .get(`http://localhost/api/working-hours/${this.date}`)
         .then((res) => {
           this.workingHours = res.data;
           this.workingHour = 0;
         });
-    },
+    },*/
     validEmail: function (email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
