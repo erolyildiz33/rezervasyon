@@ -81,9 +81,19 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          
+<img id="image" src="img/im2.jpeg" usemap="#image-map">
 
+        <map name="image-map">
+            <area target="" alt="b-bk-4" title="b-bk-4" href="" coords="24,334,49,366" shape="rect">
+            <area target="" alt="b-bk-3" title="b-bk-3" href="" coords="80,335,105,371" shape="rect">
+            <area target="" alt="b-bk-2" title="b-bk-2" href="" coords="51,500,24,469" shape="rect">
+            <area target="" alt="b-bk-1" title="b-bk-1" href="" coords="78,471,103,500" shape="rect">
+            <area target="" alt="b-bk-all" title="b-bk-all" href="" coords="137,670,225,700" shape="rect">
+        </map>
        
-
+</div>
         <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -140,6 +150,8 @@
 </template>
 
 <script>
+import $ from 'jquery';
+require('jquery-imagemapster');
 import io from "socket.io-client";
 var socket = io("http://localhost:3000");
 export default {
@@ -169,6 +181,11 @@ export default {
       console.log(res.data);
       this.workingHours = res.data;
     });
+    $('#image').mapster({
+                
+                fillColor: '000000',
+                fillOpacity: 0.5,
+  })
   },
   methods: {
     notBeforeToday(date) {

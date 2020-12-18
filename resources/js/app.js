@@ -4,8 +4,10 @@ import VueMask from  'v-mask';
 
 window.Vue = require('vue');
 Vue.use(VueMask);
+window.$=window.Jquery=require('jquery');
 Vue.use(require('vue-resource'));
-Vue.use(require('vue2-datepicker'))
+Vue.use(require('vue2-datepicker'));
+Vue.use(require('jquery-imagemapster'));
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

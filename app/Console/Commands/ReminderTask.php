@@ -5,8 +5,11 @@ namespace App\Console\Commands;
 use App\Models\Appointment;
 use App\Models\WorkingHours;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail as FacadesMail;
-use Mail;
+use App\Mail\MailNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Mail\Mailer;
+use SebastianBergmann\Environment\Console;
+
 class ReminderTask extends Command
 {
     /**
@@ -55,11 +58,11 @@ class ReminderTask extends Command
                   'name'=>$v['fullName'],
                   'email'=>$v['email'],
                   'date'=>$v['date'],
-                  'time'=>Appointment::getString($v['time']),
+                  'time'=>$v['time'],
                   'code'=>$v['code']
                 ];
                 try {
-                    FacadesMail::send('email', $data, function ($message) use ($data) {
+                    Mail::send('email', $data, function ($message) use ($data) {
                         $message->to($data['email'], $data['name'])->subject('Rezervasyon Hatırlatma');
                         $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
                     });
@@ -67,6 +70,7 @@ class ReminderTask extends Command
                 }
                 catch (\Exception $e)
                 {
+                    
                     Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_FAILED]);
                 }
             }
