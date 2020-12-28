@@ -50,7 +50,7 @@ class indexController extends Controller
     {
         $returnArray = [];
         $returnArray['status'] = false;
-        $all = $request->except('_token');
+        $all = $request->except('csrf_token');
         $mydate=date('Y-m-d',strtotime($all['date']));
        
        $all['date']=$mydate;

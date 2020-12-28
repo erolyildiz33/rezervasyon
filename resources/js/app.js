@@ -1,8 +1,11 @@
 require('./bootstrap');
 import VueMask from  'v-mask';
-
+import Button from 'vue-js-toggle-button';
 
 window.Vue = require('vue');
+
+
+Vue.use(Button);
 Vue.use(VueMask);
 window.$=window.Jquery=require('jquery');
 Vue.use(require('vue-resource'));
@@ -27,6 +30,8 @@ Vue.component('admin-table',require('./components/Admin/AdminTableComponent').de
 Vue.component('admin-table-item',require('./components/Admin/AdminTableItemComponent').default);
 Vue.component('table-preview',require('./components/Admin/TablesPreview').default);
 Vue.component('admin-rezerv',require('./components/Admin/RezervationComponent').default);
+Vue.component('appointment-modal',require('./components/RandevuModalComponent').default);
+
 
 
 
