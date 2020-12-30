@@ -71,8 +71,8 @@
 </template>
  
 <script>
-    import  io from  'socket.io-client';
-    var socket = io('http://localhost:3000');
+   import io from "socket.io-client";
+var socket = io("http://localhost:3000");
     export default
     {
         data(){
@@ -96,12 +96,10 @@
         },
         created(){
           this.getData();
-
             socket.on('admin_appointment_list',()=> {
                 console.log("Veri Geldi");
                 this.getData();
             });
-
         },
         methods:{
             updateCancel(id) {
@@ -133,6 +131,9 @@
                     });
             },
             waitingData(page){
+                
+              
+            
                 this.getData(`http://localhost/api/admin/all?waiting_page=${page}`);
             },
             listData(page){

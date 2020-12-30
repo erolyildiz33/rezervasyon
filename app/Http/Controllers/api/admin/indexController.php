@@ -78,7 +78,7 @@ class indexController extends Controller
             return $value;
         });
         /* Today List */
-        $returnArray['today_list'] = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('date','asc')->paginate(3,['*'],'today_page');
+        $returnArray['today_list'] = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('time','asc')->paginate(3,['*'],'today_page');
         $returnArray['today_list']->getCollection()->transform(function ($value){
             
             return $value;
@@ -100,10 +100,10 @@ class indexController extends Controller
     public function getCancelList()
     {
         $data = Appointment::where('isActive',2)->orderBy('time','asc')->get();
-       /* $data->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+       $data->getCollection()->transform(function ($value){
+           
             return $value;
-        });*/
+        });
         return response()->json($data);
     }
 

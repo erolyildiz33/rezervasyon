@@ -496,6 +496,7 @@
               shape="rect"
             />
           </map>
+         <!--
           <toggle-button
             v-model="secim"
             key="bkall"
@@ -550,6 +551,7 @@
             title="iikyall"
             @change="addimgAll"
           /><span>İçeri Kapı Yanı</span>
+          -->
         </div>
 
       
@@ -563,8 +565,7 @@
 import $ from "jquery";
 
 require("jquery-imagemapster");
-import io from "socket.io-client";
-var socket = io("http://localhost:3000");
+
 export default {
   name: "FixedTimeList",
 
@@ -580,23 +581,34 @@ export default {
       secim6: null,
       secim7: null,
       secim8: null,
-      showModalId: null,
+      marked:null,
+      showModalId: 0,
       showModal: false,
       
     };
   },
 
   created() {
-    socket.emit("hello");
+    var markedtmp=[];
+    axios
+          .get(`http://localhost/api/appointment-table`).then((res)=>{
+          res.data.map(function(value,index){
+            console.log(value)
+            if(value.title!=null){
+            markedtmp.push(value.title); 
+            }
+           
+          });
+           $("#image").mapster('set',true,markedtmp.toString());
+         
+          });
+
   },
   mounted() {
-    axios.get(`http://localhost/api/working-hours`).then((res) => {
-      console.log(res.data);
-      this.workingHours = res.data;
-    });
+   
 
     $("#image").mapster({
-      mapKey: "data-key",
+      mapKey: 'data-key',
       fillColor: "ff0000",
       fillOpacity: 1,
     });
@@ -620,80 +632,20 @@ export default {
         this.secim7 == true ||
         this.secim8 == true
       ) {
-        // $("#image").mapster("set", true, e.currentTarget.data - title);
+       $("#image").mapster("set", true, e.currentTarget.title);
       } else {
-        //$("#image").mapster("set", false, e.currentTarget.data - title);
+      $("#image").mapster("set", false, e.currentTarget.title);
       }
     },
-
-    notBeforeToday(date) {
-      return date < new Date(new Date().setHours(0, 0, 0, 0));
+openModal: function (id) {
+      this.showModalId = id;
+      this.showModal = true;
     },
-    getTime: function (e) {
-      var c = new Date(e);
-      var curr_hour = c.getHours();
-      var curr_min = c.getMinutes();
-      return curr_hour + ":" + curr_min;
-    },
-    store: function () {
-      if (
-        this.notification_type != null &&
-        this.name != null &&
-        this.validEmail(this.email) != false &&
-        this.body != null &&
-        this.phone != null &&
-        this.getTime(this.timevalue) != null
-      ) {
-        console.log(this.getTime(this.timevalue));
+   
+   
+      
 
-        axios
-          .post(`http://localhost/api/appointment-store`, {
-            csrf_token: document
-              .querySelector('meta[name="csrf-token"]')
-              .getAttribute("content"),
-            fullName: this.name,
-            phone: this.phone,
-            email: this.email,
-            body: this.body,
-            date: new Date(this.date).toLocaleDateString(),
-            text: this.text,
-            time: this.getTime(this.timevalue),
-
-            notification_type: this.notification_type,
-          })
-          .then((res) => {
-            if (res.status) {
-              socket.emit("new_appointment_create");
-              this.completeForm = false;
-            }
-          });
-      }
-
-      this.errors = [];
-
-      if (!this.notification_type) {
-        this.errors.push("Bildirim Tipi Seçilmelidir");
-      }
-
-      if (!this.name) {
-        this.errors.push("İsim Soyisim Girilmelidir");
-      }
-
-      if (!this.email || !this.validEmail(this.email)) {
-        this.errors.push("Email Girilmelidir ve Formatı Doğru olmalıdır");
-      }
-      if (!this.body) {
-        this.errors.push("Kişi sayısı girilmelidir");
-      }
-
-      if (!this.phone) {
-        this.errors.push("Telefon numarası Girilmelidir");
-      }
-
-      if (!this.getTime(this.timevalue)) {
-        this.errors.push("Çalışma saati seçilmelidir");
-      }
-    },
+      
     /*selectDate: function () {
       axios
         .get(`http://localhost/api/working-hours/${this.date}`)
@@ -702,10 +654,7 @@ export default {
           this.workingHour = 0;
         });
     },*/
-    validEmail: function (email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
+   
   },
 };
 </script>

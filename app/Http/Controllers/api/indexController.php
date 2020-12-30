@@ -8,7 +8,8 @@ use App\Models\Table;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Carbon;
 use function GuzzleHttp\Promise\all;
 
 class indexController extends Controller
@@ -45,7 +46,11 @@ class indexController extends Controller
         return response()->json($returnArray);
     }
 
-
+    public function getAppointmentTable(Request $request)
+    {
+        $all = $request->except('csrf_token');
+      return  Appointment::where('isActive',1)->where('date',Carbon::today())->where('title','!=',null)->get('title');
+    }
     public function appointmentStore(Request $request)
     {
         $returnArray = [];
@@ -54,7 +59,7 @@ class indexController extends Controller
         $mydate=date('Y-m-d',strtotime($all['date']));
        
        $all['date']=$mydate;
-        $control = Appointment::where('date', $all['date'])->count();
+        $control = Appointment::where('time', $all['date'])->count();
         if ($control != 0) {
             $returnArray['message'] = "Bu Randevu tarihi doludur.";
             return response()->json($returnArray);

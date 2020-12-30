@@ -1,175 +1,182 @@
 <template>
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              <h3 slot="header">
+                {{ modalId }}
 
-                   
-
-                    <div class="modal-body">
-                        <slot name="body">
-                            <div>
-    <div v-if="completeForm">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <ul>
-              <li class="errors" v-for="i in errors" :key="i.id">
-                {{ i }}
-              </li>
-            </ul>
+                <button
+                  class="btn btn-danger modal-default-button"
+                  @click="$emit('close')"
+                >
+                  X
+                </button>
+              </h3>
+            </slot>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                v-model="name"
-                placeholder="Adınızı-Soyadınızı Yazınız"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                v-model="email"
-                placeholder="E-Posta Adresinizi Yazınız"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              <input
-                type="text"
-                v-mask="'##-###-###-##-##'"
-                class="form-control"
-                v-model="phone"
-                placeholder="Telefon Numaranızı Yazınız"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <date-picker
-              :min="minDate"
-              v-model="date"
-              format="DD-MM-YYYY dddd"
-              :disabled-date="notBeforeToday"
-              type="date"
-              ><span> Tarihi</span></date-picker
-            >
-          </div>
-          <div class="col-md-4">
-            <date-picker
-              v-model="timevalue"
-              :time-picker-options="{
-                start: '11:30',
-                step: '00:05',
-                end: '23:30',
-              }"
-              format="H:mm"
-              type="time"
-              placeholder="Geliş Saatinizi belirleyiniz"
-            ></date-picker>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                v-model="body"
-                placeholder="Kaç kişi olacağınızı yazınız"
-              />
-            </div>
-          </div>
-        </div>
-       
-
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <textarea
-                  v-model="text"
-                  id=""
-                  class="form-control"
-                  cols="30"
-                  rows="5"
-                  placeholder="Notunuzu Giriniz"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-12">
-            <div class="col-md-12 notification-area">
-              <div class="form-group">
-                <input
-                  id="sms"
-                  type="radio"
-                  v-model="notification_type"
-                  value="0"
-                />
-                <label for="sms">Sms</label>
-              </div>
-
-              <div class="form-group">
-                <input
-                  id="email"
-                  type="radio"
-                  v-model="notification_type"
-                  value="1"
-                />
-                <label for="email">Email</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <button v-on:click="store" class="hw-btn">Randevu Oluştur</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="!completeForm">
-      <div class="complete-form">
-        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-        <span>Randevunuz Başarı ile Alınmıştır.</span>
-      </div>
-    </div>
-  </div>
-
-
-
-                        </slot>
-
-                        
+          <div class="modal-body">
+            <slot name="body">
+              <div>
+                <div v-if="completeForm">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul>
+                          <li class="errors" v-for="i in errors" :key="i.id">
+                            {{ i }}
+                          </li>
+                        </ul>
+                      </div>
                     </div>
 
-                    
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="name"
+                            placeholder="Adınızı-Soyadınızı Yazınız"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="email"
+                            placeholder="E-Posta Adresinizi Yazınız"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            v-mask="'##-###-###-##-##'"
+                            class="form-control"
+                            v-model="phone"
+                            placeholder="Telefon Numaranızı Yazınız"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <date-picker
+                          :min="minDate"
+                          v-model="date"
+                          format="DD-MM-YYYY dddd"
+                          :disabled-date="notBeforeToday"
+                          type="date"
+                          ><span> Tarihi</span></date-picker
+                        >
+                      </div>
+                      <div class="col-md-4">
+                        <date-picker
+                          v-model="timevalue"
+                          :time-picker-options="{
+                            start: '11:30',
+                            step: '00:05',
+                            end: '23:30',
+                          }"
+                          format="H:mm"
+                          type="time"
+                          placeholder="Geliş Saatinizi belirleyiniz"
+                        ></date-picker>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="body"
+                            placeholder="Kaç kişi olacağınızı yazınız"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <textarea
+                              v-model="text"
+                              id=""
+                              class="form-control"
+                              cols="30"
+                              rows="5"
+                              placeholder="Notunuzu Giriniz"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="col-md-12 notification-area">
+                          <div class="form-group">
+                            <input
+                              id="sms"
+                              type="radio"
+                              v-model="notification_type"
+                              value="0"
+                            />
+                            <label for="sms">Sms</label>
+                          </div>
+
+                          <div class="form-group">
+                            <input
+                              id="email"
+                              type="radio"
+                              v-model="notification_type"
+                              value="1"
+                            />
+                            <label for="email">Email</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <button v-on:click="store" class="hw-btn">
+                            Randevu Oluştur
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
+                <div v-if="!completeForm">
+                  <div class="complete-form">
+                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                    <span>Randevunuz Başarı ile Alınmıştır.</span>
+                  </div>
+                </div>
+              </div>
+            </slot>
+          </div>
         </div>
-    </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
-import datepicker from 'vue2-datepicker';
-    export  default
-    {
-        props:['modalId'],
-        data(){
-            return {
-                completeForm: true,
+import io from "socket.io-client";
+var socket = io("http://localhost:3000");
+import datepicker from "vue2-datepicker";
+
+export default {
+  props: ["modalId"],
+  data() {
+    return {
+      data:[],
+      completeForm: true,
       errors: [],
       notification_type: null,
-  
-      
+      title:null,
       name: null,
       email: null,
       body: null,
@@ -178,43 +185,13 @@ import datepicker from 'vue2-datepicker';
       minDate: new Date(),
       date: new Date(),
       timevalue: null,
-            }
-        },
-        created()
-        {
-           this.getData();
-        },
-        methods:{
-            store:function () {
-                axios.post(`http://localhost/api/appointment-store`,{
-                    id:this.modalId,
-                    text:this.text
-                }).then((res)=>{
-
-                    if(res.status)
-                    {
-                        this.text = '';
-                        this.getData();
-                    }
-                })
-            },
-            getData:function () {
-                axios.get(`http://localhost/api/appointment-store/${this.modalId}`)
-                    .then((res)=>{
-                        this.data = res.data.data;
-                        this.comment = res.data.comment;
-                    });
-            },
-            
-      notBeforeToday(date) {
-      return date < new Date(new Date().setHours(0, 0, 0, 0));
-    },
-    getTime: function (e) {
-      var c = new Date(e);
-      var curr_hour = c.getHours();
-      var curr_min = c.getMinutes();
-      return curr_hour + ":" + curr_min;
-    },
+    };
+  },
+  created() {
+    socket.emit("hello");
+  },
+  mounted() {},
+  methods: {
     store: function () {
       if (
         this.notification_type != null &&
@@ -222,17 +199,22 @@ import datepicker from 'vue2-datepicker';
         this.validEmail(this.email) != false &&
         this.body != null &&
         this.phone != null &&
+       
         this.getTime(this.timevalue) != null
       ) {
         console.log(this.getTime(this.timevalue));
 
         axios
           .post(`http://localhost/api/appointment-store`, {
-          csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            csrf_token: document
+              .querySelector('meta[name="csrf-token"]')
+              .getAttribute("content"),
             fullName: this.name,
             phone: this.phone,
             email: this.email,
             body: this.body,
+           
+            title:this.modalId,
             date: new Date(this.date).toLocaleDateString(),
             text: this.text,
             time: this.getTime(this.timevalue),
@@ -240,8 +222,9 @@ import datepicker from 'vue2-datepicker';
             notification_type: this.notification_type,
           })
           .then((res) => {
-            if (res.status) {
+            if (res.data.status) {
               socket.emit("new_appointment_create");
+              console.log(socket.emit("new_appointment_create"));
               this.completeForm = false;
             }
           });
@@ -272,6 +255,17 @@ import datepicker from 'vue2-datepicker';
         this.errors.push("Çalışma saati seçilmelidir");
       }
     },
+
+    notBeforeToday(date) {
+      return date < new Date(new Date().setHours(0, 0, 0, 0));
+    },
+    getTime: function (e) {
+      var c = new Date(e);
+      var curr_hour = c.getHours();
+      var curr_min = c.getMinutes();
+      return curr_hour + ":" + curr_min;
+    },
+
     /*selectDate: function () {
       axios
         .get(`http://localhost/api/working-hours/${this.date}`)
@@ -284,6 +278,6 @@ import datepicker from 'vue2-datepicker';
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-        }
-    }
+  },
+};
 </script>

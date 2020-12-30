@@ -27,6 +27,8 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/table-store','indexController@getTableStore');
    Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list','indexController@getTableList');
+   Route::get('/appointment-table','indexController@getAppointmentTable');
+
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
        Route::get('/process/{isActive}/{id}','indexController@process');
