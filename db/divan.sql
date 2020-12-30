@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 18 Ara 2020, 23:46:25
+-- Üretim Zamanı: 30 Ara 2020, 22:43:10
 -- Sunucu sürümü: 5.7.31-log
 -- PHP Sürümü: 7.4.13
 
@@ -38,6 +38,7 @@ CREATE TABLE `appointments` (
   `text` text COLLATE utf8mb4_unicode_ci,
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notification_type` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(55) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isActive` int(11) NOT NULL DEFAULT '0',
   `isSend` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -48,11 +49,14 @@ CREATE TABLE `appointments` (
 -- Tablo döküm verisi `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `fullName`, `phone`, `email`, `date`, `time`, `body`, `text`, `code`, `notification_type`, `isActive`, `isSend`, `created_at`, `updated_at`) VALUES
-(8, 'asdas', '90-543-258-21-14', 'q@q.com', '2020-12-06', '10:40:43', '0', 'sdasd', '', 0, 2, 0, NULL, '2020-12-05 14:21:49'),
-(9, 'u', '90-543-258-21-14', 'u@u.com', '2020-12-15', '11:55:00', '4', NULL, '84468f', 1, 1, 0, '2020-12-14 09:38:34', '2020-12-14 09:39:02'),
-(10, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-16', '11:55:00', '8', NULL, 'dde6ca', 1, 0, 0, '2020-12-14 09:43:37', '2020-12-14 09:43:37'),
-(11, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-17', '11:55:00', '4', NULL, 'b404be', 1, 1, 1, '2020-12-17 09:07:23', '2020-12-17 09:31:58');
+INSERT INTO `appointments` (`id`, `fullName`, `phone`, `email`, `date`, `time`, `body`, `text`, `code`, `notification_type`, `title`, `isActive`, `isSend`, `created_at`, `updated_at`) VALUES
+(1, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-29', '11:55:00', '4', NULL, '1f486a', 1, NULL, 1, 0, '2020-12-29 15:32:17', '2020-12-29 16:07:00'),
+(2, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-30', '11:45:00', '2', NULL, '245c0d', 1, NULL, 1, 0, '2020-12-29 16:40:52', '2020-12-30 17:23:06'),
+(3, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-30', '11:30:00', '4', NULL, '5d8968', 1, NULL, 1, 0, '2020-12-30 09:27:15', '2020-12-30 17:23:08'),
+(4, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-30', '11:55:00', '4', NULL, '1c6589', 1, 'b-bk-1', 1, 0, '2020-12-30 17:48:41', '2020-12-30 17:48:41'),
+(5, 'a', '90-543-258-21-14', 'a@a.com', '2020-12-30', '11:55:00', '4', NULL, '794037', 1, 'b-bk-1', 1, 0, '2020-12-30 18:36:34', '2020-12-30 18:41:09'),
+(6, 'uygar', '90-543-258-21-14', 'u@u.com', '2020-12-30', '11:35:00', '5', NULL, 'ac0746', 1, 'b-bk-1', 1, 0, '2020-12-30 18:52:23', '2020-12-30 18:52:43'),
+(7, 'uygar', '90-543-258-21-14', 'u@u.com', '2020-12-31', '11:35:00', '4', NULL, '4b858c', 1, 'b-bk-1', 1, 0, '2020-12-30 18:53:35', '2020-12-30 18:53:41');
 
 -- --------------------------------------------------------
 
@@ -270,7 +274,7 @@ ALTER TABLE `working_hours`
 -- Tablo için AUTO_INCREMENT değeri `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `appointment_notes`

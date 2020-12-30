@@ -599,7 +599,11 @@ export default {
             }
            
           });
-           $("#image").mapster('set',true,markedtmp.toString());
+           $("#image").mapster('set',true,markedtmp.toString(),{
+              
+              fillColor: "ff0000",
+              fillOpacity: 1,
+           });
          
           });
 
