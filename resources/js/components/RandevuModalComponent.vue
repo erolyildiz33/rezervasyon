@@ -2,8 +2,12 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
+       
         <div class="modal-container">
-          <div class="modal-header">
+          
+  <form-wizard>
+        <tab-content title="About You">
+                     <div class="modal-header">
             <slot name="header">
               <h3 slot="header">
                 {{ modalId }}
@@ -20,7 +24,9 @@
           <div class="modal-body">
             <slot name="body">
               <div>
+                <div v-if="!secilimi">
                 <div v-if="completeForm">
+
                   <div class="container">
                     <div class="row">
                       <div class="col-md-12">
@@ -66,16 +72,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-4">
-                        <date-picker
-                          :min="minDate"
-                          v-model="date"
-                          format="DD-MM-YYYY dddd"
-                          :disabled-date="notBeforeToday"
-                          type="date"
-                          ><span> Tarihi</span></date-picker
-                        >
-                      </div>
+                     
                       <div class="col-md-4">
                         <date-picker
                           v-model="timevalue"
@@ -149,15 +146,32 @@
                     </div>
                   </div>
                 </div>
+                </div>
                 <div v-if="!completeForm">
                   <div class="complete-form">
                     <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                     <span>Randevunuz Başarı ile Alınmıştır.</span>
                   </div>
                 </div>
+                <div v-if="secilimi">
+                  <div class="complete-form" >
+                    <i style="color:red!important" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <span>Bu masa rezerve edilmiştir.</span>
+                  </div>
+                </div>
               </div>
             </slot>
           </div>
+        </tab-content>
+        <tab-content title="About your Company"> 
+            <p>Can contains</p>
+            <p>Multiple Elements</p>
+        </tab-content>
+        <tab-content title="Finishing Up">
+            <p>Or an image .. or any thing</p>
+           
+        </tab-content>  
+    </form-wizard>
         </div>
       </div>
     </div>
@@ -169,7 +183,7 @@ var socket = io("http://localhost:3000");
 import datepicker from "vue2-datepicker";
 
 export default {
-  props: ["modalId"],
+  props: ["modalId","secilimi","tarih"],
   data() {
     return {
       data:[],
@@ -182,17 +196,19 @@ export default {
       body: null,
       phone: null,
       text: null,
-      minDate: new Date(),
-      date: new Date(),
+    
       timevalue: null,
     };
   },
   created() {
+   
     socket.emit("hello");
   },
   mounted() {},
   methods: {
+    
     store: function () {
+      
       if (
         this.notification_type != null &&
         this.name != null &&
@@ -215,7 +231,7 @@ export default {
             body: this.body,
            
             title:this.modalId,
-            date: new Date(this.date).toLocaleDateString(),
+            date: this.tarih,
             text: this.text,
             time: this.getTime(this.timevalue),
 

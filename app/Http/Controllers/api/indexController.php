@@ -16,40 +16,13 @@ class indexController extends Controller
 {
     public function getWorkingHours($date = '')
     {
-        $date = ($date == '') ? date("Y-m-d") : $date;
-        $day = date("l", strtotime($date));
-        $returnArray = [];
-        $hours = WorkingHours::where('day', $day)->get();
-        foreach ($hours as $k => $v) {
-            $control = Appointment::where('date', $date)
-                ->where('workingHour', $v['id'])
-                ->where(function ($control) {
-                    $control->orWhere('isActive', APPOINTMENT_DEFAULT);
-                    $control->orWhere('isActive', APPOINTMENT_SUCCESS);
-                })
-                ->count();
-            // 11.00 - 12.00
-            //   0    -   1
-            $exp = explode('-', $v['hours']);
-            $suanZaman = date('H.i');
-            $suanTarih = date('Y-m-d');
-            if ($control == 0) {
-                if ($suanZaman > $exp[0] and $suanTarih == $date)
-                    $v['isActive'] = false;
-                else
-                    $v['isActive'] = true;
-            } else {
-                $v['isActive'] = false;
-            }
-            $returnArray[] = $v;
-        }
-        return response()->json($returnArray);
+       echo  $date;
     }
 
-    public function getAppointmentTable(Request $request)
+    public function getAppointmentTable($datee='')
     {
-        $all = $request->except('csrf_token');
-      return  Appointment::where('isActive',1)->where('date',Carbon::today())->where('title','!=',null)->get('title');
+       // $all = $request->except('csrf_token');
+      return  Appointment::where('isActive',1)->where('date',$datee)->where('title','!=',null)->get('title');
     }
     public function appointmentStore(Request $request)
     {

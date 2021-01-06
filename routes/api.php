@@ -27,7 +27,7 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/table-store','indexController@getTableStore');
    Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list','indexController@getTableList');
-   Route::get('/appointment-table','indexController@getAppointmentTable');
+   Route::get('/appointment-table/{date?}','indexController@getAppointmentTable');
 
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
@@ -41,6 +41,7 @@ Route::group(['namespace'=>'api'],function (){
        Route::get('/last-list','indexController@getLastList');
        Route::get('/waiting-list','indexController@getWaitingList');
        Route::get('/cancel-list','indexController@getCancelList');
+       Route::get('/appointment-table/{date?}','indexController@getAppointmentTable');
    });
 
 });

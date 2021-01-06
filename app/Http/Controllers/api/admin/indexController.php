@@ -11,7 +11,11 @@ use App\Http\Controllers\Controller;
 
 class indexController extends Controller
 {
-
+    public function getAppointmentTable($datee='')
+    {
+       // $all = $request->except('csrf_token');
+      return  Appointment::where('isActive',1)->where('date',$datee)->where('title','!=',null)->get('title');
+    }
     public function detailStore(Request $request)
     {
         $returnArray = [];
