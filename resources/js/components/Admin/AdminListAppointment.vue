@@ -52,7 +52,11 @@ export default {
         },
         {
           title: "Saat",
-          field: "workingHour",
+          field: "time",
+        },
+        {
+          title: "Kişi",
+          field: "body",
         },
         {
           title: "Notu",

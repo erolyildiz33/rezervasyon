@@ -271,7 +271,7 @@ ol {
   border-bottom: 1px solid #ebebeb;
 }
 .hs-top .logo {
-  padding: 0 0;
+  padding: 15 0;
 }
 .hs-top .logo a {
   display: inline-block;
@@ -4477,7 +4477,9 @@ li.errors
     background-color: rgba(0, 0, 0, .5);
     display: table;
     transition: opacity .3s ease;
+    
 }
+.mx-datepicker-popup { position: relative; z-index: 1000000 !important; }
 
 .modal-wrapper {
     display: table-cell;
@@ -4486,9 +4488,10 @@ li.errors
 
 .modal-container {
 
-    width: 300px;
+    width: auto;
+    height: auto;
     margin: 0px auto;
-    padding: 20px 30px;
+    padding: 20px 40px;
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);

@@ -1,8 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
+ <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -19,14 +18,17 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
- 
+
     <!-- Styles -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="/dist/bootstrap-table.min.css" rel="stylesheet">
-
-
-
     
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+   
+
+
+
+    <link href="{{asset('dist/bootstrap-table.min.css')}}" rel="stylesheet">
+
+
 </head>
 <body>
     <div id="app">
@@ -47,12 +49,14 @@
                             <li>
                                 <a href="{{ route('admin.index') }}">Yönetim Paneli</a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.working') }}">Çalışma Saati Tanımlama</a>
+                          
+                             <li>
+                               <a href="{{ route('admin.table') }}">Müşteriler</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.table') }}">Masa Tanımlama</a>
+                                <a href="{{ route('admin.rezerv') }}">Rezervasyon Tanımla</a>
                             </li>
+                           
                             <li>
                                 <a  href="{{ route('logout') }}"
                                    onclick="event.preventDefault();

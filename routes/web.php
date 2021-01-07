@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,5 +37,7 @@ Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'
     Route::get('/','indexController@index')->name('index');
     Route::get('/working','indexController@working')->name('working');
     Route::get('/table','indexController@table')->name('table');
+    Route::get('/rezerv','indexController@rezerv')->name('rezerv');
+
 
 });

@@ -20,4 +20,8 @@ class indexController extends Controller
     {
         return view('admin.table');
     }
+    public function rezerv()
+    {
+        return view('admin.rezerv');
+    }
 }

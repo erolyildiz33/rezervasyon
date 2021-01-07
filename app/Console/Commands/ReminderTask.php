@@ -5,7 +5,11 @@ namespace App\Console\Commands;
 use App\Models\Appointment;
 use App\Models\WorkingHours;
 use Illuminate\Console\Command;
-use Mail;
+use App\Mail\MailNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Mail\Mailer;
+use SebastianBergmann\Environment\Console;
+
 class ReminderTask extends Command
 {
     /**
@@ -54,7 +58,7 @@ class ReminderTask extends Command
                   'name'=>$v['fullName'],
                   'email'=>$v['email'],
                   'date'=>$v['date'],
-                  'time'=>WorkingHours::getString($v['workingHour']),
+                  'time'=>$v['time'],
                   'code'=>$v['code']
                 ];
                 try {
@@ -66,6 +70,7 @@ class ReminderTask extends Command
                 }
                 catch (\Exception $e)
                 {
+                    
                     Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_FAILED]);
                 }
             }

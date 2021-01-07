@@ -1,11 +1,20 @@
 require('./bootstrap');
 import VueMask from  'v-mask';
+import Button from 'vue-js-toggle-button';
+
+import VueStepWizard from 'vue-step-wizard';
+import 'vue-step-wizard/dist/vue-step-wizard.css';
 
 
 window.Vue = require('vue');
+Vue.use(VueStepWizard);
+Vue.use(Button);
 Vue.use(VueMask);
+window.$=window.Jquery=require('jquery');
+
 Vue.use(require('vue-resource'));
-Vue.use(require('vue2-datepicker'))
+Vue.use(require('vue2-datepicker'));
+Vue.use(require('jquery-imagemapster'));
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,6 +33,13 @@ Vue.component('admin-working-item',require('./components/Admin/AdminWorkingItemC
 Vue.component('admin-table',require('./components/Admin/AdminTableComponent').default);
 Vue.component('admin-table-item',require('./components/Admin/AdminTableItemComponent').default);
 Vue.component('table-preview',require('./components/Admin/TablesPreview').default);
+Vue.component('admin-rezerv',require('./components/Admin/RezervationComponent').default);
+Vue.component('appointment-modal',require('./components/RandevuModalComponent').default);
+
+
+
+
+
 
 
 

@@ -68,17 +68,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2">
-                        <div class="logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                       <div class="logo">
+                            <a href="./index.html"><img src="img/logo.png" alt="" width="100" height="70"></a>
                         </div>
                     </div>
                     <div class="col-lg-10">
                         <div class="ht-widget">
                             <ul>
-                                <li><i class="icon_mail_alt"></i> Aler.support@gmail.com</li>
+                                <li><i class="icon_mail_alt"></i> divan.roof14@gmail.com</li>
                             
                             </ul>
-                            <a href="#" class="hw-btn">Rezervasyon Takip</a>
+                            <a href="#" class="hw-btn">REZERVASYON TAKİP</a>
                         </div>
                     </div>
                 </div>
@@ -111,16 +111,9 @@
     <!-- Hero Section End -->
 
     <!-- Search Section Begin -->
-    <section class="search-section spad">
+    <section>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h4>REZERVASYON YAPMAK İÇİN BİLGİLERİNİZİ GİRİNİZ</h4>
-                    </div>
-                </div>
-
-            </div>
+           
             <div id="app">
                 
 

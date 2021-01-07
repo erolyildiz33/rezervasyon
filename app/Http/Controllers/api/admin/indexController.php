@@ -11,7 +11,11 @@ use App\Http\Controllers\Controller;
 
 class indexController extends Controller
 {
-
+    public function getAppointmentTable($datee='')
+    {
+       // $all = $request->except('csrf_token');
+      return  Appointment::where('isActive',1)->where('date',$datee)->where('title','!=',null)->get('title');
+    }
     public function detailStore(Request $request)
     {
         $returnArray = [];
@@ -54,33 +58,33 @@ class indexController extends Controller
     {
         $returnArray = [];
         /* Waiting */
-        $returnArray['waiting'] = Appointment::where('isActive',0)->orderBy('workingHour','asc')->paginate(3,['*'],'waiting_page');
+        $returnArray['waiting'] = Appointment::where('isActive',0)->orderBy('date','asc')->paginate(3,['*'],'waiting_page');
         $returnArray['waiting']->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         /* Cancel */
-        $returnArray['cancel'] = Appointment::where('isActive',2)->orderBy('workingHour','asc')->paginate(3,['*'],'cancel_page');
+        $returnArray['cancel'] = Appointment::where('isActive',2)->orderBy('date','asc')->paginate(3,['*'],'cancel_page');
         $returnArray['cancel']->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         /* List */
-        $returnArray['list'] = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'list_page');
+        $returnArray['list'] = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('time','asc')->paginate(3,['*'],'list_page');
         $returnArray['list']->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         /* Last List */
-        $returnArray['last_list'] = Appointment::where('date','<',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'last_page');
+        $returnArray['last_list'] = Appointment::where('date','<',date("Y-m-d"))->orderBy('time','asc')->paginate(3,['*'],'last_page');
         $returnArray['last_list']->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         /* Today List */
-        $returnArray['today_list'] = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'today_page');
+        $returnArray['today_list'] = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('time','asc')->paginate(3,['*'],'today_page');
         $returnArray['today_list']->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+            
             return $value;
         });
         return response()->json($returnArray);
@@ -89,9 +93,9 @@ class indexController extends Controller
 
     public function getWaitingList()
     {
-        $data = Appointment::where('isActive',0)->orderBy('workingHour','asc')->paginate(9);
+        $data = Appointment::where('isActive',0)->orderBy('time','asc')->paginate(9);
         $data->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         return response()->json($data);
@@ -99,21 +103,21 @@ class indexController extends Controller
 
     public function getCancelList()
     {
-        $data = Appointment::where('isActive',2)->orderBy('workingHour','asc')->get();
-       /* $data->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+        $data = Appointment::where('isActive',2)->orderBy('time','asc')->get();
+       $data->getCollection()->transform(function ($value){
+           
             return $value;
-        });*/
+        });
         return response()->json($data);
     }
 
     public function getList()
     {
        // $data = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(9);
-        $data = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('workingHour','asc');
+        $data = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('time','asc');
 
         $data->getCollection()->transform(function ($value){
-           $value['working'] = WorkingHours::getString($value['workingHour']);
+           
            return $value;
         });
         return response()->json($data['cancel']['data']);
@@ -121,9 +125,9 @@ class indexController extends Controller
 
     public function getLastList()
     {
-        $data = Appointment::where('date','<',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(9);
+        $data = Appointment::where('date','<',date("Y-m-d"))->orderBy('time','asc')->paginate(9);
         $data->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+           
             return $value;
         });
         return response()->json($data);
@@ -131,9 +135,9 @@ class indexController extends Controller
 
     public function getTodayList()
     {
-        $data = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(9);
+        $data = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('time','asc')->paginate(9);
         $data->getCollection()->transform(function ($value){
-            $value['working'] = WorkingHours::getString($value['workingHour']);
+            
             return $value;
         });
         return response()->json($data);
