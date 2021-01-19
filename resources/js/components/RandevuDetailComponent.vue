@@ -3,8 +3,8 @@
         <div>
             <div class="container">
                 <div class="main">
-                    <h2>Randevu Takip Sistemi</h2>
-                    <h3>Randevunuzu görmek için bilgileri doğru giriniz.</h3>
+                    <h2>Rezervasyon Aktivasyon</h2>
+                   
 
                 </div>
 
@@ -21,13 +21,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="text" class="form-control"  v-model="code" placeholder="Randevu Kodu">
+                            <input type="text" class="form-control"  v-model="code" placeholder="Rezervasyon Kodu">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <button v-on:click="store" class="btn btn-success">Randevu Ara</button>
+                        <button v-on:click="store" class="btn btn-success">Rezervasyon Detayı</button>
                     </div>
                 </div>
             </div>

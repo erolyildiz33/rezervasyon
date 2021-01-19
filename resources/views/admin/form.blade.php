@@ -1,4 +1,4 @@
 @extends('layouts.admin')
 @section('content')
-<admin-rezerv></admin-rezerv>
+<admin-form :userid="{{$kullanici}}"></admin-form>
 @endsection

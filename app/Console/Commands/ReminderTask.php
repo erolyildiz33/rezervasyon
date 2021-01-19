@@ -43,7 +43,7 @@ class ReminderTask extends Command
      */
     public function handle()
     {
-        $date = date("Y-m-d");
+        $date = date("Y-m-d N");
         $nextDate = date("Y-m-d",strtotime("+1 Day",time()));
 
         $list = Appointment::whereIn('date',[$date,$nextDate])

@@ -78,7 +78,7 @@
                                 <li><i class="icon_mail_alt"></i> divan.roof14@gmail.com</li>
                             
                             </ul>
-                            <a href="#" class="hw-btn">REZERVASYON TAKİP</a>
+                            <a href="{{ route('detail') }}" class="hw-btn">REZERVASYON TAKİP</a>
                         </div>
                     </div>
                 </div>
@@ -149,6 +149,7 @@
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+   
 
 
 </body>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Models\Appointment;
 use App\Models\AppointmentNote;
 use App\Models\Table;
+use App\Models\Event;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,7 @@ class indexController extends Controller
             return response()->json($returnArray);
         }
         $all['code'] = substr(md5(uniqid()), 0, 6);
+        $all['isActive']=1;
         $create = Appointment::create($all);
         if ($create) {
             $returnArray['status'] = true;
@@ -74,10 +76,21 @@ class indexController extends Controller
         }
         Table::where('id', $all['id'])->delete();
     }
+    public function getEventDelete(Request $request)
+    {
+        $all = $request->except('_token');
+        $resim = Event::where('id', $all['id'])->get('image');
+        $file = public_path('uploads/event/') . DIRECTORY_SEPARATOR . $resim[0]['image'];
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        Event::where('id', $all['id'])->delete();
+    }
 
     public function getTableStore(Request $request)
     {
         $all = $request->except('_token');
+
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
         $uri =  substr($all['image'], strpos($all['image'], ",") + 1);
@@ -85,14 +98,58 @@ class indexController extends Controller
         $pathfile = public_path('uploads') . DIRECTORY_SEPARATOR . $filename;
         file_put_contents($pathfile, base64_decode($uri));
         $image = $filename;
-        $id = Table::create([
-            'tablename' => $all['tablename'],
-            'price' => $all['price'],
-            'person' => $all['person'],
-            'map' => $all['map'],
-            'image' => $image,
-        ]);
-        echo  $id;
+        $veri=[
+            'ad' => $all['ad'],
+            'soyad' => $all['soyad'],
+            'email' => $all['email'],
+            'tel' => $all['tel'],
+           
+            'notu' => $all['notu'],
+            'iptal' => $all['iptal'],
+            'image'=>$image,
+            'karaliste'=>($all['karaliste']?1:0),
+            'misafir_id'=>($all['misafir_id']?1:0),
+            'karaliste_gerekce'=>$all['karaliste_gerekce'],
+
+           
+
+
+
+
+        ];
+
+if(isset($all['dogumtar']))
+{ 
+    $veri['dogumtar'] = Carbon::createFromFormat('d.m.Y',$all['dogumtar'])->format('Y-m-d');
+}
+if(isset($all['evliliktar']))
+    { 
+        $veri['evliliktar'] = Carbon::createFromFormat('d.m.Y',$all['evliliktar'])->format('Y-m-d');
+    }
+
+
+        $id = Table::create($veri);
+        echo  json_encode($veri);
+    }
+    public function getEventStore(Request $request)
+    {
+        $all = $request->except('_token');
+
+        $datetime = date("Y-m-d h:i:s");
+        $timestamp = strtotime($datetime);
+        $uri =  substr($all['image'], strpos($all['image'], ",") + 1);
+        $filename = md5($timestamp) . ".jpg";
+        $pathfile = public_path('uploads/event/') . DIRECTORY_SEPARATOR . $filename;
+        file_put_contents($pathfile, base64_decode($uri));
+        $image = $filename;
+        $veri=[
+            'ad' => $all['ad'],
+            'tarih' => Carbon::createFromFormat('d.m.Y',$all['tarih'])->format('Y-m-d'),
+            'saat' =>  $all['saat'],
+            'image'=>$image,
+        ];
+        $veri['id'] = Event::create($veri)->id;
+        echo  json_encode($veri);
     }
 
     public function getWorkingList($id=null)
@@ -155,12 +212,35 @@ class indexController extends Controller
         $data = Table::all();
         foreach ($data as $k => $v) {
             array_push($returnArray, array(
-                'id' => $v->id,
-                'tablename' => $v->tablename,
-                'price' => $v->price,
-                'map' => $v->map,
-                'person' => $v->person,
-                'image' => $v->image,
+                'id'=>$v->id,
+                'ad' => $v->ad,
+                'soyad' => $v->soyad,
+                'email' => $v->email,
+                'tel' => $v->tel,
+                'dogumtar' =>$v->dogumtar,
+                'evliliktar' =>$v->evliliktar,
+                'notu' => $v->notu,
+                'iptal' =>$v->iptal,
+                'image'=>$v->image,
+                'karaliste'=>$v->karaliste,
+                'cinsiyet'=>$v->cinsiyet,
+                'misafir_id'=>$v->misafir_id,
+                'karaliste_gerekce'=>$v->karaliste_gerekce,
+            ));
+        }
+        return response()->json($returnArray);
+    }
+        public function getEventList()
+    {
+        $returnArray = array();
+        $data = Event::all();
+        foreach ($data as $k => $v) {
+            array_push($returnArray, array(
+                'id'=>$v->id,
+                'ad' => $v->ad,
+                'tarih' => $v->tarih,
+                'saat' => $v->saat,
+                'image'=>$v->image,
             ));
         }
 

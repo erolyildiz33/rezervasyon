@@ -35,6 +35,13 @@ Vue.component('admin-table-item',require('./components/Admin/AdminTableItemCompo
 Vue.component('table-preview',require('./components/Admin/TablesPreview').default);
 Vue.component('admin-rezerv',require('./components/Admin/RezervationComponent').default);
 Vue.component('appointment-modal',require('./components/RandevuModalComponent').default);
+Vue.component('admin-event',require('./components/Admin/AdminEventComponent').default);
+Vue.component('admin-event-preview',require('./components/Admin/AdminEventPreview').default);
+Vue.component('admin-profile',require('./components/Admin/AdminProfileComponent').default);
+
+
+
+
 
 
 
@@ -49,6 +56,8 @@ Vue.component('appointment-modal',require('./components/RandevuModalComponent').
 
 
 Vue.component('admin-appointment-modal',require('./components/Admin/AdminAppointmentModal').default);
+Vue.component('admin-form',require('./components/Admin/AdminFormComponent').default);
+Vue.component('admin-modal',require('./components/Admin/AdminModalComponent').default);
 
 Vue.component('appointment-form',require('./components/RandevuFormComponent').default);
 Vue.component('appointment-detail',require('./components/RandevuDetailComponent').default);

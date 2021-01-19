@@ -1,159 +1,345 @@
 <template>
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ title }}
-                <button class="btn btn-secondary" @click="showForm"><i class="fa fa-plus"> Yeni Masa Ekle</i></button>
-            </div>
-            <div v-if="isShow" style="padding:10px;">
-                <input type="text" class="form-control" v-model="inputTable" @keyup="inputcheck"
-                       placeholder="Masa Adı Yazınız">
-                <input type="text" class="form-control" v-model="price" placeholder="Rezervasyon fiyatı ekleyiniz."
-                />
-                <input type="text" class="form-control" v-model="person"
-                       placeholder="Masanın kaç kişilik olduğunu ekleyiniz."
-                />
-                <input type="text" class="form-control" v-model="map" placeholder="Masanın konumunu ekleyiniz."
-                />
-                <div v-if="SelectPhoto">
-                    <label for="file-input">Resim Seç</label>
-                    <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
-                </div>
-                <img :src="previewImage" class="uploading-image picture" style="max-height: 200px"/>
-                <button :disabled="isDisable" @click="addTable" style="margin-top:5px;" class="btn btn-primary">Ekle
-                </button>
-            </div>
-            <div class="panel-body">
-                <div v-for="(item,index) in masalar" :id="'masa'+item.id">
-                    <table-preview :item="item" :index="index"  :isDelete="true"
-                                   @tablelist="gelen($event)"></table-preview>
-                                   
-                </div>
-            </div>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{ title }}
+        <button class="btn btn-secondary" @click="showForm">
+          <i class="fa fa-plus"> Yeni Müşteri Ekle</i>
+        </button>
+      </div>
+      <div v-if="isShow" style="padding: 10px">
+        <label>Müşteri Tipi</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim"
+          :labels="{ checked: 'Yerel', unchecked: 'Otel' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+        <label>Cinsiyet</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim2"
+          :labels="{ checked: 'Kadın', unchecked: 'Erkek' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+        <label>Karaliste mi?</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim1"
+         
+          :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+        <div v-if="secim1">
+          <textarea
+            type="text"
+            class="form-control"
+            v-model="gerekce"
+            placeholder="Karaliste Gerekçesi?"
+          />
         </div>
+        <div>
+          <label>Kişisel Bilgiler:</label>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          v-model="ad"
+          placeholder="Adı"
+        />
+        <input
+          type="text"
+          class="form-control"
+          v-model="soyad"
+          placeholder="Soyadı"
+        />
+        <input
+          type="text"
+          class="form-control"
+          v-model="email"
+          placeholder="Mail"
+        />
+        <input
+          type="text"
+          class="form-control"
+          v-model="tel"
+          placeholder="Telefon"
+          v-mask="'90-###-###-##-##'"
+        />
+        <textarea
+          type="text"
+          class="form-control"
+          v-model="notu"
+          placeholder="Notu"
+        />
+        <input
+          type="text"
+          class="form-control"
+          v-model="iptal"
+          placeholder="iptal ettiği rezervasyon"
+        />
+        <div>
+          <label>Özel Gün Bilgileri:</label>
+        </div>
+        <span>Doğum Tarihi</span>
+        <date-picker
+          :min="minDate"
+          v-model="date"
+          data="data1"
+          format="DD-MM-YYYY dddd"
+          type="date"
+        ></date-picker>
+        <span>Evlilik Tarihi</span>
+        <date-picker
+          :min="minDate1"
+          v-model="date1"
+          format="DD-MM-YYYY dddd"
+          type="date"
+        ></date-picker>
+
+        <div v-if="SelectPhoto">
+          <label for="file-input">Resim Seç</label>
+          <input
+            type="file"
+            accept="image/*"
+            @change="uploadImage($event)"
+            id="file-input"
+          />
+        </div>
+        <img
+          :src="previewImage"
+          class="uploading-image picture"
+          style="max-height: 200px"
+        />
+        <button
+          @click="addTable"
+          style="margin-top: 5px"
+          class="btn btn-primary"
+        >
+          Ekle
+        </button>
+      </div>
+      <div class="panel-body">
+        <div id="table">
+          <bootstrap-table
+            :columns="columns"
+            :data="data1"
+            :options="options"
+          ></bootstrap-table>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                price: '',
-                person: '',
-                map: '',
-                SelectPhoto: true,
-                previewImage: null,
-                isDisable: true,
-                isShow: false,
-                inputTable: '',
-                masalar: [],
-
+export default {
+  props: ["data"],
+  data() {
+    return {
+      ad: "",
+      soyad: "",
+      email: "",
+      tel: "",
+      notu: "",
+      iptal: "",
+      gerekce: "",
+      SelectPhoto: true,
+      previewImage: null,
+      isDisable: true,
+      isShow: false,
+      inputTable: "",
+      masalar: [],
+      minDate: "",
+     
+      date: "",
+      minDate1: "",
+      date1: "",
+      data1: [],
+      secim: false,
+      secim1: false,
+      secim2: false,
+      columns: [
+        {
+          title: "Sıra No",
+          formatter: function (value, row, index) {
+            return index + 1;
+          },
+        },
+        {
+          title: "Adı",
+          field: "ad",
+        },
+        {
+          title: "Soyad",
+          field: "soyad",
+        },
+        {
+          title: "Cinsiyet",
+          formatter: function (value, row) {
+            if (row.cinsiyet == 0) return "Erkek";
+            else return "Kadın";
+          },
+        },
+        {
+          title: "Mail",
+          field: "email",
+        },
+        {
+          title: "Tel",
+          field: "tel",
+        },
+        {
+          title: "Doğum Tarihi",
+          field: "dogumtar",
+        },
+        {
+          title: "Evlilik Tarihi",
+          field: "evliliktar",
+        },
+        {
+          title: "Notu",
+          field: "text",
+        },
+        {
+          title: "İptal",
+          field: "iptal",
+        },
+        {
+          title: "Misafir Tipi",
+          formatter: function (value, row) {
+            if (row.misafir_id == 0) return "Otel";
+            else return "Yerel";
+          },
+        },
+        {
+          title: "Karaliste",
+          formatter: function (value, row) {
+            if (row.karaliste == 0) return "Hayır";
+            else return "Evet";
+          },
+        },
+        {
+          title: "Karaliste Gerekçesi",
+          field: "karaliste_gerekce",
+        },
+        {
+          title: "İşlem",
+          formatter: (value, row) => {
+            if (row.id != 0) {
+              return (
+                '<a class="btn btn-default" href="http://localhost/admin/rezerv/' +
+                row.id +
+                '">Rezervasyon Yap</a><a class="btn btn-default" href="http://localhost/admin/profile/' +
+                row.id +
+                '">Profil</a>'
+              );
+            } else if (row.isActive == 1) {
+              return '<span class="bg-green">Onaylı</span>';
+            } else if (row.isActive == 2) {
+              return '<span class="bg-danger">İptal Edilen</span>';
             }
+          },
         },
-        created() {
-            axios.get(`http://localhost/api/table-list`).then((res) => {
+      ],
+      options: {
+        search: true,
+        showColumns: true,
+      },
+    };
+  },
+  components: {
+    BootstrapTable,
+  },
+  created() {
+    axios.get(`http://localhost/api/table-list`).then((res) => {
+      this.data1 = res.data;
+    });
+  },
+  props: ["title"],
+  watch: {},
+  methods: {
+   
+    gelen(id) {
+      this.removeTable(id["id"], id["index"]);
+    },
+    uploadImage(e) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = (e) => {
+        this.previewImage = e.target.result;
+        this.SelectPhoto = false;
+      };
+    },
+    showForm: function () {
+      this.isShow = !this.isShow;
+    },
 
-                this.masalar = res.data;
-            })
-        },
-        props: ['title'],
-        watch: {
-
-
-        },
-        methods: {
-
-            gelen(id) {
-               this.removeTable(id['id'],id['index'])
-            },
-            uploadImage(e) {
-                const image = e.target.files[0];
-                const reader = new FileReader();
-                reader.readAsDataURL(image);
-                reader.onload = e => {
-                    this.previewImage = e.target.result;
-                    this.SelectPhoto = false;
-                };
-
-            },
-            showForm: function () {
-                this.isShow = !this.isShow;
-            },
-
-            addTable: function () {
-
-                axios.post(`http://localhost/api/table-store`, {
-                    tablename: this.inputTable,
-                    price: this.price,
-                    person: this.person,
-                    map: this.map,
-                    image: this.previewImage,
-
-                })
-                    .then((res) => {
-
-                        this.masalar.push(res.data)
-                        this.inputTable = ''
-
-                    })
-
-
-            },
-            inputcheck: function () {
-
-                var my = this.inputTable;
-                if (my.length > 0) {
-
-                    var check = this.masalar.filter(function (elm) {
-                        if (elm.tablename == my) {
-                            return elm;
-                        }
-                    });
-                    if (!check.length > 0) {
-                        this.isDisable = false;
-                    } else {
-                        this.isDisable = true
-                    }
-                }
-                else {
-                    this.isDisable = true
-                }
-
-            },
-
-            removeTable: function (item, index) {
-
-                axios.post(`http://localhost/api/table-delete`, {
-                    id: item,
-
-                })
-                    .then((res) => {
-                        var tmp = this.masalar
-                        var tmp2 = []
-                        delete tmp[index]
-
-                        this.masalar = []
-
-                        $.each(tmp, function (key, value) {
-                            if (value)
-                                tmp2.push({
-                                    'id': value.id,
-                                    'tablename': value.tablename,
-                                    'price': value.price,
-                                    'map': value.map,
-                                    'person': value.person,
-                                    'image': value.image,
-                                });
-                        });
-                        this.masalar = tmp2
-                    })
-
-
-            }
+    addTable: function () {
+      axios
+        .post(`http://localhost/api/table-store`, {
+          ad: this.ad,
+          soyad: this.soyad,
+          email: this.email,
+          tel: this.tel,
+          notu: this.notu,
+          image: this.previewImage,
+          iptal: this.iptal,
+          dogumtar: this.date != ""? this.date.toLocaleDateString():""
+             ,
+          
+          evliliktar:  this.date1 != ""? this.date1.toLocaleDateString():"",
+          misafir_id: this.secim,
+          karaliste: this.secim1,
+          cinsiyet: this.secim2,
+          karaliste_gerekce: this.gerekce,
+        })
+        .then((res) => {
+          this.data1.push(res.data);
+          this.inputTable = "";
+        });
+    },
+    inputcheck: function () {
+      var my = this.inputTable;
+      if (my.length > 0) {
+        var check = this.masalar.filter(function (elm) {
+          if (elm.ad == my) {
+            return elm;
+          }
+        });
+        if (!check.length > 0) {
+          this.isDisable = false;
+        } else {
+          this.isDisable = true;
         }
-    }
+      } else {
+        this.isDisable = true;
+      }
+    },
+  },
+};
 </script>
 <style>
-    .uploading-image {
-        display: flex;
-    }
+.uploading-image {
+  display: flex;
+}
 </style>

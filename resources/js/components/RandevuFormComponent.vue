@@ -573,15 +573,15 @@
 </template>
 
 <script>
-
 import $ from "jquery";
-
 require("jquery-imagemapster");
+import datepicker from "vue2-datepicker";
 
 export default {
-  name: "FixedTimeList",
-
+  
+  
   data() {
+    
     return {
       secim: null,
       secim1: null,
@@ -602,7 +602,6 @@ export default {
    
     };
   },
-
   created() {},
   mounted() {
     $("img").mapster({
@@ -615,7 +614,6 @@ export default {
     });
     var trh=(new Date().toLocaleDateString().split('.'));
 this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
-
    
   },
   methods: {
@@ -667,7 +665,6 @@ this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
       this.showModalId = id;
       this.showModal = true;
     },
-
     selectDate: function (date) {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')

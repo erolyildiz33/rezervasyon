@@ -59,14 +59,38 @@ export default {
           field: "body",
         },
         {
+          title: "Masa No",
+          field: "title",
+        },
+        {
           title: "Notu",
           field: "text",
         },
         {
+          title: "Bildirim Türü",
+          formatter:function(value,row){ if (row.notification_type==1) return "Email"; else return "SMS"},
+        },
+         {
+          title: "Müşteri Türü",
+          formatter:function(value,row){ if (row.misafir_id==0) return "Yerel"; else return "Otel"},
+        },
+
+       {
           title: "İşlem",
           formatter: (value, row) => {
             if (row.isActive == 0) {
-              return '<a class="btn btn-default" href="http://localhost/api/admin/process/1/'+row.id+'">Onayla</a><a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>';
+              return '<a class="btn btn-default" href="http://localhost/api/admin/process/1/'+row.id+'">Onayla</a><a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>'
+              
+            } else if (row.isActive == 1) {
+              return '<a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>';
+            } else if (row.isActive == 2) {
+              return '<span class="bg-danger">İptal Edilen</span>';
+            }
+            
+             if (row.isActive == 1) {
+              return '<a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>';
+             
+           
             } else if (row.isActive == 1) {
               return '<span class="bg-green">Onaylı</span>';
             } else if (row.isActive == 2) {
@@ -88,6 +112,9 @@ export default {
 
   created() {},
   methods: {
+    detay:function(id){
+
+    },
     appointmentOkey: function (id) {
       axios.post(`http://localhost/api/admin/process`,{
                     type:1,

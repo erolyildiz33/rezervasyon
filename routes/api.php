@@ -28,13 +28,21 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list','indexController@getTableList');
    Route::get('/appointment-table/{date?}','indexController@getAppointmentTable');
-
+   Route::post('/event-store','indexController@getEventStore');
+   Route::post('/event-delete','indexController@getEventDelete');
+   Route::get('/event-list','indexController@getEventList');
+   
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
        Route::get('/process/{isActive}/{id}','indexController@process');
        Route::get('/all','indexController@all');
        Route::get('/detail/{id}','indexController@detail');
        Route::post('/detail','indexController@detailStore');
+      
+      
+
+      
+
 
        Route::get('/list','indexController@getList');
        Route::get('/today-list','indexController@getTodayList');

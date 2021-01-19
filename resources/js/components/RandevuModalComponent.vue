@@ -6,19 +6,21 @@
         <div class="modal-container">
           
   <form-wizard>
-        <tab-content title="About You">
+        <tab-content title="Bilgileriniz">
                      <div class="modal-header">
             <slot name="header">
+              
               <h3 slot="header">
+                <label>Masa No:</label>
                 {{ modalId }}
-
+</h3>
                 <button
                   class="btn btn-danger modal-default-button"
                   @click="$emit('close')"
                 >
                   X
                 </button>
-              </h3>
+              
             </slot>
           </div>
           <div class="modal-body">
@@ -163,13 +165,9 @@
             </slot>
           </div>
         </tab-content>
-        <tab-content title="About your Company"> 
-            <p>Can contains</p>
-            <p>Multiple Elements</p>
-        </tab-content>
-        <tab-content title="Finishing Up">
-            <p>Or an image .. or any thing</p>
-           
+       
+        <tab-content title="Aktivasyon">
+            
         </tab-content>  
     </form-wizard>
         </div>
@@ -184,6 +182,7 @@ import datepicker from "vue2-datepicker";
 
 export default {
   props: ["modalId","secilimi","tarih"],
+  name: "FixedTimeList",
   data() {
     return {
       data:[],
