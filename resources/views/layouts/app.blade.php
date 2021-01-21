@@ -145,6 +145,9 @@
     <script src="js/jquery.richtext.min.js"></script>
     <script src="js/image-uploader.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2" ></script>
+    
+   
     <script src="/dist/bootstrap-table.min.js"></script>
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>

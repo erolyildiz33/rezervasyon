@@ -6,46 +6,79 @@ use App\Models\Appointment;
 use App\Models\AppointmentNote;
 use App\Models\Table;
 use App\Models\Event;
+use App\Models\User;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
+use App\Models\Not;
+use App\Models\Log;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Carbon;
 use function GuzzleHttp\Promise\all;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 class indexController extends Controller
 {
     public function getWorkingHours($date = '')
     {
-       echo  $date;
+        echo  $date;
     }
 
-    public function getAppointmentTable($datee='')
+    public function getAppointmentTable($datee = '')
     {
-       // $all = $request->except('csrf_token');
-      return  Appointment::where('isActive',1)->where('date',$datee)->where('title','!=',null)->get('title');
+        // $all = $request->except('csrf_token');
+        return  Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
     }
     public function appointmentStore(Request $request)
     {
-        $returnArray = [];
+      $returnArray = [];
         $returnArray['status'] = false;
         $all = $request->except('csrf_token');
-        $mydate=date('Y-m-d',strtotime($all['date']));
-       
-       $all['date']=$mydate;
+
+        $mydate = date('Y-m-d', strtotime($all['date']));
+
+        $all['date'] = $mydate;
         $control = Appointment::where('time', $all['date'])->count();
         if ($control != 0) {
             $returnArray['message'] = "Bu Randevu tarihi doludur.";
             return response()->json($returnArray);
         }
         $all['code'] = substr(md5(uniqid()), 0, 6);
-        $all['isActive']=1;
+        $all['isActive'] = 1;
+$all['date']=Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
         $create = Appointment::create($all);
         if ($create) {
             $returnArray['status'] = true;
             $returnArray['message'] = "Randevunuz Başarı ile Alındı.";
         } else {
             $returnArray['message'] = "Veri Eklenemedi bizimle iletişime geçiniz";
+        }
+     
+        return response()->json($returnArray);
+    }
+    public function getNotStore(Request $request)
+    {
+        $all = $request->except('_token');
+        $veri = [
+            'kisi_id' => $all['kisi_id'],
+            'not_icerik' => $all['not_icerik'],
+        ];
+        $id = Not::create($veri);
+        $tumlist = $this->getNotList($all['kisi_id']);
+       
+        return ($tumlist);
+    }
+    public function getNotList($id = null)
+    {
+        $returnArray = array();
+        $data = Not::all()->where("kisi_id", $id);
+        foreach ($data as $k => $v) {
+            array_push($returnArray, array(
+                'id' => $v->id,
+                'kisi_id' => $v->kisi_id,
+                'not_icerik' => $v->not_icerik,
+
+            ));
         }
         return response()->json($returnArray);
     }
@@ -74,7 +107,9 @@ class indexController extends Controller
         if (file_exists($file)) {
             unlink($file);
         }
-        Table::where('id', $all['id'])->delete();
+      
+        $query=Table::where('id', $all['id'])->delete();
+       
     }
     public function getEventDelete(Request $request)
     {
@@ -84,11 +119,13 @@ class indexController extends Controller
         if (file_exists($file)) {
             unlink($file);
         }
-        Event::where('id', $all['id'])->delete();
+        $query=Event::where('id', $all['id'])->delete();
+       
     }
 
     public function getTableStore(Request $request)
     {
+     
         $all = $request->except('_token');
 
         $datetime = date("Y-m-d h:i:s");
@@ -98,38 +135,37 @@ class indexController extends Controller
         $pathfile = public_path('uploads') . DIRECTORY_SEPARATOR . $filename;
         file_put_contents($pathfile, base64_decode($uri));
         $image = $filename;
-        $veri=[
+        $veri = [
             'ad' => $all['ad'],
             'soyad' => $all['soyad'],
             'email' => $all['email'],
             'tel' => $all['tel'],
-           
+
             'notu' => $all['notu'],
             'iptal' => $all['iptal'],
-            'image'=>$image,
-            'karaliste'=>($all['karaliste']?1:0),
-            'misafir_id'=>($all['misafir_id']?1:0),
-            'karaliste_gerekce'=>$all['karaliste_gerekce'],
+            'image' => $image,
+            'karaliste' => ($all['karaliste'] ? 1 : 0),
+            'misafir_id' => ($all['misafir_id'] ? 1 : 0),
+            'karaliste_gerekce' => $all['karaliste_gerekce'],
 
-           
+
 
 
 
 
         ];
 
-if(isset($all['dogumtar']))
-{ 
-    $veri['dogumtar'] = Carbon::createFromFormat('d.m.Y',$all['dogumtar'])->format('Y-m-d');
-}
-if(isset($all['evliliktar']))
-    { 
-        $veri['evliliktar'] = Carbon::createFromFormat('d.m.Y',$all['evliliktar'])->format('Y-m-d');
-    }
+        if (isset($all['dogumtar'])) {
+            $veri['dogumtar'] = Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
+        }
+        if (isset($all['evliliktar'])) {
+            $veri['evliliktar'] = Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d');
+        }
 
 
         $id = Table::create($veri);
-        echo  json_encode($veri);
+      $getir=Table::orderBy('created_at',"desc")->get();
+        echo  json_encode($getir);
     }
     public function getEventStore(Request $request)
     {
@@ -142,105 +178,140 @@ if(isset($all['evliliktar']))
         $pathfile = public_path('uploads/event/') . DIRECTORY_SEPARATOR . $filename;
         file_put_contents($pathfile, base64_decode($uri));
         $image = $filename;
-        $veri=[
+        $veri = [
             'ad' => $all['ad'],
-            'tarih' => Carbon::createFromFormat('d.m.Y',$all['tarih'])->format('Y-m-d'),
+            'tarih' => Carbon::createFromFormat('d.m.Y', $all['tarih'])->format('Y-m-d'),
             'saat' =>  $all['saat'],
-            'image'=>$image,
+            'image' => $image,
         ];
         $veri['id'] = Event::create($veri)->id;
+       
         echo  json_encode($veri);
     }
 
-    public function getWorkingList($id=null)
+    public function getWorkingList($id = null)
     {
 
         $returnArray = [];
-        if($id!=null)
-        {$data = WorkingHours::where('day', $id)->get();}
-        else{
-            $data=WorkingHours::all();
+        if ($id != null) {
+            $data = WorkingHours::where('day', $id)->get();
+        } else {
+            $data = WorkingHours::all();
         }
         foreach ($data as $k => $v) {
-            if($v['day']=="Pazartesi")
-            {
-                $gun='monday';
+            if ($v['day'] == "Pazartesi") {
+                $gun = 'monday';
+            } elseif ($v['day'] == "Salı") {
+                $gun = 'tuesday';
+            } elseif ($v['day'] == "Çarşamba") {
+                $gun = 'wednesday';
+            } elseif ($v['day'] == "Perşembe") {
+                $gun = 'thursday';
+            } elseif ($v['day'] == "Cuma") {
+                $gun = 'friday';
+            } elseif ($v['day'] == "Cumartesi") {
+                $gun = 'saturday';
+            } elseif ($v['day'] == "Pazar") {
+                $gun = 'sunday';
             }
-            elseif($v['day']=="Salı")
-            {
-                $gun='tuesday';
-            }
-            elseif($v['day']=="Çarşamba")
-            {
-                $gun='wednesday';
-            }
-            elseif($v['day']=="Perşembe")
-            {
-                $gun='thursday';
-            }
-            elseif($v['day']=="Cuma")
-            {
-                $gun='friday';
-            }
-            elseif($v['day']=="Cumartesi")
-            {
-                $gun='saturday';
-            }
-            elseif($v['day']=="Pazar")
-            {
-                $gun='sunday';
-            }
-            Table::where('id',$v['table_id'])->get('tablename');
-            $tb=(Table::where('id',$v['table_id'])->get('tablename')[0]->tablename);
+            Table::where('id', $v['table_id'])->get('tablename');
+            $tb = (Table::where('id', $v['table_id'])->get('tablename')[0]->tablename);
             $table[$tb][] = $v['hours'];
 
             $returnArray[$gun] = $table;
-
         }
         $responsecode = 200;
 
-        $header = array (
-                'Content-Type' => 'application/json; charset=UTF-8',
-                'charset' => 'utf-8'
-            );
-        return response()->json($returnArray, $responsecode, $header,JSON_UNESCAPED_UNICODE);
+        $header = array(
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+        return response()->json($returnArray, $responsecode, $header, JSON_UNESCAPED_UNICODE);
     }
-
-    public function getTableList()
+    public function getTableUpdate(Request $request)
+    {
+        $arr = [];
+        $all = $request->except('_token');
+        $arr = [
+             
+            'ad' => $all['ad'],
+            'soyad' => $all['soyad'],
+            'email' => $all['email'],
+            'tel' => $all['tel'],
+            'notu' => $all['notu'],
+            'iptal' => $all['iptal'],
+            'dogumtar' =>Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d'),
+            'evliliktar' =>Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d'),
+            'image' => $all['image'],
+            'karaliste' => $all['karaliste'],
+            'cinsiyet' => $all['cinsiyet'],
+            'misafir_id' => $all['misafir_id'],
+        ];
+        $query=Table::find($all['id'])->update($arr);
+       
+        return response()->json(Table::all());
+    }
+    public function getAppointmentUpdate(Request $request)
+    {
+        $srr = [];
+        $tum = $request->except('_token');
+        $srr = [
+            
+            'fullName' => $tum['fullName'],
+            'phone' => $tum['phone'],
+            'email' => $tum['email'],
+            'title'=>$tum['title'],
+            'text' => $tum['text'],
+            'body' => $tum['body'],
+            'time' =>$tum['time'],
+           'notification_type'=>$tum['notification_type'],
+            'bildirim' => $tum['bildirim_notu'],
+           
+        ];
+        $query=Appointment::find($tum['id'])->update($srr);
+       
+        return response()->json(Appointment::all());
+    }
+    public function getTableList($id = null)
     {
         $returnArray = array();
-        $data = Table::all();
+        if ($id) {
+            $data = Table::all()->where('id', $id);
+        } else {
+            $data = Table::all();
+        }
+
         foreach ($data as $k => $v) {
             array_push($returnArray, array(
-                'id'=>$v->id,
+                'id' => $v->id,
                 'ad' => $v->ad,
                 'soyad' => $v->soyad,
                 'email' => $v->email,
                 'tel' => $v->tel,
-                'dogumtar' =>$v->dogumtar,
-                'evliliktar' =>$v->evliliktar,
+                'dogumtar' => $v->dogumtar,
+                'evliliktar' => $v->evliliktar,
                 'notu' => $v->notu,
-                'iptal' =>$v->iptal,
-                'image'=>$v->image,
-                'karaliste'=>$v->karaliste,
-                'cinsiyet'=>$v->cinsiyet,
-                'misafir_id'=>$v->misafir_id,
-                'karaliste_gerekce'=>$v->karaliste_gerekce,
+                'iptal' => $v->iptal,
+                'image' => $v->image,
+                'karaliste' => $v->karaliste,
+                'cinsiyet' => $v->cinsiyet,
+                'misafir_id' => $v->misafir_id,
+                'karaliste_gerekce' => $v->karaliste_gerekce,
             ));
         }
         return response()->json($returnArray);
     }
-        public function getEventList()
+    public function getEventList()
     {
         $returnArray = array();
         $data = Event::all();
         foreach ($data as $k => $v) {
             array_push($returnArray, array(
-                'id'=>$v->id,
+                'id' => $v->id,
                 'ad' => $v->ad,
                 'tarih' => $v->tarih,
                 'saat' => $v->saat,
-                'image'=>$v->image,
+                'image' => $v->image,
             ));
         }
 

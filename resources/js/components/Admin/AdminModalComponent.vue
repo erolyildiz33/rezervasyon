@@ -1,3 +1,4 @@
+
 <template>
   <transition name="modal">
     <div class="modal-mask">
@@ -5,7 +6,7 @@
        
         <div class="modal-container">
           
-  <form-wizard @onNextStep="İleri" @onPreviousStep="Geri" @onComplete="store">
+  <form-wizard @onComplete="store">
         <tab-content title="Bilgileriniz">
                      <div class="modal-header">
             <slot name="header">
@@ -180,7 +181,6 @@
 import io from "socket.io-client";
 var socket = io("http://localhost:3000");
 import datepicker from "vue2-datepicker";
-
 export default {
   props: ["modalId","secilimi","tarih","kisi"],
   name: "FixedTimeList",
@@ -195,7 +195,7 @@ export default {
       email: this.kisi.email,
       body: null,
       phone: this.kisi.tel,
-      text: this.kisi.notu,
+      text:"",
     
       timevalue: null,
     };
@@ -219,9 +219,8 @@ export default {
         this.getTime(this.timevalue) != null
       ) {
         console.log(this.getTime(this.timevalue));
-
         axios
-          .post(`http://localhost/api/appointment-store`, {
+          .post('http://localhost/api/appointment-store', {
             csrf_token: document
               .querySelector('meta[name="csrf-token"]')
               .getAttribute("content"),
@@ -231,47 +230,39 @@ export default {
             body: this.body,
            
             title:this.modalId,
-            date: this.tarih,
+            date:(this.tarih).toLocalDateString(),
             text: this.text,
             time: this.getTime(this.timevalue),
-
             notification_type: this.notification_type,
           })
           .then((res) => {
             if (res.data.status) {
-              socket.emit("new_appointment_create");
-              console.log(socket.emit("new_appointment_create"));
+              //socket.emit("new_appointment_create");
+             
               this.completeForm = false;
             }
           });
       }
-
       this.errors = [];
-
       if (!this.notification_type) {
         this.errors.push("Bildirim Tipi Seçilmelidir");
       }
-
       if (!this.name) {
         this.errors.push("İsim Soyisim Girilmelidir");
       }
-
       if (!this.email || !this.validEmail(this.email)) {
         this.errors.push("Email Girilmelidir ve Formatı Doğru olmalıdır");
       }
       if (!this.body) {
         this.errors.push("Kişi sayısı girilmelidir");
       }
-
       if (!this.phone) {
         this.errors.push("Telefon numarası Girilmelidir");
       }
-
       if (!this.getTime(this.timevalue)) {
         this.errors.push("Çalışma saati seçilmelidir");
       }
     },
-
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
@@ -281,7 +272,6 @@ export default {
       var curr_min = c.getMinutes();
       return curr_hour + ":" + curr_min;
     },
-
     /*selectDate: function () {
       axios
         .get(`http://localhost/api/working-hours/${this.date}`)
@@ -297,3 +287,4 @@ export default {
   },
 };
 </script>
+

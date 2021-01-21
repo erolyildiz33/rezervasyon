@@ -25,13 +25,14 @@ Route::group(['prefix'=>'cron'],function (){
 
 Route::get('/', 'front\indexController@index')->name("anasayfa");
 Route::get('/detail', 'front\indexController@detail')->name('detail');
-
+Route::get('/working', 'front\indexController@deneme')->name('working');
 
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'=>['auth']],function (){

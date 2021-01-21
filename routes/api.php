@@ -26,16 +26,22 @@ Route::group(['namespace'=>'api'],function (){
    Route::get('/working-list/{id?}','indexController@getWorkingList');
    Route::post('/table-store','indexController@getTableStore');
    Route::post('/table-delete','indexController@getTableDelete');
-   Route::get('/table-list','indexController@getTableList');
+   Route::get('/table-list/{id?}','indexController@getTableList');
    Route::get('/appointment-table/{date?}','indexController@getAppointmentTable');
    Route::post('/event-store','indexController@getEventStore');
    Route::post('/event-delete','indexController@getEventDelete');
    Route::get('/event-list','indexController@getEventList');
+   Route::get('/not-list/{id?}','indexController@getNotList');
+   Route::post('/not-store','indexController@getNotStore');
+   Route::post('/table-update','indexController@getTableUpdate');
+   Route::post('/appointment-update','indexController@getAppointmentUpdate');
+
+   
    
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
        Route::get('/process/{isActive}/{id}','indexController@process');
-       Route::get('/all','indexController@all');
+       Route::get('/all/{id?}','indexController@all');
        Route::get('/detail/{id}','indexController@detail');
        Route::post('/detail','indexController@detailStore');
       

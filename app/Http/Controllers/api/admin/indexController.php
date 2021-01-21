@@ -6,6 +6,8 @@ use App\Models\Appointment;
 use App\Models\AppointmentNote;
 use App\Models\WorkingHours;
 use App\Models\Table;
+use App\Models\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,7 +34,11 @@ class indexController extends Controller
         {
             $returnArray['status'] = false;
         }
-
+        Log::insert(['user_id'=>session()->get('user_id'),
+        "tablename"=>"AppointmentNote",
+        "description"=>$create,
+        "type"=>"create"
+        ]);
         return response()->json($returnArray);
     }
 
@@ -55,40 +61,48 @@ class indexController extends Controller
     }
    
 
-    public function all()
+    public function all($id=null)
     {
-        $returnArray = [];
-        /* Waiting */
-        $returnArray['waiting'] = Appointment::where('isActive',0)->orderBy('date','asc')->paginate(100,['*'],'waiting_page');
-        $returnArray['waiting']->getCollection()->transform(function ($value){
-           
-            return $value;
-        });
-        /* Cancel */
-        $returnArray['cancel'] = Appointment::where('isActive',2)->orderBy('date','asc')->paginate(100,['*'],'cancel_page');
-        $returnArray['cancel']->getCollection()->transform(function ($value){
-           
-            return $value;
-        });
-        /* List */
-        $returnArray['list'] = Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('time','asc')->paginate(100,['*'],'list_page');
-        $returnArray['list']->getCollection()->transform(function ($value){
-           
-            return $value;
-        });
-        /* Last List */
-        $returnArray['last_list'] = Appointment::where('date','<',date("Y-m-d"))->orderBy('time','asc')->paginate(100,['*'],'last_page');
-        $returnArray['last_list']->getCollection()->transform(function ($value){
-           
-            return $value;
-        });
-        /* Today List */
-        $returnArray['today_list'] = Appointment::where('isActive',1)->where('date',date("Y-m-d"))->orderBy('time','asc')->paginate(100,['*'],'today_page');
-        $returnArray['today_list']->getCollection()->transform(function ($value){
-            
-            return $value;
-        });
-        return response()->json($returnArray);
+        if ($id==null){
+
+            $returnArray = [];
+            /* Waiting */
+            $returnArray['waiting'] =DB::table("appointments")->select("tables.notu","appointments.*")->where('isActive',0)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date','asc')->paginate(100,['*'],'waiting_page');
+            $returnArray['waiting']->getCollection()->transform(function ($value){
+               
+                return $value;
+            });
+            /* Cancel */
+            $returnArray['cancel'] = DB::table("appointments")->select("tables.notu","appointments.*")->where('isActive',2)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date','asc')->paginate(100,['*'],'cancel_page');
+            $returnArray['cancel']->getCollection()->transform(function ($value){
+               
+                return $value;
+            });
+            /* List */
+            $returnArray['list'] =DB::table("appointments")->select("tables.notu","appointments.*")->where('isActive',1)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->where('date','>',date("Y-m-d"))->orderBy('time','asc')->paginate(100,['*'],'list_page');
+            $returnArray['list']->getCollection()->transform(function ($value){
+               
+                return $value;
+            });
+            /* Last List */
+            $returnArray['last_list'] = DB::table("appointments")->select("*")->where('date','<',date("Y-m-d"))->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('time','asc')->paginate(100,['*'],'last_page');
+            $returnArray['last_list']->getCollection()->transform(function ($value){
+               
+                return $value;
+            });
+            /* Today List */
+            $returnArray['today_list'] =DB::table("appointments")->select("tables.notu","appointments.*")->where('isActive',1)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->where('date',date("Y-m-d"))->orderBy('time','asc')->paginate(100,['*'],'today_page');
+            $returnArray['today_list']->getCollection()->transform(function ($value){
+                
+                return $value;
+            });
+            return response()->json($returnArray);    
+        }
+        else{
+        return  response()->json(Appointment::find($id));
+
+        }
+        
     }
 
 

@@ -31,7 +31,8 @@ class LoginController extends Controller
         if (auth()->user()->isAdmin != 0) {
             return 'http://localhost';
         }
-        session(['user_id' => auth()->user()->name]);
+        session(['user_name' => auth()->user()->name]);
+        session(['user_id' => auth()->user()->id]);
         return '/admin';
     }
 

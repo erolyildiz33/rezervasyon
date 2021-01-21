@@ -11,11 +11,13 @@
       </div>
     </div>
 
-    <admin-appointment-modal
+    <admin-rezervation-update-modal
       :modalId="showModalId"
       v-if="showModal"
-      @close="showModal = false"
-    ></admin-appointment-modal>
+      :kisi="modalveri"
+      :secilimi="true"
+      @close="showModal=false"
+    ></admin-rezervation-update-modal>
   </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
     return {
       showModalId: 0,
       showModal: false,
+      modalveri:[],
       columns: [
         {
           title: "Sıra No",
@@ -63,8 +66,12 @@ export default {
           field: "title",
         },
         {
-          title: "Notu",
+          title: "Rezervasyon Notu",
           field: "text",
+        },
+         {
+          title: "Kişi Notu",
+          field: "notu",
         },
         {
           title: "Bildirim Türü",
@@ -82,7 +89,11 @@ export default {
               return '<a class="btn btn-default" href="http://localhost/api/admin/process/1/'+row.id+'">Onayla</a><a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>'
               
             } else if (row.isActive == 1) {
-              return '<a class="btn btn-default" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a>';
+              return '<a class="btn btn-danger" href="http://localhost/api/admin/process/2/'+row.id+'">İptal Et</a><a class="btn btn-info" href="http://localhost/admin/profile/' +
+                row.kisi_id +
+                '">Profil</a><button data-userid="' +
+                row.id +
+                '" class="btn btn-success rezervguncelle">Rezervasyon Güncelle</button>';
             } else if (row.isActive == 2) {
               return '<span class="bg-danger">İptal Edilen</span>';
             }
@@ -102,6 +113,7 @@ export default {
       options: {
         search: true,
         showColumns: true,
+         showExport:true
         
       },
     };
@@ -111,7 +123,23 @@ export default {
   },
 
   created() {},
+  mounted() {
+    var ref = this;
+    $(document).on("click", ".rezervguncelle", function () {
+      var id = $(this).data("userid");
+
+      ref.getir(id);
+    });
+  },
   methods: {
+    getir: function (id) {
+      axios.get(`http://localhost/api/admin/all/` + id).then((res) => {
+       
+        this.modalveri = res.data;
+      
+        this.showModal = true;
+      });
+    },
     detay:function(id){
 
     },

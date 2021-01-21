@@ -40,7 +40,6 @@
           :height="30"
           style="font-size: 16px"
           v-model="secim1"
-         
           :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
           :color="{
             checked: '#00FF00',
@@ -104,14 +103,14 @@
           :min="minDate"
           v-model="date"
           data="data1"
-          format="DD-MM-YYYY dddd"
+          format="DD-MM-YYYY"
           type="date"
         ></date-picker>
         <span>Evlilik Tarihi</span>
         <date-picker
           :min="minDate1"
           v-model="date1"
-          format="DD-MM-YYYY dddd"
+          format="DD-MM-YYYY"
           type="date"
         ></date-picker>
 
@@ -144,6 +143,11 @@
             :data="data1"
             :options="options"
           ></bootstrap-table>
+          <admin-update-modal
+            :kisi="kisi[0]"
+            v-if="showModal"
+            @close="showModal = false"
+          ></admin-update-modal>
         </div>
       </div>
     </div>
@@ -155,6 +159,9 @@ export default {
   props: ["data"],
   data() {
     return {
+      showModalId: 0,
+      showModal: false,
+      kisi: [],
       ad: "",
       soyad: "",
       email: "",
@@ -169,7 +176,7 @@ export default {
       inputTable: "",
       masalar: [],
       minDate: "",
-     
+
       date: "",
       minDate1: "",
       date1: "",
@@ -216,8 +223,8 @@ export default {
           field: "evliliktar",
         },
         {
-          title: "Notu",
-          field: "text",
+          title: "Müşteri Notu",
+          field: "notu",
         },
         {
           title: "İptal",
@@ -246,11 +253,13 @@ export default {
           formatter: (value, row) => {
             if (row.id != 0) {
               return (
-                '<a class="btn btn-default" href="http://localhost/admin/rezerv/' +
+                '<a class="btn btn-success" href="http://localhost/admin/rezerv/' +
                 row.id +
-                '">Rezervasyon Yap</a><a class="btn btn-default" href="http://localhost/admin/profile/' +
+                '">Rezervasyon Yap</a><a class="btn btn-info" href="http://localhost/admin/profile/' +
                 row.id +
-                '">Profil</a>'
+                '">Profil</a><button data-userid="' +
+                row.id +
+                '" class="btn btn-warning kisiguncelle">Kisi Güncelle</button>'
               );
             } else if (row.isActive == 1) {
               return '<span class="bg-green">Onaylı</span>';
@@ -263,6 +272,10 @@ export default {
       options: {
         search: true,
         showColumns: true,
+        showExport: true,
+        pagination:true,
+        sidePagination:"client",
+        pageList:"[10, 25, 50, 100, 200, All]",
       },
     };
   },
@@ -276,8 +289,22 @@ export default {
   },
   props: ["title"],
   watch: {},
+  mounted() {
+    var ref = this;
+    $(document).on("click", ".kisiguncelle", function () {
+      var id = $(this).data("userid");
+
+      ref.getir(id);
+    });
+  },
   methods: {
-   
+    
+    getir: function (id) {
+      axios.get(`http://localhost/api/table-list/` + id).then((res) => {
+        this.kisi = res.data;
+        this.showModal = true;
+      });
+    },
     gelen(id) {
       this.removeTable(id["id"], id["index"]);
     },
@@ -304,17 +331,18 @@ export default {
           notu: this.notu,
           image: this.previewImage,
           iptal: this.iptal,
-          dogumtar: this.date != ""? this.date.toLocaleDateString():""
-             ,
-          
-          evliliktar:  this.date1 != ""? this.date1.toLocaleDateString():"",
+          dogumtar:
+            this.date != "" ? new Date(this.date).toLocaleDateString() : "",
+          evliliktar:
+            this.date1 != "" ? new Date(this.date1).toLocaleDateString() : "",
           misafir_id: this.secim,
           karaliste: this.secim1,
           cinsiyet: this.secim2,
           karaliste_gerekce: this.gerekce,
+          
         })
         .then((res) => {
-          this.data1.push(res.data);
+          this.data1=res.data;
           this.inputTable = "";
         });
     },

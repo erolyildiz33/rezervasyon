@@ -17,6 +17,9 @@ class indexController extends Controller
     {
         return view('front.detail');
     } 
-  
+    public function deneme()
+    {
+        return view('front.working');
+    } 
     
 }
