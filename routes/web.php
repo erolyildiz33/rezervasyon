@@ -40,6 +40,8 @@ Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'
     Route::get('/working','indexController@working')->name('working');
     Route::get('/table','indexController@table')->name('table');
     Route::get('/rezerv/{id}','indexController@rezerv')->name('rezerv');
+    Route::get('/updaterezerv/{id}','indexController@updaterezerv')->name('updaterezerv');
+
     Route::get('/event','indexController@event')->name('event');
     Route::get('/profile/{id}','indexController@profile')->name('profile');
 

@@ -10,7 +10,7 @@
           :tarih="date"
           :kisi="userid[0]"
            
-          @close="showModal = true"
+          @close="showModal = false"
         ></admin-modal>
          <div class="col-md-12">
                         <date-picker
@@ -27,7 +27,7 @@
         <img src="/img/yeni.jpeg" usemap="#image-map">
 
 <map name="image-map">
-    <area data-key="" @click="modalShow" alt="52" title="52" href="" coords="24,522,4,487" shape="rect">
+    <area data-key="" @click="modalShow"  alt="52" title="52" href="" coords="24,522,4,487" shape="rect">
     <area data-key="" @click="modalShow" alt="60" title="60" href="" coords="65,522,43,487" shape="rect">
     <area data-key="" @click="modalShow" alt="59" title="59" href="" coords="85,485,107,524" shape="rect">
     <area data-key="" @click="modalShow" alt="53" title="53" href="" coords="0,404,36,435" shape="rect">
@@ -87,6 +87,7 @@
 </map>
       
       </div>
+      
     </div>
   </div>
 </template>
@@ -95,7 +96,6 @@
 import $ from "jquery";
 require("jquery-imagemapster");
 import datepicker from "vue2-datepicker";
-
 export default {
   props:["userid"],
   
@@ -121,7 +121,9 @@ export default {
    
     };
   },
-  created() {},
+  created() {
+    this.getirtarih(this.selectDate());
+  },
   mounted() {
     $("img").mapster({
       mapKey: "title",
@@ -130,12 +132,20 @@ export default {
       fillOpacity: 1,
       stroke: false,
       isSelectable: false,
+       clickNavigate: true,
+      showToolTip: true,  
+      onMouseover: function (e) {
+             $(this).mapster('set', false).mapster('set', true);                
+         },
+          onMouseout: function (e) {
+             $(this).mapster('set', false);
+         },
     });
-    var trh=(new Date().toLocaleDateString().split('.'));
-this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
+    
    
   },
   methods: {
+    
     
     getirtarih: function (tarih){
       $("area").mapster('deselect')
@@ -184,11 +194,11 @@ this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
       this.showModalId = id;
       this.showModal = true;
     },
-    selectDate: function (date) {
+    selectDate: function () {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
       var gonder=gidentarih[2]+"-"+gidentarih[1]+"-"+gidentarih[0];
-       console.log(this.date.toLocaleDateString())
+      
    
         
 this.getirtarih(gonder);

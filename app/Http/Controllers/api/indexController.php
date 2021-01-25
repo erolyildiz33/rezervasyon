@@ -35,7 +35,7 @@ class indexController extends Controller
         $returnArray['status'] = false;
         $all = $request->except('csrf_token');
 
-        $mydate = date('Y-m-d', strtotime($all['date']));
+        $mydate = Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
 
         $all['date'] = $mydate;
         $control = Appointment::where('time', $all['date'])->count();
@@ -45,7 +45,7 @@ class indexController extends Controller
         }
         $all['code'] = substr(md5(uniqid()), 0, 6);
         $all['isActive'] = 1;
-$all['date']=Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
+
         $create = Appointment::create($all);
         if ($create) {
             $returnArray['status'] = true;
@@ -260,14 +260,25 @@ $all['date']=Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
             'fullName' => $tum['fullName'],
             'phone' => $tum['phone'],
             'email' => $tum['email'],
-            'title'=>$tum['title'],
+            
             'text' => $tum['text'],
             'body' => $tum['body'],
-            'time' =>$tum['time'],
+         
+           
            'notification_type'=>$tum['notification_type'],
-            'bildirim' => $tum['bildirim_notu'],
+            'bildirim_notu' => $tum['bildirim_notu'],
            
         ];
+        if($tum['time']!=null){
+             $srr['time'] =Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
+        }
+        if($tum['date']!=null){
+            $srr['date'] =Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d');
+       }
+        if($tum['title']!=null){
+            $srr['title'] =$tum['title'];
+       }
+       
         $query=Appointment::find($tum['id'])->update($srr);
        
         return response()->json(Appointment::all());

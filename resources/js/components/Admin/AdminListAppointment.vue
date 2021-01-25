@@ -2,6 +2,7 @@
 <template>
   <div>
     <div class="row">
+      
       <div id="table">
         <bootstrap-table
           :columns="columns"
@@ -12,10 +13,13 @@
     </div>
 
     <admin-rezervation-update-modal
-      :modalId="showModalId"
+     
       v-if="showModal"
+       :modalId="showModalId"
       :kisi="modalveri"
       :secilimi="true"
+      :secimsaat="secilisaat"
+      :secimtarih="secilitarih"
       @close="showModal=false"
     ></admin-rezervation-update-modal>
   </div>
@@ -30,6 +34,7 @@ export default {
       showModalId: 0,
       showModal: false,
       modalveri:[],
+      secimtarih:null,
       columns: [
         {
           title: "Sıra No",
@@ -113,7 +118,7 @@ export default {
       options: {
         search: true,
         showColumns: true,
-         showExport:true
+         showExport:true,
         
       },
     };
@@ -122,7 +127,22 @@ export default {
     BootstrapTable,
   },
 
-  created() {},
+  created() {
+  
+
+ if (this.$session.has("secimmasa")) {
+     
+        this.showModalId=this.$session.get("secimmasa");
+        this.modalveri=this.$session.get("kisi");
+        this.secilitarih=this.$session.get("secimtarih");
+        this.secilisaat=this.$session.get("secimsaat");
+        this.showModal=true;
+        this.$session.clear();
+       
+    }
+
+
+  },
   mounted() {
     var ref = this;
     $(document).on("click", ".rezervguncelle", function () {

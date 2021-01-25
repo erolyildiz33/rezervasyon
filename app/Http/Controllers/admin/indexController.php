@@ -27,6 +27,12 @@ class indexController extends Controller
       
         return view('admin.form')->with('kullanici',$kullanici);
     }
+    public function updaterezerv($id=null)
+    {
+        $kullanici=Appointment::where('id',$id)->get();
+      
+        return view('admin.updaterezerv')->with('kullanici',$kullanici);
+    }
     public function event()
     {
         return view('admin.event');

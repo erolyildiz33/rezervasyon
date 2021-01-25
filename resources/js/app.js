@@ -4,12 +4,14 @@ import Button from 'vue-js-toggle-button';
 
 import VueStepWizard from 'vue-step-wizard';
 import 'vue-step-wizard/dist/vue-step-wizard.css';
-
+import VueSession from 'vue-session';
 
 window.Vue = require('vue');
 Vue.use(VueStepWizard);
 Vue.use(Button);
 Vue.use(VueMask);
+
+Vue.use(VueSession);
 window.$=window.Jquery=require('jquery');
 
 Vue.use(require('vue-resource'));
@@ -63,6 +65,8 @@ Vue.component('admin-form',require('./components/Admin/AdminFormComponent').defa
 Vue.component('admin-modal',require('./components/Admin/AdminModalComponent').default);
 Vue.component('admin-update-modal',require('./components/Admin/AdminUpdateModalComponent').default);
 Vue.component('admin-rezervation-update-modal',require('./components/Admin/AdminRezervationUpdateModelComponent').default);
+Vue.component('admin-rezervation',require('./components/Admin/AdminRezervationComponent').default);
+
 
 
 Vue.component('appointment-form',require('./components/RandevuFormComponent').default);

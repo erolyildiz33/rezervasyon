@@ -10,11 +10,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet"/>
     <!-- Latest compiled and minified CSS -->
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,21 +23,21 @@
 
     <!-- Styles -->
     
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
    
 
 
 
     <link href="{{asset('dist/bootstrap-table.min.css')}}" rel="stylesheet">
     
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/elegant-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/nice-select.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/slicknav.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/elegant-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery-ui.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/nice-select.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/slicknav.min.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -118,6 +119,7 @@
                         <div class="ht-widget">
                         <ul class="nav navbar-nav">
                         @auth
+                        
                             <li>
                                 <a href="{{ route('admin.index') }}">Yönetim Paneli</a>
                             </li>
@@ -140,7 +142,7 @@
                             </li>
                            
                            <span>Kullanıcı :</span>
-                                <label>{{session()->get('user_id')}}</label>
+                                <label>{{session()->get('user_name')}}</label>
                            
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -222,8 +224,10 @@
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
-
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
    
+
     
 
 
