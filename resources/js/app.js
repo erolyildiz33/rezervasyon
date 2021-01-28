@@ -6,10 +6,12 @@ import VueStepWizard from 'vue-step-wizard';
 import 'vue-step-wizard/dist/vue-step-wizard.css';
 import VueSession from 'vue-session';
 
+
 window.Vue = require('vue');
 Vue.use(VueStepWizard);
 Vue.use(Button);
 Vue.use(VueMask);
+
 
 Vue.use(VueSession);
 window.$=window.Jquery=require('jquery');
@@ -41,6 +43,7 @@ Vue.component('admin-event',require('./components/Admin/AdminEventComponent').de
 Vue.component('admin-event-preview',require('./components/Admin/AdminEventPreview').default);
 Vue.component('admin-profile',require('./components/Admin/AdminProfileComponent').default);
 Vue.component('deneme-table',require('./components/DenemeTable.vue').default);
+Vue.component('admin-durum',require('./components/Admin/AdminDurumComponent.vue').default);
 
 
 

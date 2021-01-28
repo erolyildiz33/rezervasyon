@@ -209,6 +209,9 @@ export default {
     uptadeModal: function () {
       axios
         .post(`http://localhost/api/table-update`, {
+           _token: document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
          id:this.kisi.id,
           ad: this.ad,
           soyad: this.soyad,
@@ -227,7 +230,8 @@ export default {
           karaliste_gerekce: this.gerekce,
         })
         .then((res) => {
-         this.kisiguncelleme();
+           this.$emit("kisiguncelle") ;
+        
         
         });
     },

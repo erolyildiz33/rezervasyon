@@ -145,6 +145,8 @@
           ></bootstrap-table>
           <admin-update-modal
             :kisi="kisi[0]"
+            @kisiguncelle="tumkayit"
+           
             v-if="showModal"
             @close="showModal = false"
           ></admin-update-modal>
@@ -155,6 +157,7 @@
 </template>
 
 <script>
+
 export default {
   props: ["data"],
   data() {
@@ -283,9 +286,7 @@ export default {
     BootstrapTable,
   },
   created() {
-    axios.get(`http://localhost/api/table-list`).then((res) => {
-      this.data1 = res.data;
-    });
+   this.tumkayit();
   },
   props: ["title"],
   watch: {},
@@ -298,6 +299,12 @@ export default {
     });
   },
   methods: {
+  tumkayit: function(){
+ axios.get(`http://localhost/api/table-list`).then((res) => {
+      this.data1 = res.data;
+      this.showModal=false;
+    });
+  },
     
     getir: function (id) {
       axios.get(`http://localhost/api/table-list/` + id).then((res) => {

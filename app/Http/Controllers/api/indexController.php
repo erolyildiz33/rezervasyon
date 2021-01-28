@@ -240,13 +240,21 @@ class indexController extends Controller
             'tel' => $all['tel'],
             'notu' => $all['notu'],
             'iptal' => $all['iptal'],
-            'dogumtar' =>Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d'),
-            'evliliktar' =>Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d'),
+            
             'image' => $all['image'],
             'karaliste' => $all['karaliste'],
             'cinsiyet' => $all['cinsiyet'],
             'misafir_id' => $all['misafir_id'],
         ];
+        if ($all['dogumtar']!=""){
+            $arr['dogumtar'] =Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
+
+            
+        }
+        if ($all['evliliktar']!=""){
+$arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d');
+        }
+        
         $query=Table::find($all['id'])->update($arr);
        
         return response()->json(Table::all());
@@ -255,15 +263,26 @@ class indexController extends Controller
     {
         $srr = [];
         $tum = $request->except('_token');
+        $veritabani=Appointment::find($tum['id']);
+        $degisenler=[];
+        if ($veritabani->fullName!=$tum['fullName']&&$tum['fullName']!=null) array_push($degisenler,['fullName' => $tum['fullName']]);
+        if ($veritabani->phone!=$tum['phone']&&$tum['phone']!=null) array_push($degisenler,['phone' => $tum['phone']]);
+        if ($veritabani->email!=$tum['email']&&$tum['email']!=null) array_push($degisenler,['email' => $tum['email']]);
+        if ($veritabani->text!=$tum['text']&&$tum['text']!=null) array_push($degisenler,['text' => $tum['text']]);
+        if ($veritabani->body!=$tum['body']&&$tum['body']!=null) array_push($degisenler,['body' => $tum['body']]);
+        if ($veritabani->date!=Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d')&&$tum['date']!=null) array_push($degisenler,['date' => $tum['date']]);
+        if ($veritabani->time!=$tum['time']&&$tum['time']!=null) array_push($degisenler,['time' => $tum['time']]);
+        if ($veritabani->title!=$tum['title']&&$tum['title']!=null) array_push($degisenler,['title' => $tum['title']]);
+        
         $srr = [
             
             'fullName' => $tum['fullName'],
             'phone' => $tum['phone'],
             'email' => $tum['email'],
-            
+            'isSend'=>0,
             'text' => $tum['text'],
             'body' => $tum['body'],
-         
+        	'degisenler'=>json_encode($degisenler),
            
            'notification_type'=>$tum['notification_type'],
             'bildirim_notu' => $tum['bildirim_notu'],

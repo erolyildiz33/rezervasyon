@@ -53,11 +53,11 @@ class indexController extends Controller
         return response()->json($returnArray);
     }
 
-    public function process($isActive, $id)
+    public function process(Request $request)
     {
         
-        Appointment::where('id',$id)->update(['isActive'=>$isActive]);
-        return back();
+        Appointment::where('id',$request->id)->update(['isActive'=>$request->type,'isSend'=>0]);
+        return $this->all();
     }
    
 
@@ -85,7 +85,7 @@ class indexController extends Controller
                 return $value;
             });
             /* Last List */
-            $returnArray['last_list'] = DB::table("appointments")->select("*")->where('date','<',date("Y-m-d"))->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('time','asc')->paginate(100,['*'],'last_page');
+            $returnArray['last_list'] = DB::table("appointments")->select("tables.notu","appointments.*")->where('date','<',date("Y-m-d"))->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('time','asc')->paginate(100,['*'],'last_page');
             $returnArray['last_list']->getCollection()->transform(function ($value){
                
                 return $value;

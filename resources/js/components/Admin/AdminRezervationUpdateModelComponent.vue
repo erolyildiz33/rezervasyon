@@ -187,13 +187,13 @@ var socket = io("http://localhost:3000");
 import datepicker from "vue2-datepicker";
 
 export default {
-  props: ["modalId", "kisi","secimtarih","secimmasa","secimsaat"],
-  name: "FixedTimeList",
+  props: ["modalId", "kisi","secimtarih","secimmasa","secimsaat","secilimi"],
+  
   data() {
     return {
       data: [],
       completeForm: false,
-      secilimi: false,
+    kayitno:this.kisi.id,
       errors: [],
       notification_type: null,
       title: this.kisi.title,
@@ -203,7 +203,7 @@ export default {
       phone: this.kisi.phone,
       text: this.kisi.text,
       bildirim: this.kisi.bildirim_notu,
-      timevalue: this.secimsaat?this.secimsaat:this.kisi.time,
+      timevalue: this.secimsaat?this.secimsaat:null,
       date: this.secimtarih?this.secimtarih:this.kisi.date,
       
     };
@@ -213,22 +213,21 @@ export default {
     
     socket.emit("hello");
   },
-  mounted() {},
+  mounted() {
+    
+  },
   methods: {
     rezerv: function(){
       window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.id
     },
-    rezervguncelleme: function (res) {
-      this.showModal = false;
-      this.kisi = res.data;
-    },
+    
     uptadeModal: function () {
       axios
         .post("http://localhost/api/appointment-update", {
           _token: document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content"),
-          id: this.kisi.id,
+          id: this.kayitno,
 
           fullName: this.name,
           email: this.email,
@@ -242,7 +241,7 @@ export default {
           bildirim_notu: this.bildirim,
         })
         .then((res) => {
-          this.rezervguncelleme();
+          this.$emit("kisiguncel",res.data) ;
         });
     },
 

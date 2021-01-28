@@ -40,7 +40,7 @@ Route::group(['namespace'=>'api'],function (){
    
 
    Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
-       Route::get('/process/{isActive}/{id}','indexController@process');
+       Route::post('/process/{isActive?}/{id?}','indexController@process');
        Route::get('/all/{id?}','indexController@all');
        Route::get('/detail/{id}','indexController@detail');
        Route::post('/detail','indexController@detailStore');

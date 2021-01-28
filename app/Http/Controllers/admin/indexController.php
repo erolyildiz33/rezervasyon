@@ -37,6 +37,10 @@ class indexController extends Controller
     {
         return view('admin.event');
     }
+    public function durum()
+    {
+        return view('admin.durum');
+    }
     public function profile($id)
     {
         

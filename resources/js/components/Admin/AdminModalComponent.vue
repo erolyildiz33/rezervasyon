@@ -222,11 +222,12 @@ export default {
             notification_type: this.notification_type,
             bildirim_notu:this.bildirim_notu,
           })
-          .then((res) => {
+           .then((res) => {
             if (res.data.status) {
-              //socket.emit("new_appointment_create");
-
+              socket.emit("new_appointment_create");
+             
               this.completeForm = false;
+               window.location.href="http://localhost/admin"
             }
           });
       }

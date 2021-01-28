@@ -127,7 +127,9 @@
                              <li>
                                <a href="{{ route('admin.table') }}">Müşteri Tanımla</a>
                             </li>
-                           
+                            <li>
+                                <a href="{{ route('admin.durum') }}">Masa Durumu</a>
+                            </li>
                             <li>
                                 <a href="{{ route('admin.event') }}">Event Tanımla</a>
                             </li>
@@ -224,10 +226,10 @@
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  
    
-
+    
     
 
 

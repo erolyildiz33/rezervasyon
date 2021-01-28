@@ -73,6 +73,7 @@
           @updateOkey="updateOkey"
           @updateCancel="updateCancel"
           :data="today.data"
+          @ustgonder="gelenveri"
         ></appointment-item>
         <div class="row" style="margin-top: 10px">
           <div class="col-md-12"></div>
@@ -161,6 +162,9 @@ export default {
   },
 
   methods: {
+    gelenveri(){
+      this.getData();
+    },
     updateCancel(id) {
       axios
         .post(`http://localhost/api/admin/process`, {

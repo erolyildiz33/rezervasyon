@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,6 +26,18 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+     public function rezervkontrol()
+    {
+        $all=Appointment::all()->where('isActive',1)->where('date',Carbon::now()->format('Y-m-d'));
+        foreach ($all as $k=>$v){
+           
+            Appointment::find($v['id'])->update(['isActive'=>2]);
+        }
+        
+        
+       
     }
  
 }
