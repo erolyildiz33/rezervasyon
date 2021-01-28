@@ -8,6 +8,7 @@ import VueSession from 'vue-session';
 
 
 window.Vue = require('vue');
+
 Vue.use(VueStepWizard);
 Vue.use(Button);
 Vue.use(VueMask);
@@ -15,7 +16,7 @@ Vue.use(VueMask);
 
 Vue.use(VueSession);
 window.$=window.Jquery=require('jquery');
-
+Vue.use(require('vue-moment'));
 Vue.use(require('vue-resource'));
 Vue.use(require('vue2-datepicker'));
 Vue.use(require('jquery-imagemapster'));

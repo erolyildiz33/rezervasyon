@@ -232,6 +232,8 @@ class indexController extends Controller
     {
         $arr = [];
         $all = $request->except('_token');
+        
+       
         $arr = [
              
             'ad' => $all['ad'],
@@ -245,7 +247,10 @@ class indexController extends Controller
             'karaliste' => $all['karaliste'],
             'cinsiyet' => $all['cinsiyet'],
             'misafir_id' => $all['misafir_id'],
+            
         ];
+      
+      
         if ($all['dogumtar']!=""){
             $arr['dogumtar'] =Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
 
@@ -288,6 +293,18 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
             'bildirim_notu' => $tum['bildirim_notu'],
            
         ];
+        $onbes=Carbon::now()->addMinutes(15)->toTimeString();
+        $simdi=Carbon::now()->toTimeString();
+        if($tum['time']<=$onbes && $tum['time']>=$simdi){
+            $srr["isGone"]=1;
+    
+          }
+          elseif($tum['time']<$simdi){
+           $srr["isGone"]=2;
+          }
+          else{
+            $srr["isGone"]=0;
+          }
         if($tum['time']!=null){
              $srr['time'] =Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
         }
@@ -327,6 +344,7 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
                 'cinsiyet' => $v->cinsiyet,
                 'misafir_id' => $v->misafir_id,
                 'karaliste_gerekce' => $v->karaliste_gerekce,
+                'isGone'=>$v->isGone,
             ));
         }
         return response()->json($returnArray);

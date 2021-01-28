@@ -7,6 +7,7 @@ use App\Models\AppointmentNote;
 use App\Models\WorkingHours;
 use App\Models\Table;
 use App\Models\Log;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

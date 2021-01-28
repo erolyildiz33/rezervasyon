@@ -1,6 +1,25 @@
  
 <template>
   <div>
+    
+<div id="toolbar">
+  <div class="form-inline" role="form">
+    <div class="form-group">
+     
+      <input v-model="date1" class="form-control w70" type="date" >
+       <span>tarihi ile </span>
+    </div>
+    <div class="form-group">
+     
+      <input v-model="date2" class="form-control w70" type="date">
+       <span>tarihi arası </span>
+    </div>
+    <button id="ok" @click="search()" class="btn btn-primary">Listele</button>
+  </div>
+</div>    
+
+
+
     <div class="row">
       <div id="table">
         <bootstrap-table
@@ -36,7 +55,8 @@ export default {
       secimtarih: null,
       secilitarih: null,
       secilisaat: null,
-
+date1:null,
+date2:null,
       columns: [
         {
           title: "Sıra No",
@@ -108,7 +128,7 @@ export default {
               );
             } else if (row.isActive == 1) {
               return (
-                '<a class="btn btn-danger iptal" data-iptalid="' +
+                '<a class="btn btn-primary iptal" data-iptalid="' +
                 row.id +
                 '">İptal Et</a><a class="btn btn-info" href="http://localhost/admin/profile/' +
                 row.kisi_id +
@@ -142,6 +162,26 @@ export default {
         search: true,
         showColumns: true,
         showExport: true,
+        rowStyle: function(row){
+if(row.isGone==2){
+  return {
+    css: {'color': 'white','background-color': 'red'}
+       
+      }
+}
+else if(row.isGone==1){
+ return {
+            css: {'color': 'white','background-color': 'orange'}
+
+      }
+}
+else{
+ return {
+            css: {'color': 'black','background-color': 'white'}
+
+      }
+}
+    },
       },
     };
   },
@@ -227,6 +267,19 @@ export default {
   },
 
   methods: {
+    search(){
+ //BootstrapTable('filterBy',{ date: this.getDates(this.date1,this.date2)}) 
+    },
+   getDates: function(startDate, stopDate){
+ var dateArray = [];
+    var currentDate = this.$moment(startDate);
+    var stopDate = this.$moment(stopDate);
+    while (currentDate <= stopDate) {
+        dateArray.push( this.$moment(currentDate).format('YYYY-MM-DD'))
+        currentDate = this.$moment(currentDate).add(1, 'days');
+    }
+    return dateArray;
+   },
     gelenguncel(data) {
         this.showModal = false;
     this.$emit("ustgonder");

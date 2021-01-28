@@ -25,11 +25,19 @@ class indexController extends Controller
     public function rezervkontrol()
     {
         $all=Appointment::all()->where('isActive',1)->where('date',Carbon::now()->format('Y-m-d'))->where('isGone',0);
-        $date = date("Y-m-d H:i:s");
-        $time = strtotime($date);
-        $time = $time - (15 * 60);
-        $date = date("Y-m-d H:i:s", $time);
-        dd($time);
+        $onbes=Carbon::now()->addMinutes(15)->toTimeString();
+        $simdi=Carbon::now()->toTimeString();
+        foreach ($all as $key=>$value){
+      
+      if($value['time']<=$onbes && $value['time']>=$simdi){
+            Appointment::find($value['id'])->update(["isGone"=>1]);
+
+      }
+      elseif($value['time']<$simdi){
+        Appointment::find($value['id'])->update(["isGone"=>2]);
+      }
+    }
+       // dd($time);
        /* foreach ($all as $k=>$v){
            
             Appointment::find($v['id'])->update(['isActive'=>2]);
