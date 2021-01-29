@@ -239,6 +239,7 @@ export default {
           date:this.date?new Date(this.date).toLocaleDateString():null,
           body: this.body,
           bildirim_notu: this.bildirim,
+           user_id:$("#logidUserid").text(),
         })
         .then((res) => {
           this.$emit("kisiguncel",res.data) ;

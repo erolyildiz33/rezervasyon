@@ -98,6 +98,7 @@ export default {
          axios.post(`http://localhost/api/not-store`,{
               kisi_id:this.user.id,
          not_icerik:this.notss,
+         user_id:$("#logidUserid").text(),
          }).then((res) => {
         this.notlar=res.data;
         console.log(this.notlar);

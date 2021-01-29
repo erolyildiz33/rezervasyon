@@ -221,6 +221,7 @@ export default {
             time: this.getTime(this.timevalue),
             notification_type: this.notification_type,
             bildirim_notu:this.bildirim_notu,
+            user_id:$("#logidUserid").text(),
           })
            .then((res) => {
             if (res.data.status) {

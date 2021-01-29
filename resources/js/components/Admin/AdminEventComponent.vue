@@ -96,6 +96,7 @@
                     tarih:this.date.toLocaleDateString(),
                     saat: this.timevalue.toLocaleTimeString(),
                     image: this.previewImage,
+                     user_id:$("#logidUserid").text(),
                 })
                     .then((res) => {
                         this.masalar.push(res.data)
@@ -126,6 +127,7 @@
                 console.log(item);
                 axios.post(`http://localhost/api/event-delete`, {
                     id: item,
+                     user_id:$("#logidUserid").text(),
                 })  
                     .then((res) => {
                         var tmp = this.masalar

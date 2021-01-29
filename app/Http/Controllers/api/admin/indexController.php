@@ -35,7 +35,7 @@ class indexController extends Controller
         {
             $returnArray['status'] = false;
         }
-        Log::insert(['user_id'=>session()->get('user_id'),
+        Log::create(['user_id'=>session()->get('user_id'),
         "tablename"=>"AppointmentNote",
         "description"=>$create,
         "type"=>"create"
@@ -56,8 +56,14 @@ class indexController extends Controller
 
     public function process(Request $request)
     {
-        
+        $user_name=$request->user_id;
         Appointment::where('id',$request->id)->update(['isActive'=>$request->type,'isSend'=>0]);
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Appointment",
+        "description"=>json_encode(['isActive'=>$request->type,'isSend'=>0]),
+        "related_id"=>$request->id,
+        "type"=>$request->type=1?"iptal":"gerial",
+        ]);
         return $this->all();
     }
    

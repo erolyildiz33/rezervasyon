@@ -144,7 +144,7 @@
                             </li>
                            
                            <span>Kullanıcı :</span>
-                                <label>{{session()->get('user_name')}}</label>
+                                <label id="logidUserid">{{session()->get('user_name')}}</label>
                            
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

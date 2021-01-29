@@ -232,7 +232,7 @@ export default {
             date: this.tarih,
             text: this.text,
             time: this.getTime(this.timevalue),
-
+ user_id:$("#logidUserid").text(),
             notification_type: this.notification_type,
           })
           .then((res) => {

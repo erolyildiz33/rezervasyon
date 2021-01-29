@@ -23,6 +23,7 @@
     <div class="row">
       <div id="table">
         <bootstrap-table
+        ref="list"
           :columns="columns"
           :data="data"
           :options="options"
@@ -226,6 +227,8 @@ else{
                 .getAttribute("content"),
               type: 1,
               id: geriid,
+              user_id:$("#logidUserid").text(),
+              
             })
             .then((res) => {
               //this.data=res.data
@@ -255,6 +258,7 @@ else{
                   .getAttribute("content"),
                 type: 2,
                 id: iptalid,
+                user_id:$("#logidUserid").text(),
               })
               .then((res) => {
                 //this.data=res.data
@@ -268,7 +272,7 @@ else{
 
   methods: {
     search(){
- //BootstrapTable('filterBy',{ date: this.getDates(this.date1,this.date2)}) 
+   this.$refs.list.filterBy({date: this.getDates(this.date1, this.date2)})
     },
    getDates: function(startDate, stopDate){
  var dateArray = [];

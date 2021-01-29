@@ -9,14 +9,15 @@ use App\Models\Event;
 use App\Models\User;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Models\Not;
 use App\Models\Log;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Carbon;
 use function GuzzleHttp\Promise\all;
-use Symfony\Component\HttpFoundation\Session\Session;
+
 class indexController extends Controller
 {
     public function getWorkingHours($date = '')
@@ -31,9 +32,13 @@ class indexController extends Controller
     }
     public function appointmentStore(Request $request)
     {
+      
+    
       $returnArray = [];
         $returnArray['status'] = false;
-        $all = $request->except('csrf_token');
+        $user_name=$request->user_id;
+        $all = $request->except('csrf_token','user_id');
+        
 
         $mydate = Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
 
@@ -53,19 +58,31 @@ class indexController extends Controller
         } else {
             $returnArray['message'] = "Veri Eklenemedi bizimle iletişime geçiniz";
         }
-     
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Appointment",
+        "description"=>$create,
+        "related_id"=>$create->id,
+        "type"=>"create"
+        ]);
         return response()->json($returnArray);
     }
     public function getNotStore(Request $request)
     {
-        $all = $request->except('_token');
+        $user_name=$request->user_id;
+        $all = $request->except('_token','user_id');
+        
         $veri = [
             'kisi_id' => $all['kisi_id'],
             'not_icerik' => $all['not_icerik'],
         ];
         $id = Not::create($veri);
         $tumlist = $this->getNotList($all['kisi_id']);
-       
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Not",
+        "description"=>$id,
+        "related_id"=>$id->id,
+        "type"=>"create"
+        ]);
         return ($tumlist);
     }
     public function getNotList($id = null)
@@ -113,20 +130,28 @@ class indexController extends Controller
     }
     public function getEventDelete(Request $request)
     {
-        $all = $request->except('_token');
+        $user_name=$request->user_id;
+        $all = $request->except('_token','user_id');
         $resim = Event::where('id', $all['id'])->get('image');
+        $sorgu = Event::find($all['id']);
         $file = public_path('uploads/event/') . DIRECTORY_SEPARATOR . $resim[0]['image'];
         if (file_exists($file)) {
             unlink($file);
         }
         $query=Event::where('id', $all['id'])->delete();
-       
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Event",
+        "description"=>json_encode($sorgu),
+        "related_id"=>$all['id'],
+        "type"=>"delete"
+        ]);
     }
 
     public function getTableStore(Request $request)
     {
      
-        $all = $request->except('_token');
+        $user_name=$request->user_id;
+        $all = $request->except('_token','user_id');
 
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
@@ -163,13 +188,21 @@ class indexController extends Controller
         }
 
 
-        $id = Table::create($veri);
+        $id = Table::create($veri)->id;
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Table",
+        "description"=>$id,
+        "related_id"=>$id->id,
+        "type"=>"create"
+        ]);
+        
       $getir=Table::orderBy('created_at',"desc")->get();
         echo  json_encode($getir);
     }
     public function getEventStore(Request $request)
     {
-        $all = $request->except('_token');
+        $user_name=$request->user_id;
+        $all = $request->except('_token','user_id');
 
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
@@ -185,7 +218,12 @@ class indexController extends Controller
             'image' => $image,
         ];
         $veri['id'] = Event::create($veri)->id;
-       
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Event",
+        "description"=> $veri['id'],
+        "related_id"=> $veri['id']->id,
+        "type"=>"create"
+        ]);
         echo  json_encode($veri);
     }
 
@@ -231,7 +269,8 @@ class indexController extends Controller
     public function getTableUpdate(Request $request)
     {
         $arr = [];
-        $all = $request->except('_token');
+        $user_name=$request->user_id;
+        $all = $request->except('_token','user_id');
         
        
         $arr = [
@@ -261,13 +300,20 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
         }
         
         $query=Table::find($all['id'])->update($arr);
+        Log::create(['user_name'=>$user_name,
+        "tablename"=>"Table",
+        "description"=> json_encode($arr),
+        "related_id"=> $all['id'],
+        "type"=>"update"
+        ]);
        
         return response()->json(Table::all());
     }
     public function getAppointmentUpdate(Request $request)
     {
         $srr = [];
-        $tum = $request->except('_token');
+        $user_name=$request->user_id;
+        $tum = $request->except('_token','user_id');
         $veritabani=Appointment::find($tum['id']);
         $degisenler=[];
         if ($veritabani->fullName!=$tum['fullName']&&$tum['fullName']!=null) array_push($degisenler,['fullName' => $tum['fullName']]);
@@ -316,7 +362,12 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
        }
        
         $query=Appointment::find($tum['id'])->update($srr);
-       
+       Log::create(['user_name'=>$user_name,
+        "tablename"=>"Appointment",
+        "description"=>  json_encode($srr),
+        "related_id"=> $tum['id'],
+        "type"=>"update"
+        ]);
         return response()->json(Appointment::all());
     }
     public function getTableList($id = null)

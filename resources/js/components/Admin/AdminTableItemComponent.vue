@@ -346,6 +346,7 @@ export default {
           karaliste: this.secim1,
           cinsiyet: this.secim2,
           karaliste_gerekce: this.gerekce,
+           user_id:$("#logidUserid").text(),
           
         })
         .then((res) => {
