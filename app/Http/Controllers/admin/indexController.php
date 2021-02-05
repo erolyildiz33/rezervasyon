@@ -29,7 +29,7 @@ class indexController extends Controller
     }
     public function updaterezerv($id=null)
     {
-        $kullanici=Appointment::where('id',$id)->get();
+        $kullanici=Appointment::where('app_id',$id)->get();
       
         return view('admin.updaterezerv')->with('kullanici',$kullanici);
     }

@@ -26,6 +26,7 @@
           <div class="modal-body">
             <slot name="body">
               <div>
+              
                 <div v-if="!secilimi">
                   <div v-if="!completeForm">
                     <div class="container">
@@ -193,7 +194,7 @@ export default {
     return {
       data: [],
       completeForm: false,
-    kayitno:this.kisi.id,
+    kayitno:this.kisi.app_id,
       errors: [],
       notification_type: null,
       title: this.kisi.title,
@@ -218,7 +219,7 @@ export default {
   },
   methods: {
     rezerv: function(){
-      window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.id
+      window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.app_id
     },
     
     uptadeModal: function () {
@@ -227,7 +228,7 @@ export default {
           _token: document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content"),
-          id: this.kayitno,
+          app_id: this.kayitno,
 
           fullName: this.name,
           email: this.email,
@@ -242,7 +243,7 @@ export default {
            user_id:$("#logidUserid").text(),
         })
         .then((res) => {
-          this.$emit("kisiguncel",res.data) ;
+          this.$emit("kisiguncel",res.data);
         });
     },
 

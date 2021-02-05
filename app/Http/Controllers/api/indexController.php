@@ -61,7 +61,7 @@ class indexController extends Controller
         Log::create(['user_name'=>$user_name,
         "tablename"=>"Appointment",
         "description"=>$create,
-        "related_id"=>$create->id,
+        "related_id"=>$create->app_id,
         "type"=>"create"
         ]);
         return response()->json($returnArray);
@@ -192,7 +192,7 @@ class indexController extends Controller
         Log::create(['user_name'=>$user_name,
         "tablename"=>"Table",
         "description"=>$id,
-        "related_id"=>$id->id,
+        "related_id"=>$id,
         "type"=>"create"
         ]);
         
@@ -314,7 +314,7 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
         $srr = [];
         $user_name=$request->user_id;
         $tum = $request->except('_token','user_id');
-        $veritabani=Appointment::find($tum['id']);
+        $veritabani=Appointment::where("app_id",$tum['app_id'])->get()[0];
         $degisenler=[];
         if ($veritabani->fullName!=$tum['fullName']&&$tum['fullName']!=null) array_push($degisenler,['fullName' => $tum['fullName']]);
         if ($veritabani->phone!=$tum['phone']&&$tum['phone']!=null) array_push($degisenler,['phone' => $tum['phone']]);
@@ -334,23 +334,33 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
             'text' => $tum['text'],
             'body' => $tum['body'],
         	'degisenler'=>json_encode($degisenler),
-           
+          
            'notification_type'=>$tum['notification_type'],
             'bildirim_notu' => $tum['bildirim_notu'],
            
         ];
         $onbes=Carbon::now()->addMinutes(15)->toTimeString();
         $simdi=Carbon::now()->toTimeString();
-        if($tum['time']<=$onbes && $tum['time']>=$simdi){
-            $srr["isGone"]=1;
-    
-          }
-          elseif($tum['time']<$simdi){
-           $srr["isGone"]=2;
-          }
-          else{
+        $bugun=Carbon::now()->today();
+        if( $tum['date']>$bugun){
+            $srr["isGone"]=2;
+        }
+        elseif( $tum['date']<$bugun){
             $srr["isGone"]=0;
-          }
+        }
+        else{
+            if($tum['time']<=$onbes && $tum['time']>=$simdi) {
+                $srr["isGone"]=1;
+        
+              }
+              elseif($tum['time']>$onbes && $tum['time']>=$simdi){
+               $srr["isGone"]=2;
+              }
+              else{
+                $srr["isGone"]=0;
+              }
+        }
+        
         if($tum['time']!=null){
              $srr['time'] =Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
         }
@@ -361,11 +371,11 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
             $srr['title'] =$tum['title'];
        }
        
-        $query=Appointment::find($tum['id'])->update($srr);
+        $query=Appointment::where("app_id",$tum['app_id'])->update($srr);
        Log::create(['user_name'=>$user_name,
         "tablename"=>"Appointment",
         "description"=>  json_encode($srr),
-        "related_id"=> $tum['id'],
+        "related_id"=> $tum['app_id'],
         "type"=>"update"
         ]);
         return response()->json(Appointment::all());

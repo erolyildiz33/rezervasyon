@@ -23,7 +23,9 @@
     "dependencies": {
         "@popperjs/core": "^2.6.0",
         "bootstrap": "^4.6.0",
+        "bootstrap-switch": "^3.4.0",
         "bootstrap-table": "^1.18.2",
+        "bootstrap4-toggle": "^3.6.1",
         "express": "^4.15.2",
         "jquery": "^1.7.2",
         "jquery-ui": "^1.12.1",

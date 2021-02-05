@@ -86,6 +86,7 @@
         aria-labelledby="profile-tab"
       >
         <appointment-item
+          @ustgonder="gelenveri"
           @updateOkey="updateOkey"
           @updateCancel="updateCancel"
           :data="list.data"
@@ -101,6 +102,7 @@
         aria-labelledby="contact-tab"
       >
         <appointment-item
+          @ustgonder="gelenveri"
           @updateOkey="updateOkey"
           @updateCancel="updateCancel"
           :data="last.data"
@@ -116,6 +118,7 @@
         aria-labelledby="cancel-tab"
       >
         <appointment-item
+          @ustgonder="gelenveri"
           @updateOkey="updateOkey"
           @updateCancel="updateCancel"
           :data="cancel.data"
@@ -163,6 +166,7 @@ export default {
 
   methods: {
     gelenveri(){
+      console.log("emit oldu geldi-admin");
       this.getData();
     },
     updateCancel(id) {
