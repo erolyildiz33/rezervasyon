@@ -30,10 +30,10 @@ class HomeController extends Controller
 
      public function rezervkontrol()
     {
-        $all=Appointment::all()->where('isActive',1)->where('date',Carbon::now()->format('Y-m-d'));
+        $all=Appointment::where('isActive',1)->where('date',Carbon::now()->format('Y-m-d'))->get();
         foreach ($all as $k=>$v){
            
-            Appointment::find($v['id'])->update(['isActive'=>2]);
+            Appointment::where("app_id",$v['app_id'])->update(['isActive'=>2]);
         }
         
         

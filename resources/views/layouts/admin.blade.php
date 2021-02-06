@@ -120,41 +120,46 @@
                             <a href="./index.html"><img src="/img/logo.png" alt="" width="100" height="70"></a>
                         </div>
                     </div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-12">
                         <div class="ht-widget">
                         <ul class="nav navbar-nav">
                         @auth
                         
                             <li>
-                                <a href="{{ route('admin.index') }}">Yönetim Paneli</a>
+                                <a href="{{ route('admin.index') }}" class="btn btn-dark">Yönetim Paneli</a>
                             </li>
                           
                              <li>
-                               <a href="{{ route('admin.table') }}">Müşteri Tanımla</a>
+                               <a href="{{ route('admin.table') }}" class="btn btn-dark">Müşteri Tanımla</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.durum') }}">Masa Durumu</a>
+                                <a href="{{ route('admin.durum') }}" class="btn btn-dark">Masa Durumu</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.event') }}">Event Tanımla</a>
+                                <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.event') }}" class="btn btn-dark">Raporlar</a>
                             </li>
                            
                            
-                            <li>
-                                <a  href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                  Çıkış
-                                </a>
-                            </li>
-                           
+                          
+                           <li>
                            <span>Kullanıcı :</span>
-                                <label id="logidUserid">{{session()->get('user_name')}}</label>
+                                <label id="logidUserid" >{{session()->get('user_name')}}</label>
                            
                             
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
+                           </li>
+                           <li>
+                                <a  href="{{ route('logout') }}" class="btn btn-danger"
+                                   onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                  Çıkış
+                                </a>
+                            </li>
                         @else
                         <li>
                             <a href="{{ route('detail') }}">Randevu Takip</a>

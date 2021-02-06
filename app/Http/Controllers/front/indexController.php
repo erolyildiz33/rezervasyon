@@ -30,19 +30,19 @@ class indexController extends Controller
         $bugun=Carbon::now()->toDateString();
         foreach ($all as $key=>$value){
       if($value['date']<$bugun){
-        Appointment::find($value['id'])->update(["isGone"=>2]);
+        Appointment::where("app_id",$value['app_id'])->update(["isGone"=>2]);
       }
       elseif($value['date']==$bugun){
       if($value['time']<=$onbes && $value['time']>=$simdi){
-            Appointment::find($value['id'])->update(["isGone"=>1]);
+            Appointment::where("app_id",$value['app_id'])->update(["isGone"=>1]);
 
       }
       elseif($value['time']<$simdi){
-        Appointment::find($value['id'])->update(["isGone"=>2]);
+        Appointment::where("app_id",$value['app_id'])->update(["isGone"=>2]);
       }
     }
     else{
-        Appointment::find($value['id'])->update(["isGone"=>0]); 
+        Appointment::where("app_id",$value['app_id'])->update(["isGone"=>0]); 
     }
     }
        // dd($time);

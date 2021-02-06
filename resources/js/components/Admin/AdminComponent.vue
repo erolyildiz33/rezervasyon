@@ -6,7 +6,7 @@
             </li>-->
       <li class="nav-item active">
         <a
-          class="nav-link"
+          class="nav-link btn btn-default"
           id="home-tab"
           data-toggle="tab"
           href="#home"
@@ -18,7 +18,7 @@
       </li>
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link btn btn-default"
           id="profile-tab"
           data-toggle="tab"
           href="#profile"
@@ -30,7 +30,7 @@
       </li>
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link btn btn-default"
           id="contact-tab"
           data-toggle="tab"
           href="#contact"
@@ -42,7 +42,7 @@
       </li>
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link btn btn-default"
           id="cancel-tab"
           data-toggle="tab"
           href="#cancel"

@@ -99,10 +99,10 @@ if(isset($v['degisenler'])){
                         $message->to($data['email'], $data['name'])->subject('Rezervasyon Hatırlatma');
                         $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
                     });
-                    Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_SUCCESS, 'degisenler' => null]);
+                    Appointment::where('app_id', $v['app_id'])->update(['isSend' => REMINDER_SUCCESS, 'degisenler' => null]);
                 } catch (\Exception $e) {
 
-                    Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_FAILED]);
+                    Appointment::where('app_id', $v['app_id'])->update(['isSend' => REMINDER_FAILED]);
                 }
             }
             if ($v['notification_type'] == NOTIFICATION_SMS) {
@@ -133,9 +133,9 @@ if(isset($v['degisenler'])){
                     $xml = new \SimpleXMLElement($result);
 
                     if ($xml->status->code == '200') {
-                        Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_SUCCESS]);
+                        Appointment::where('app_id', $v['app_id'])->update(['isSend' => REMINDER_SUCCESS]);
                     } else {
-                        Appointment::where('id', $v['id'])->update(['isSend' => REMINDER_FAILED]);
+                        Appointment::where('app_id', $v['app_id'])->update(['isSend' => REMINDER_FAILED]);
                     }
                 } catch (\Exception $e) {
                 }
