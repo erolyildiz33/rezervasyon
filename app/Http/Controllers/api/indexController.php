@@ -342,6 +342,7 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
         $onbes=Carbon::now()->addMinutes(15)->toTimeString();
         $simdi=Carbon::now()->toTimeString();
         $bugun=Carbon::now()->today();
+        
         if( $tum['date']>$bugun){
             $srr["isGone"]=2;
         }

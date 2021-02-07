@@ -25,9 +25,7 @@
           :data="data"
           :options="options"
           @on-post-body="YuklemeSonrasi"
-         
-         
-        > 
+        >
         </bootstrap-table>
       </div>
     </div>
@@ -60,11 +58,10 @@ export default {
       secilisaat: null,
       date1: null,
       date2: null,
-      kontrolDurum:null,
-      kontrolId:null,
+      kontrolDurum: null,
+      kontrolId: null,
       columns: [
         {
-         
           title: "Sıra No",
           formatter: function (value, row, index) {
             return index + 1;
@@ -73,10 +70,27 @@ export default {
         {
           title: "Geldi mi?",
           formatter: function (value, row, index) {
-            var yes=null;
-            if (row.isGone==1) yes="checked";else yes="";
+            console.log(row.date);
+            console.log(new Date().toISOString().substring(0, 10));
+            var yes = null;
+            var geldi=null;
+            if (row.isCame == 1) yes = "checked";
+            else yes = "";
+            if(row.date<new Date().toISOString().substring(0, 10)) geldi="disabled"
+            else if(row.date>new Date().toISOString().substring(0, 10)){
+            geldi=""
+            }
+            else{
+              if(row.date==new Date().toISOString().substring(0, 10) && row.time<new Date().toTimeString()) geldi="disabled"
+              else{
+                geldi=""
+              }
+              
+            }
             return (
-              '<input type="checkbox"'+yes+' class="durum" data-durumId="' +
+              '<input type="checkbox"' +
+              yes + " " + geldi +
+              ' class="durum" data-durumId="' +
               row.app_id +
               '">'
             );
@@ -90,7 +104,7 @@ export default {
           title: "Telefon",
           field: "phone",
         },
-       
+
         {
           title: "Tarih",
           field: "date",
@@ -152,31 +166,42 @@ export default {
         },
       ],
       options: {
-         search: true,
+        search: true,
         showColumns: true,
-        virtualScroll:true,
+        virtualScroll: true,
         showExport: true,
-        pagination:true,
-        detailView:true,
-        sidePagination:"client",
-        width:200,
-        pageList:"[10, 25, 50, 100, 200, All]",
-        detailFormatter:function(index, row) {
-   
-    return "<div class='text-center' style='text-align:center; margin-left:50px!important;'><table class='table table-bordered table-hover'><thead>"+
-    "<th>Mail</th>"+
-    "<th>Rezervasyon Notu</th>"+
-    "<th>Müşteri Notu</th>"+
-    "<th>Bildirim Türü</th>"+
-     "<th>Müşteri Türü</th>"+
-   "</thead><tbody><tr>"+
-     "<td>"+row.email+"</td>"+
-    "<td>"+row.text+"</td>"+
-     "<td>"+row.notu+"</td>"+
-    "<td>"+ ((row.notification_type==1)?'Email':'SMS')+"</td>"+
-     "<td>"+ ((row.misafir_id==0)?'Yerel':'Otel')+"</td>"+
-    "</tr></tbody></table></div>"
-  },
+        pagination: true,
+        detailView: true,
+        sidePagination: "client",
+        width: 200,
+        pageList: "[10, 25, 50, 100, 200, All]",
+        detailFormatter: function (index, row) {
+          return (
+            "<div class='text-center' style='text-align:center; margin-left:50px!important;'><table class='table table-bordered table-hover'><thead>" +
+            "<th>Mail</th>" +
+            "<th>Rezervasyon Notu</th>" +
+            "<th>Müşteri Notu</th>" +
+            "<th>Bildirim Türü</th>" +
+            "<th>Müşteri Türü</th>" +
+            "</thead><tbody><tr>" +
+            "<td>" +
+            row.email +
+            "</td>" +
+            "<td>" +
+            row.text +
+            "</td>" +
+            "<td>" +
+            row.notu +
+            "</td>" +
+            "<td>" +
+            (row.notification_type == 1 ? "Email" : "SMS") +
+            "</td>" +
+            "<td>" +
+            (row.misafir_id == 0 ? "Yerel" : "Otel") +
+            "</td>" +
+            "</tr></tbody></table></div>"
+          );
+        },
         rowStyle: function (row) {
           if (row.isGone == 2) {
             return {
@@ -185,6 +210,10 @@ export default {
           } else if (row.isGone == 1) {
             return {
               css: { color: "white", "background-color": "orange" },
+            };
+          } else if (row.isGone == 3) {
+            return {
+              css: { color: "white", "background-color": "green" },
             };
           } else {
             return {
@@ -217,6 +246,8 @@ export default {
 
       ref.getir(id);
     });
+ 
+
 
     $(document).on("click", ".rezervdengerial", function () {
       var geriid = $(this).data("gerial");
@@ -240,9 +271,7 @@ export default {
               id: geriid,
               user_id: $("#logidUserid").text(),
             })
-            .then((res) => {
-            
-            });
+            .then((res) => {});
 
           Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
         }
@@ -271,56 +300,54 @@ export default {
                 user_id: $("#logidUserid").text(),
               })
               .then((res) => {
-          this.$emit("ustgonder",res);
+                this.$emit("ustgonder", res);
               });
- 
+
             Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success");
           }
         });
-          
       });
-  },watch: {
+  },
+  watch: {
     kontrolDurum: function (newValue, oldValue) {
-     
-       axios
-          .post(`http://localhost/api/admin/process`, {
-            csrf_token: document
-              .querySelector('meta[name="csrf-token"]')
-              .getAttribute("content"),
-            gone: newValue==true?1:2,
-            id: this.kontrolId,
-            user_id: $("#logidUserid").text(),
-          })
-          .then((res) => {
-        
-         
-          });
+      console.log(newValue+"-"+oldValue);
+      axios
+        .post(`http://localhost/api/admin/process`, {
+          csrf_token: document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
+          came: newValue == true ? 1 : 0,
+          id: this.kontrolId,
+          user_id: $("#logidUserid").text(),
+        })
+        .then((res) => {});
       this.$emit("ustgonder");
-       
-    }
+    },
   },
   methods: {
-    YuklemeSonrasi: function () {
-      var ref = this;
-      $(".durum").bootstrapToggle({
-        on: "Evet",
-        off: "Hayır",
-        onstyle: "success",
-        offstyle: "danger",
-        size: "lg",
-        width: "85",
-        height: "30",
-        style: "font-size: 10px",
-      });
+    bas: function (e) {
     
- 
+      Swal.fire({
+        title: "Müşteri durumu Geldi olarak değiştirelecektir?",
+        text:
+          "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Evet, istiyorum!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.kontrolDurum = e.prop("checked");
+          this.kontrolId = e.data("durumid");
+         
+        }
+       else{
+        this.gelenguncel();
 
+       }
 
-
-      $(".durum").change(function () {
-        ref.kontrolDurum=$(this).prop("checked");
-        ref.kontrolId=$(this).data("durumid");
-    /*    axios
+        /*    axios
           .post(`http://localhost/api/admin/process`, {
             csrf_token: document
               .querySelector('meta[name="csrf-token"]')
@@ -337,12 +364,35 @@ export default {
         Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success"); 
        */
       });
+    },
+    YuklemeSonrasi: function () {
+      var ref = this;
 
+      $(".durum").bootstrapToggle({
+        on: "Evet",
+        off: "Hayır",
+        onstyle: "success",
+        offstyle: "danger",
+        size: "lg",
+        width: "85",
+        height: "30",
+        style: "font-size: 10px",
+
+      });
+      $('.durum').on("change", function(e) {
+      
+         ref.bas($(this));
+     
+  
+});
+     
+       
+  
     },
     search() {
       this.$refs.list.filterBy({ date: this.getDates(this.date1, this.date2) });
     },
-   
+
     getDates: function (startDate, stopDate) {
       var dateArray = [];
       var currentDate = this.$moment(startDate);
@@ -354,9 +404,8 @@ export default {
       return dateArray;
     },
     gelenguncel() {
-    
       this.showModal = false;
-     console.log("emit geldi")
+      console.log("emit geldi");
       this.$emit("ustgonder");
     },
     getir: function (id) {
