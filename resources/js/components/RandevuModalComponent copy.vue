@@ -2,14 +2,14 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-       
+
         <div class="modal-container">
-          
+
   <form-wizard>
         <tab-content title="Bilgileriniz">
                      <div class="modal-header">
             <slot name="header">
-              
+
               <h3 slot="header">
                 <label>Masa No:</label>
                 {{ modalId }}
@@ -20,7 +20,7 @@
                 >
                   X
                 </button>
-              
+
             </slot>
           </div>
           <div class="modal-body">
@@ -74,7 +74,7 @@
                         </div>
                       </div>
 
-                     
+
                       <div class="col-md-4">
                         <date-picker
                           v-model="timevalue"
@@ -165,10 +165,10 @@
             </slot>
           </div>
         </tab-content>
-       
+
         <tab-content title="Aktivasyon">
-            
-        </tab-content>  
+
+        </tab-content>
     </form-wizard>
         </div>
       </div>
@@ -194,29 +194,29 @@ export default {
       body: null,
       phone: null,
       text: null,
-    
+
       timevalue: null,
     };
   },
   created() {
-   
+
     socket.emit("hello");
   },
   mounted() {},
   methods: {
-    
+
     store: function () {
-      
+
       if (
         this.notification_type != null &&
         this.name != null &&
         this.validEmail(this.email) != false &&
         this.body != null &&
         this.phone != null &&
-       
+
         this.getTime(this.timevalue) != null
       ) {
-        console.log(this.getTime(this.timevalue));
+
 
         axios
           .post(`http://localhost/api/appointment-store`, {
@@ -227,7 +227,7 @@ export default {
             phone: this.phone,
             email: this.email,
             body: this.body,
-           
+
             title:this.modalId,
             date: this.tarih,
             text: this.text,
@@ -238,7 +238,7 @@ export default {
           .then((res) => {
             if (res.data.status) {
               socket.emit("new_appointment_create");
-              console.log(socket.emit("new_appointment_create"));
+
               this.completeForm = false;
             }
           });

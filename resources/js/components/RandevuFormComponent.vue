@@ -7,8 +7,8 @@
           :modalId="showModalId"
           v-if="showModal"
           :tarih="date"
-         
-           
+
+
           @close="showModal = true"
         ></appointment-modal>
          <div class="col-md-12">
@@ -16,7 +16,7 @@
                           :min="minDate"
                           v-model="date"
                           @pick="selectDate"
-                           
+
                           format="DD-MM-YYYY dddd"
                           :disabled-date="notBeforeToday"
                           type="date"
@@ -84,10 +84,10 @@
     <area data-key="" @click="modalShow" alt="44" title="44" href="" coords="1184,477,1216,505" shape="rect">
     <area data-key="" @click="modalShow"  alt="45" title="45" href="" coords="1228,474,1260,505" shape="rect">
 </map>
-      
 
-     
-       
+
+
+
       </div>
     </div>
   </div>
@@ -99,10 +99,10 @@ require("jquery-imagemapster");
 import datepicker from "vue2-datepicker";
 
 export default {
-  
-  
+
+
   data() {
-    
+
     return {
       secim: null,
       secim1: null,
@@ -119,8 +119,8 @@ export default {
        minDate: new Date(),
       date: new Date(),
       gettar:new Date(),
-      
-   
+
+
     };
   },
   created() {},
@@ -135,10 +135,10 @@ export default {
     });
     var trh=(new Date().toLocaleDateString().split('.'));
 this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
-   
+
   },
   methods: {
-    
+
     getirtarih: function (tarih){
       $("area").mapster('deselect')
     axios.get(`http://localhost/api/appointment-table/${tarih}`).then((res) => {
@@ -159,13 +159,13 @@ this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
       }
       this.showModalId = e.currentTarget.title;
       this.showModal = true;
-      // console.log(e.currentTarget.title);
+
     },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
     addimgAll: function (e) {
-      console.log(e.currentTarget.key);
+
       if (
         this.secim == true ||
         this.secim1 == true ||
@@ -190,12 +190,12 @@ this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
       var gonder=gidentarih[2]+"-"+gidentarih[1]+"-"+gidentarih[0];
-       console.log(this.date.toLocaleDateString())
-   
-        
+
+
+
 this.getirtarih(gonder);
-    
-  
+
+
     },
   },
 };

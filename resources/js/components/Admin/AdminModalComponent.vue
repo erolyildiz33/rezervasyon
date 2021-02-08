@@ -10,7 +10,7 @@
                 <label>Masa No:</label>
                 {{modalId }}
               </h3>
-             
+
             </slot>
              <button
                 class="btn btn-danger modal-default-button"
@@ -204,7 +204,7 @@ export default {
         this.phone != null &&
         this.getTime(this.timevalue) != null
       ) {
-        console.log(this.getTime(this.timevalue));
+
         axios
           .post("http://localhost/api/appointment-store", {
             csrf_token: document
@@ -226,7 +226,7 @@ export default {
            .then((res) => {
             if (res.data.status) {
               socket.emit("new_appointment_create");
-             
+
               this.completeForm = false;
                window.location.href="http://localhost/admin"
             }

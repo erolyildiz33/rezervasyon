@@ -1,4 +1,4 @@
- 
+
 <template>
   <div>
     <div id="toolbar">
@@ -70,8 +70,7 @@ export default {
         {
           title: "Geldi mi?",
           formatter: function (value, row, index) {
-            console.log(row.date);
-            console.log(new Date().toISOString().substring(0, 10));
+
             var yes = null;
             var geldi=null;
             if (row.isCame == 1) yes = "checked";
@@ -85,7 +84,7 @@ export default {
               else{
                 geldi=""
               }
-              
+
             }
             return (
               '<input type="checkbox"' +
@@ -246,7 +245,7 @@ export default {
 
       ref.getir(id);
     });
- 
+
 
 
     $(document).on("click", ".rezervdengerial", function () {
@@ -310,7 +309,7 @@ export default {
   },
   watch: {
     kontrolDurum: function (newValue, oldValue) {
-      console.log(newValue+"-"+oldValue);
+
       axios
         .post(`http://localhost/api/admin/process`, {
           csrf_token: document
@@ -326,7 +325,7 @@ export default {
   },
   methods: {
     bas: function (e) {
-    
+
       Swal.fire({
         title: "Müşteri durumu Geldi olarak değiştirelecektir?",
         text:
@@ -340,7 +339,7 @@ export default {
         if (result.isConfirmed) {
           this.kontrolDurum = e.prop("checked");
           this.kontrolId = e.data("durumid");
-         
+
         }
        else{
         this.gelenguncel();
@@ -358,10 +357,10 @@ export default {
           })
           .then((res) => {
        // ref.$emit("ustgonder",res.data);
-         
+
           });
        ref.gelenguncel();
-        Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success"); 
+        Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
        */
       });
     },
@@ -380,14 +379,14 @@ export default {
 
       });
       $('.durum').on("change", function(e) {
-      
+
          ref.bas($(this));
-     
-  
+
+
 });
-     
-       
-  
+
+
+
     },
     search() {
       this.$refs.list.filterBy({ date: this.getDates(this.date1, this.date2) });
@@ -405,7 +404,7 @@ export default {
     },
     gelenguncel() {
       this.showModal = false;
-      console.log("emit geldi");
+
       this.$emit("ustgonder");
     },
     getir: function (id) {

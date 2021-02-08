@@ -8,16 +8,16 @@
                 <input type="text" class="form-control" v-model="inputTable" @keyup="inputcheck"
                        placeholder="Event Adı Yazınız">
                 <date-picker
-                         
+
                           v-model="date"
-                         
-                           
+
+
                           format="DD-MM-YYYY dddd"
-                          
+
                           type="date"
                           ></date-picker>
-                        
-                
+
+
                 <date-picker
                           v-model="timevalue"
                           :time-picker-options="{
@@ -29,7 +29,7 @@
                           type="time"
                           placeholder="Event Saati belirleyiniz"
                         ></date-picker>
-                
+
                 <div v-if="SelectPhoto">
                     <label for="file-input">Resim Seç</label>
                     <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
@@ -43,7 +43,7 @@
                 <div v-for="(Item,index) in masalar" :id="'masa'+Item.id">
                     <admin-event-preview :urun="Item" :index="index"  :isDelete="true"
                                    @eventlist="gelen($event)"></admin-event-preview>
-                                   
+
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
         data() {
             return {
                 date: new Date(),
-                
+
                 timevalue: null,
                 SelectPhoto: true,
                 previewImage: null,
@@ -75,7 +75,7 @@
         },
         methods: {
             gelen(id) {
-                console.log(id);
+
                this.removeTable(id['id'],id['index'])
             },
             uploadImage(e) {
@@ -124,11 +124,11 @@
                 }
             },
             removeTable: function (item, index) {
-                console.log(item);
+
                 axios.post(`http://localhost/api/event-delete`, {
                     id: item,
                      user_id:$("#logidUserid").text(),
-                })  
+                })
                     .then((res) => {
                         var tmp = this.masalar
                         var tmp2 = []

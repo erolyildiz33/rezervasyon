@@ -2,22 +2,22 @@
   <div>
     <div class="container">
       <div class="row">
-          
+
         <admin-modal
           :secilimi="sonuc"
           :modalId="showModalId"
           v-if="showModal"
           :tarih="date"
           :kisi="userid[0]"
-           
+
           @close="showModal = false"
         ></admin-modal>
          <div class="col-md-12">
                         <date-picker
-                          
+
                           v-model="date"
                           @pick="selectDate"
-                          
+
                           format="DD-MM-YYYY dddd"
                           :disabled-date="notBeforeToday"
                           type="date"
@@ -541,9 +541,9 @@
             shape="rect"
           />
         </map>
-      
+
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -554,9 +554,9 @@ require("jquery-imagemapster");
 import datepicker from "vue2-datepicker";
 export default {
   props:["userid"],
-  
+
   data() {
-    
+
     return {
       secim: null,
       secim1: null,
@@ -570,11 +570,11 @@ export default {
       secilimasalar: null,
       showModalId: 0,
       showModal: false,
-    
+
       date: new Date(),
       gettar:new Date(),
-      
-   
+
+
     };
   },
   created() {
@@ -589,20 +589,20 @@ export default {
       stroke: false,
       isSelectable: false,
        clickNavigate: true,
-      showToolTip: true,  
+      showToolTip: true,
       onMouseover: function (e) {
-             $(this).mapster('set', false).mapster('set', true);                
+             $(this).mapster('set', false).mapster('set', true);
          },
           onMouseout: function (e) {
              $(this).mapster('set', false);
          },
     });
-    
-   
+
+
   },
   methods: {
-    
-    
+
+
     getirtarih: function (tarih){
       $("area").mapster('deselect')
     axios.get(`http://localhost/api/appointment-table/${tarih}`).then((res) => {
@@ -623,13 +623,13 @@ export default {
       }
       this.showModalId = e.currentTarget.title;
       this.showModal = true;
-      // console.log(e.currentTarget.title);
+
     },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
     addimgAll: function (e) {
-      console.log(e.currentTarget.key);
+
       if (
         this.secim == true ||
         this.secim1 == true ||
@@ -654,12 +654,12 @@ export default {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
       var gonder=gidentarih[2]+"-"+gidentarih[1]+"-"+gidentarih[0];
-      
-   
-        
+
+
+
 this.getirtarih(gonder);
-    
-  
+
+
     },
   },
 };

@@ -55,11 +55,11 @@
     </ul>
     <div class="tab-content" id="myTabContent">
       <!-- <div class="tab-pane fade in active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
-               
+
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="waiting.data"></appointment-item>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-md-12">
-                        
+
                     </div>
                 </div>
             </div>-->
@@ -130,7 +130,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import io from "socket.io-client";
 var socket = io("http://localhost:3000");
@@ -157,16 +157,16 @@ export default {
   created() {
     this.getData();
     socket.on("admin_appointment_list", () => {
-      console.log("Veri Geldi");
+
       this.getData();
     });
 
-   
+
   },
 
   methods: {
     gelenveri(){
-      console.log("emit oldu geldi-admin");
+
       this.getData();
     },
     updateCancel(id) {

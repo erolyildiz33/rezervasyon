@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        
+
         <div class="modal-container">
              <div class="modal-header">
                         <slot name="header">
@@ -16,7 +16,7 @@
                         </slot>
                     </div>
             <div class="panel panel-default">
-             
+
               <div style="padding: 10px">
                 <label>Müşteri Tipi</label>
                 <toggle-button
@@ -197,7 +197,7 @@ export default {
   },
   created() {
     socket.emit("hello");
-    console.log(this.kisi)
+
   },
   mounted() {},
   methods: {
@@ -205,7 +205,7 @@ export default {
       this.showModal = false;
       this.kisi = res.data;
     },
-   
+
     uptadeModal: function () {
       axios
         .post(`http://localhost/api/table-update`, {
@@ -232,8 +232,8 @@ export default {
         })
         .then((res) => {
            this.$emit("kisiguncelle") ;
-        
-        
+
+
         });
     },
 

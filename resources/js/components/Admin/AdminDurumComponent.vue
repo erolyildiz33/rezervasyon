@@ -10,14 +10,14 @@
     </VueSlickCarousel>
   </div>
       <div class="row">
-          
-       
+
+
          <div class="col-md-12">
                         <date-picker
-                          
+
                           v-model="date"
                           @pick="selectDate"
-                          
+
                           format="DD-MM-YYYY dddd"
                           :disabled-date="notBeforeToday"
                           type="date"
@@ -29,7 +29,7 @@
   <map name="image-map">
           <area
             data-key=""
-              
+
             alt="52"
             title="b-k-i-52"
             href=""
@@ -38,7 +38,7 @@
           />
           <area
             data-key=""
-              
+
             alt="60"
             title="b-k-i-60"
             href=""
@@ -47,7 +47,7 @@
           />
           <area
             data-key=""
-              
+
             alt="59"
             title="b-k-i-59"
             href=""
@@ -56,7 +56,7 @@
           />
           <area
             data-key=""
-              
+
             alt="53"
             title="b-k-i-53"
             href=""
@@ -65,7 +65,7 @@
           />
           <area
             data-key=""
-              
+
             alt="54"
             title="b-k-i-54"
             href=""
@@ -74,7 +74,7 @@
           />
           <area
             data-key=""
-              
+
             alt="61"
             title="b-k-i-61"
             href=""
@@ -83,7 +83,7 @@
           />
           <area
             data-key=""
-              
+
             alt="62"
             title="b-k-i-62"
             href=""
@@ -92,7 +92,7 @@
           />
           <area
             data-key=""
-              
+
             alt="58"
             title="b-k-i-58"
             href=""
@@ -101,7 +101,7 @@
           />
           <area
             data-key=""
-              
+
             alt="57"
             title="b-k-i-57"
             href=""
@@ -110,7 +110,7 @@
           />
           <area
             data-key=""
-              
+
             alt="56"
             title="b-k-i-56"
             href=""
@@ -119,7 +119,7 @@
           />
           <area
             data-key=""
-              
+
             alt="55"
             title="b-k-i-55"
             href=""
@@ -128,7 +128,7 @@
           />
           <area
             data-key=""
-              
+
             alt="51"
             title="b-k-i-51"
             href=""
@@ -137,7 +137,7 @@
           />
           <area
             data-key=""
-              
+
             alt="50"
             title="b-k-i-50"
             href=""
@@ -146,7 +146,7 @@
           />
           <area
             data-key=""
-              
+
             alt="B2"
             title="b-ö-s-B2"
             href=""
@@ -155,7 +155,7 @@
           />
           <area
             data-key=""
-              
+
             alt="B1"
             title="b-ö-s-B1"
             href=""
@@ -164,7 +164,7 @@
           />
           <area
             data-key=""
-              
+
             alt="1"
             title="b-ö-i-1"
             href=""
@@ -173,7 +173,7 @@
           />
           <area
             data-key=""
-              
+
             alt="2"
             title="b-ö-i-2"
             href=""
@@ -182,7 +182,7 @@
           />
           <area
             data-key=""
-              
+
             alt="3"
             title="s-s-i-3"
             href=""
@@ -191,7 +191,7 @@
           />
           <area
             data-key=""
-              
+
             alt="4"
             title="s-s-i-4"
             href=""
@@ -200,7 +200,7 @@
           />
           <area
             data-key=""
-              
+
             alt="5"
             title="s-s-i-5"
             href=""
@@ -209,7 +209,7 @@
           />
           <area
             data-key=""
-              
+
             alt="6"
             title="s-s-i-6"
             href=""
@@ -218,7 +218,7 @@
           />
           <area
             data-key=""
-              
+
             alt="7"
             title="s-s-i-7"
             href=""
@@ -227,7 +227,7 @@
           />
           <area
             data-key=""
-              
+
             alt="8"
             title="s-s-i-8"
             href=""
@@ -236,7 +236,7 @@
           />
           <area
             data-key=""
-              
+
             alt="9"
             title="s-s-i-9"
             href=""
@@ -245,7 +245,7 @@
           />
           <area
             data-key=""
-              
+
             alt="10"
             title="s-s-i-10"
             href=""
@@ -254,7 +254,7 @@
           />
           <area
             data-key=""
-              
+
             alt="11"
             title="s-ö-i-11"
             href=""
@@ -263,7 +263,7 @@
           />
           <area
             data-key=""
-              
+
             alt="12"
             title="s-ö-i-12"
             href=""
@@ -272,7 +272,7 @@
           />
           <area
             data-key=""
-              
+
             alt="13"
             title="s-ö-i-13"
             href=""
@@ -281,7 +281,7 @@
           />
           <area
             data-key=""
-              
+
             alt="14"
             title="s-ö-i-14"
             href=""
@@ -290,7 +290,7 @@
           />
           <area
             data-key=""
-              
+
             alt="15"
             title="s-ö-i-15"
             href=""
@@ -299,7 +299,7 @@
           />
           <area
             data-key=""
-              
+
             alt="16"
             title="s-ö-i-16"
             href=""
@@ -308,7 +308,7 @@
           />
           <area
             data-key=""
-              
+
             alt="17"
             title="s-ö-i-17"
             href=""
@@ -317,7 +317,7 @@
           />
           <area
             data-key=""
-              
+
             alt="18"
             title="s-ö-i-18"
             href=""
@@ -326,7 +326,7 @@
           />
           <area
             data-key=""
-              
+
             alt="19"
             title="m-ö-i-19"
             href=""
@@ -335,7 +335,7 @@
           />
           <area
             data-key=""
-              
+
             alt="20"
             title="m-ö-i-20"
             href=""
@@ -344,7 +344,7 @@
           />
           <area
             data-key=""
-              
+
             alt="21"
             title="m-ö-i-21"
             href=""
@@ -353,7 +353,7 @@
           />
           <area
             data-key=""
-              
+
             alt="22"
             title="m-ö-i-22"
             href=""
@@ -362,7 +362,7 @@
           />
           <area
             data-key=""
-              
+
             alt="23"
             title="m-ö-i-23"
             href=""
@@ -371,7 +371,7 @@
           />
           <area
             data-key=""
-              
+
             alt="24"
             title="m-ö-i-24"
             href=""
@@ -380,7 +380,7 @@
           />
           <area
             data-key=""
-              
+
             alt="25"
             title="25"
             href=""
@@ -389,7 +389,7 @@
           />
           <area
             data-key=""
-              
+
             alt="26"
             title="26"
             href=""
@@ -398,7 +398,7 @@
           />
           <area
             data-key=""
-              
+
             alt="30"
             title="s-ö-b-30"
             href=""
@@ -407,7 +407,7 @@
           />
           <area
             data-key=""
-              
+
             alt="31"
             title="s-ö-b-31"
             href=""
@@ -416,7 +416,7 @@
           />
           <area
             data-key=""
-              
+
             alt="32"
             title="s-ö-b-32"
             href=""
@@ -425,7 +425,7 @@
           />
           <area
             data-key=""
-              
+
             alt="33"
             title="s-ö-b-33"
             href=""
@@ -434,7 +434,7 @@
           />
           <area
             data-key=""
-              
+
             alt="34"
             title="s-s-b-34"
             href=""
@@ -443,7 +443,7 @@
           />
           <area
             data-key=""
-              
+
             alt="35"
             title="s-s-b-35"
             href=""
@@ -452,7 +452,7 @@
           />
           <area
             data-key=""
-              
+
             alt="36"
             title="s-s-b-36"
             href=""
@@ -461,7 +461,7 @@
           />
           <area
             data-key=""
-              
+
             alt="37"
             title="s-s-b-37"
             href=""
@@ -470,7 +470,7 @@
           />
           <area
             data-key=""
-              
+
             alt="D1"
             title="m-ö-s-D1"
             href=""
@@ -479,7 +479,7 @@
           />
           <area
             data-key=""
-              
+
             alt="D2"
             title="m-ö-s-D2"
             href=""
@@ -488,7 +488,7 @@
           />
           <area
             data-key=""
-              
+
             alt="46"
             title="d-k-i-46"
             href=""
@@ -497,7 +497,7 @@
           />
           <area
             data-key=""
-              
+
             alt="47"
             title="d-k-i-47"
             href=""
@@ -506,7 +506,7 @@
           />
           <area
             data-key=""
-              
+
             alt="48"
             title="d-k-i-48"
             href=""
@@ -515,7 +515,7 @@
           />
           <area
             data-key=""
-              
+
             alt="43"
             title="d-k-i-43"
             href=""
@@ -524,7 +524,7 @@
           />
           <area
             data-key=""
-              
+
             alt="44"
             title="d-k-i-44"
             href=""
@@ -533,7 +533,7 @@
           />
           <area
             data-key=""
-              
+
             alt="45"
             title="d-k-i-45"
             href=""
@@ -541,9 +541,9 @@
             shape="rect"
           />
         </map>
-      
+
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -560,7 +560,7 @@ export default {
   props:["userid"],
   components: { VueSlickCarousel },
   data() {
-    
+
     return {
       secim: null,
       secim1: null,
@@ -572,13 +572,13 @@ export default {
       secim7: null,
       secim8: null,
       secilimasalar: null,
-     
-    
+
+
       date: new Date(),
       gettar:new Date(),
       settings:{
         "arrows": false,
-       
+
   "dots": true,
   "infinite": true,
   "speed": 1000,
@@ -587,7 +587,7 @@ export default {
   "initialSlide": 0,
   "autoplay":true,
    "autoplay": true,
-  
+
   "autoplaySpeed": 3000,
   "responsive": [
     {
@@ -616,7 +616,7 @@ export default {
     }
   ]
 }
-   
+
     };
   },
   created() {
@@ -630,15 +630,15 @@ export default {
       fillOpacity: 1,
       stroke: false,
       isSelectable: false,
-       
-      
+
+
     });
-    
-   
+
+
   },
   methods: {
-    
-    
+
+
     getirtarih: function (tarih){
       $("area").mapster('deselect')
     axios.get(`http://localhost/api/appointment-table/${tarih}`).then((res) => {
@@ -648,12 +648,12 @@ export default {
       });
     });
     },
-   
+
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
     addimgAll: function (e) {
-      console.log(e.currentTarget.key);
+
       if (
         this.secim == true ||
         this.secim1 == true ||
@@ -670,17 +670,17 @@ export default {
         $("#image").mapster("set", false, e.currentTarget.title);
       }
     },
-   
+
     selectDate: function () {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
       var gonder=gidentarih[2]+"-"+gidentarih[1]+"-"+gidentarih[0];
-      
-   
-        
+
+
+
 this.getirtarih(gonder);
-    
-  
+
+
     },
   },
 };

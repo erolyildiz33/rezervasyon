@@ -1,6 +1,6 @@
 <template>
     <div>
-      
+
 <div class="container bootstrap snippets bootdey">
 <div class="row">
   <div class="profile-nav col-md-3">
@@ -28,13 +28,13 @@
           <footer class="panel-footer">
               <button class="btn btn-warning pull-right" @click="store">Kaydet</button>
               <ul class="nav nav-pills">
-                
+
               </ul>
           </footer>
       </div>
       <div class="panel">
           <div class="bio-graph-heading">
-            
+
           </div>
           <div class="panel-body bio-graph-info">
               <h1>Kişisel Bilgiler</h1>
@@ -45,21 +45,21 @@
                   <div class="bio-row">
                       <p><span>Soyad </span>: {{user.soyad}}</p>
                   </div>
-                  
+
                   <div class="bio-row">
                       <p><span>Doğum Tarihi</span>: {{user.dogumtar}}</p>
                   </div>
                    <div class="bio-row">
                       <p><span>Evlilik Tarihi</span>: {{user.evliliktar}}</p>
                   </div>
-                 
+
                   <div class="bio-row">
                       <p><span>Email </span>: {{user.email}}</p>
                   </div>
                   <div class="bio-row">
                       <p><span>Telefon </span>: {{user.tel}}</p>
                   </div>
-                  
+
               </div>
           </div>
       </div>
@@ -101,7 +101,7 @@ export default {
          user_id:$("#logidUserid").text(),
          }).then((res) => {
         this.notlar=res.data;
-        console.log(this.notlar);
+
     });
 }
     }

@@ -572,15 +572,15 @@ export default {
   },
   created() {
     if (this.$session.has("secimmasa")) {
-     
+
         this.showModalId=this.$session.get("secimmasa");
         this.modalveri=this.$session.get("kisi");
         this.secilitarih=this.$session.get("secimtarih");
         this.secilisaat=this.$session.get("secimsaat");
         this.showModal=false;
         this.date=this.secilitarih;
-       
-       
+
+
     }
     this.getirtarih(this.selectDate());
   },
@@ -607,33 +607,33 @@ export default {
         });
     },
     modalShow: function (e) {
-   
+
       var item = this.secilimasalar.find(
         (item) => item.title == e.currentTarget.title
       );
       if (item) {
-         
-      
+
+
       } else {
         this.$session.start();
       this.$session.set("kisi", this.userid[0]);
       this.$session.set("secimtarih", this.date);
       this.$session.set("secimmasa",e.currentTarget.title);
       this.$session.set("secimsaat",this.time);
-     
+
 
      window.location.href = "http://localhost/admin/";
-     
+
       }
-   
-      // console.log(e.currentTarget.title);
-     
+
+
+
     },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
     addimgAll: function (e) {
-      
+
       if (
         this.secim == true ||
         this.secim1 == true ||

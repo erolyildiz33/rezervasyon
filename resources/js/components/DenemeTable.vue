@@ -26,17 +26,17 @@ export default {
           title: "Adı Soyadı",
           field: "soyad",
         },
-   
+
       ],
       options: {
-        
+
         search: true,
         showColumns: true,
          showExport:true
-        
+
       },
-      
-      
+
+
         }
     },
      components: {
@@ -45,7 +45,7 @@ export default {
     created(){
   axios.get('http://localhost/api/table-list/').then((res) => {
       this.tabledata=res.data;
-      console.log(this.tabledata)
+
 
   })
 },

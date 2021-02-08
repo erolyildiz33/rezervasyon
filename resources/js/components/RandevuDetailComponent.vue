@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="main">
                     <h2>Rezervasyon Aktivasyon</h2>
-                   
+
 
                 </div>
 
@@ -90,7 +90,7 @@
                             }
                         })
                         .catch((e) => {
-                            console.log(e);
+
                         })
                 }
 
