@@ -4,14 +4,19 @@ import Button from 'vue-js-toggle-button';
 
 import VueStepWizard from 'vue-step-wizard';
 import 'vue-step-wizard/dist/vue-step-wizard.css';
+import VueSession from 'vue-session';
 
 
 window.Vue = require('vue');
+
 Vue.use(VueStepWizard);
 Vue.use(Button);
 Vue.use(VueMask);
-window.$=window.Jquery=require('jquery');
 
+
+Vue.use(VueSession);
+window.$=window.Jquery=require('jquery');
+Vue.use(require('vue-moment'));
 Vue.use(require('vue-resource'));
 Vue.use(require('vue2-datepicker'));
 Vue.use(require('jquery-imagemapster'));
@@ -35,6 +40,17 @@ Vue.component('admin-table-item',require('./components/Admin/AdminTableItemCompo
 Vue.component('table-preview',require('./components/Admin/TablesPreview').default);
 Vue.component('admin-rezerv',require('./components/Admin/RezervationComponent').default);
 Vue.component('appointment-modal',require('./components/RandevuModalComponent').default);
+Vue.component('admin-event',require('./components/Admin/AdminEventComponent').default);
+Vue.component('admin-event-preview',require('./components/Admin/AdminEventPreview').default);
+Vue.component('admin-profile',require('./components/Admin/AdminProfileComponent').default);
+Vue.component('deneme-table',require('./components/DenemeTable.vue').default);
+Vue.component('admin-durum',require('./components/Admin/AdminDurumComponent.vue').default);
+
+
+
+
+
+
 
 
 
@@ -49,6 +65,13 @@ Vue.component('appointment-modal',require('./components/RandevuModalComponent').
 
 
 Vue.component('admin-appointment-modal',require('./components/Admin/AdminAppointmentModal').default);
+Vue.component('admin-form',require('./components/Admin/AdminFormComponent').default);
+Vue.component('admin-modal',require('./components/Admin/AdminModalComponent').default);
+Vue.component('admin-update-modal',require('./components/Admin/AdminUpdateModalComponent').default);
+Vue.component('admin-rezervation-update-modal',require('./components/Admin/AdminRezervationUpdateModelComponent').default);
+Vue.component('admin-rezervation',require('./components/Admin/AdminRezervationComponent').default);
+
+
 
 Vue.component('appointment-form',require('./components/RandevuFormComponent').default);
 Vue.component('appointment-detail',require('./components/RandevuDetailComponent').default);

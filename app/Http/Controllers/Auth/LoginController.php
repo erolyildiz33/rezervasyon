@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     /*
@@ -31,6 +31,9 @@ class LoginController extends Controller
         if (auth()->user()->isAdmin != 0) {
             return 'http://localhost';
         }
+        session(['user_name' => auth()->user()->name]);
+        session(['user_id' => auth()->user()->id]);
+        Session::put('user_id', auth()->user()->id);
         return '/admin';
     }
 

@@ -23,9 +23,10 @@ Route::group(['prefix'=>'cron'],function (){
 
 
 
-Route::get('/', 'front\indexController@index');
+Route::get('/', 'front\indexController@index')->name("anasayfa");
 Route::get('/detail', 'front\indexController@detail')->name('detail');
-
+Route::get('/working', 'front\indexController@deneme')->name('working');
+Route::get('/rezervkontrol', 'front\indexController@rezervkontrol')->name('rezervkontrol');
 
 
 
@@ -33,11 +34,21 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
+
 Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'=>['auth']],function (){
     Route::get('/','indexController@index')->name('index');
     Route::get('/working','indexController@working')->name('working');
     Route::get('/table','indexController@table')->name('table');
-    Route::get('/rezerv','indexController@rezerv')->name('rezerv');
+    Route::get('/rezerv/{id}','indexController@rezerv')->name('rezerv');
+    Route::get('/updaterezerv/{id}','indexController@updaterezerv')->name('updaterezerv');
+
+    Route::get('/event','indexController@event')->name('event');
+    Route::get('/durum','indexController@durum')->name('durum');
+
+    Route::get('/profile/{id}','indexController@profile')->name('profile');
+
 
 
 });

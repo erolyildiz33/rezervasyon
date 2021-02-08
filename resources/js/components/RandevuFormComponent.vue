@@ -23,565 +23,86 @@
                           ><span> Tarihi</span></date-picker
                         >
                       </div>
-        <img id="image" src="img/im2.jpeg" usemap="#image-map" />
+                      <img src="img/yeni.jpeg" usemap="#image-map">
 
-        <map name="image-map">
-          <area
-            data-key="bk1,bkall"
-            @click="modalShow"
-            alt="b-bk-1"
-            title="b-bk-1"
-            href=""
-            coords="76,469,101,501"
-            shape="rect"
-          />
-          <area
-            data-key="bk2,bkall"
-            @click="modalShow"
-            alt="b-bk-2"
-            title="b-bk-2"
-            href=""
-            coords="23,469,46,501"
-            shape="rect"
-          />
-          <area
-            data-key="bk3,bkall"
-            @click="modalShow"
-            alt="b-bk-3"
-            title="b-bk-3"
-            href=""
-            coords="103,370,78,336"
-            shape="rect"
-          />
-          <area
-            data-key="bk4,bkall"
-            @click="modalShow"
-            alt="b-bk-4"
-            title="b-bk-4"
-            href=""
-            coords="26,335,49,366"
-            shape="rect"
-          />
-          <area
-            data-key="bkall"
-            alt="b-bk-all"
-            title="b-bk-all"
-            href=""
-            coords="138,668,225,701"
-            shape="rect"
-          />
-          <area
-            data-key="ibo1,iboall"
-            alt="i-bo-1"
-            title="i-bo-1"
-            href=""
-            coords="161,486,185,518"
-            shape="rect"
-          />
-          <area
-            data-key="ibo2,iboall"
-            alt="i-bo-2"
-            title="i-bo-2"
-            href=""
-            coords="244,465,271,519"
-            shape="rect"
-          />
-          <area
-            data-key="itbo51,iboall"
-            alt="i-tbo-51"
-            title="i-tbo-51"
-            href=""
-            coords="291,596,311,624"
-            shape="rect"
-          />
-          <area
-            data-key="itbo52,iboall"
-            alt="i-tbo-52"
-            title="i-tbo-52"
-            href=""
-            coords="240,595,264,623"
-            shape="rect"
-          />
-          <area
-            data-key="itbo53,iboall"
-            alt="i-tbo-53"
-            title="i-tbo-53"
-            href=""
-            coords="196,595,215,624"
-            shape="rect"
-          />
-          <area
-            data-key="iboall"
-            alt="i-bo-all"
-            title="i-bo-all"
-            href=""
-            coords="353,668,448,702"
-            shape="rect"
-          />
-          <area
-            data-key="bkt54,bktall"
-            alt="b-bkt-54"
-            title="b-bkt-54"
-            href=""
-            coords="150,593,170,620"
-            shape="rect"
-          />
-          <area
-            data-key="bkt55,bktall"
-            alt="b-bkt-55"
-            title="b-bkt-55"
-            href=""
-            coords="101,583,123,611"
-            shape="rect"
-          />
-          <area
-            data-key="bkt56,bktall"
-            alt="b-bkt-56"
-            title="b-bkt-56"
-            href=""
-            coords="54,560,73,587"
-            shape="rect"
-          />
-          <area
-            data-key="bktall"
-            alt="b-bkt-all"
-            title="b-bkt-all"
-            href=""
-            coords="248,669,332,702"
-            shape="rect"
-          />
-          <area
-            data-key="sst5,sstall"
-            alt="s-st-5"
-            title="s-st-5"
-            href=""
-            coords="341,493,365,518"
-            shape="rect"
-          />
-          <area
-            data-key="sst6,sstall"
-            alt="s-st-6"
-            title="s-st-6"
-            href=""
-            coords="402,494,424,519"
-            shape="rect"
-          />
-          <area
-            data-key="sst7,sstall"
-            alt="s-st-7"
-            title="s-st-7"
-            href=""
-            coords="465,492,490,520"
-            shape="rect"
-          />
-          <area
-            data-key="sst8,sstall"
-            alt="s-st-8"
-            title="s-st-8"
-            href=""
-            coords="536,496,561,521"
-            shape="rect"
-          />
-          <area
-            data-key="sst9,sstall"
-            alt="s-st-9"
-            title="s-st-9"
-            href=""
-            coords="597,494,621,522"
-            shape="rect"
-          />
-          <area
-            data-key="sstt44,sstall"
-            alt="s-stt-44"
-            title="s-stt-44"
-            href=""
-            coords="652,576,674,629"
-            shape="rect"
-          />
-          <area
-            data-key="sstt45,sstall"
-            alt="s-stt-45"
-            title="s-stt-45"
-            href=""
-            coords="596,575,619,626"
-            shape="rect"
-          />
-          <area
-            data-key="sstt46,sstall"
-            alt="s-stt-46"
-            title="s-stt-46"
-            href=""
-            coords="538,575,561,629"
-            shape="rect"
-          />
-          <area
-            data-key="sstt47,sstall"
-            alt="s-stt-47"
-            title="s-stt-47"
-            href=""
-            coords="489,577,512,628"
-            shape="rect"
-          />
-          <area
-            data-key="sstt48,sstall"
-            alt="s-stt-48"
-            title="s-stt-48"
-            href=""
-            coords="438,586,463,624"
-            shape="rect"
-          />
-          <area
-            data-key="sstt49,sstall"
-            alt="s-stt-49"
-            title="s-stt-49"
-            href=""
-            coords="388,581,408,624"
-            shape="rect"
-          />
-          <area
-            data-key="sstt50,sstall"
-            alt="s-stt-50"
-            title="s-stt-50"
-            href=""
-            coords="337,597,361,625"
-            shape="rect"
-          />
-          <area
-            data-key="sstall"
-            alt="s-st-all"
-            title="s-st-all"
-            href=""
-            coords="562,700,469,668"
-            shape="rect"
-          />
-          <area
-            data-key="ssoi10,ssoall"
-            alt="s-soi-10"
-            title="s-soi-10"
-            href=""
-            coords="660,496,682,519"
-            shape="rect"
-          />
-          <area
-            data-key="ssoi11,ssoall"
-            alt="s-soi-11"
-            title="s-soi-11"
-            href=""
-            coords="729,496,752,521"
-            shape="rect"
-          />
-          <area
-            data-key="ssoi12,ssoall"
-            alt="s-soi-12"
-            title="s-soi-12"
-            href=""
-            coords="784,496,810,522"
-            shape="rect"
-          />
-          <area
-            data-key="ssoi13,ssoall"
-            alt="s-soi-13"
-            title="s-soi-13"
-            href=""
-            coords="836,494,860,520"
-            shape="rect"
-          />
-          <area
-            data-key="ssot41,ssoall"
-            alt="s-sot-41"
-            title="s-sot-41"
-            href=""
-            coords="820,572,847,628"
-            shape="rect"
-          />
-          <area
-            data-key="ssot42,ssoall"
-            alt="s-sot-42"
-            title="s-sot-42"
-            href=""
-            coords="765,565,787,628"
-            shape="rect"
-          />
-          <area
-            data-key="ssot43,ssoall"
-            alt="s-sot-43"
-            title="s-sot-43"
-            href=""
-            coords="711,575,733,627"
-            shape="rect"
-          />
-          <area
-            data-key="ssoall"
-            alt="s-so-all"
-            title="s-so-all"
-            href=""
-            coords="588,667,682,701"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi14,mmoall"
-            alt="m-moi-14"
-            title="m-moi-14"
-            href=""
-            coords="865,413,890,460"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi15,mmoall"
-            alt="m-moi-15"
-            title="m-moi-15"
-            href=""
-            coords="913,460,945,518"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi16,mmoall"
-            alt="m-moi-16"
-            title="m-moi-16"
-            href=""
-            coords="990,457,1020,519"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi17,mmoall"
-            alt="m-moi-17"
-            title="m-moi-17"
-            href=""
-            coords="1062,463,1098,523"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi36,mmoall"
-            alt="m-moi-36"
-            title="m-moi-36"
-            href=""
-            coords="1094,589,1113,629"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi37,mmoall"
-            alt="m-moi-37"
-            title="m-moi-37"
-            href=""
-            coords="1038,585,1060,624"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi38,mmoall"
-            alt="m-moi-38"
-            title="m-moi-38"
-            href=""
-            coords="986,585,1009,624"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi39,mmoall"
-            alt="m-moi-39"
-            title="m-moi-39"
-            href=""
-            coords="933,584,954,624"
-            shape="rect"
-          />
-          <area
-            data-key="mmoi40,mmoall"
-            alt="m-moi-40"
-            title="m-moi-40"
-            href=""
-            coords="877,574,901,628"
-            shape="rect"
-          />
-          <area
-            data-key="mmoall"
-            alt="m-mo-all"
-            title="m-mo-all"
-            href=""
-            coords="705,665,798,699"
-            shape="rect"
-          />
-          <area
-            data-key="ddk110,ddkall"
-            alt="d-dk-110"
-            title="d-dk-110"
-            href=""
-            coords="1133,342,1171,370"
-            shape="rect"
-          />
-          <area
-            data-key="ddk111,ddkall"
-            alt="d-dk-111"
-            title="d-dk-111"
-            href=""
-            coords="1181,342,1217,370"
-            shape="rect"
-          />
-          <area
-            data-key="ddk112,ddkall"
-            alt="d-dk-112"
-            title="d-dk-112"
-            href=""
-            coords="1234,344,1268,371"
-            shape="rect"
-          />
-          <area
-            data-key="ddk113,ddkall"
-            alt="d-dk-113"
-            title="d-dk-113"
-            href=""
-            coords="1144,425,1179,451"
-            shape="rect"
-          />
-          <area
-            data-key="ddk114,ddkall"
-            alt="d-dk-114"
-            title="d-dk-114"
-            href=""
-            coords="1190,427,1223,453"
-            shape="rect"
-          />
-          <area
-            data-key="ddk115,ddkall"
-            alt="d-dk-115"
-            title="d-dk-115"
-            href=""
-            coords="1234,427,1270,452"
-            shape="rect"
-          />
-          <area
-            data-key="ddkall"
-            alt="d-dk-all"
-            title="d-dk-all"
-            href=""
-            coords="940,668,1036,699"
-            shape="rect"
-          />
-          <area
-            data-key="ddkt33,ddktall"
-            alt="d-dkt-33"
-            title="d-dkt-33"
-            href=""
-            coords="1230,551,1248,537,1260,553,1243,567"
-            shape="poly"
-          />
-          <area
-            data-key="ddkt34,ddktall"
-            alt="d-dkt-34"
-            title="d-dkt-34"
-            href=""
-            coords="1188,582,1202,569,1219,590,1205,603"
-            shape="poly"
-          />
-          <area
-            data-key="ddkt35,ddktall"
-            alt="d-dkt-35"
-            title="d-dkt-35"
-            href=""
-            coords="1147,593,1165,621"
-            shape="rect"
-          />
-          <area
-            data-key="ddktall"
-            alt="d-dkt-all"
-            title="d-dkt-all"
-            href=""
-            coords="826,668,919,701"
-            shape="rect"
-          />
-          <area
-            data-key="iiky3,iikyall"
-            alt="i-iky-3"
-            title="i-iky-3"
-            href=""
-            coords="398,280,424,312"
-            shape="rect"
-          />
-          <area
-            data-key="iiky4,iikyall"
-            alt="i-iky-4"
-            title="i-iky-4"
-            href=""
-            coords="462,279,486,311"
-            shape="rect"
-          />
-          <area
-            data-key="iikyall"
-            alt="i-iky-all"
-            title="i-iky-all"
-            href=""
-            coords="1062,665,1158,698"
-            shape="rect"
-          />
-        </map>
-        <!--
-          <toggle-button
-            v-model="secim"
-            key="bkall"
-            :labels="{ checked: 'Aç', unchecked: 'Kapa' }"
-            @change="addimgAll"
-          ></toggle-button>
-          <input
-            type="checkbox"
-            v-model="secim1"
-            title="iboall"
-            @change="addimgAll"
-          /><span>İçeri Teras Bar Önü</span>
-          <input
-            type="checkbox"
-            v-model="secim2"
-            title="bktall"
-            @change="addimgAll"
-          /><span>Batı Kulakçık Teras</span>
-          <input
-            type="checkbox"
-            v-model="secim3"
-            title="sstall"
-            @change="addimgAll"
-          /><span>Sahne Sağ Taraf</span>
-          <input
-            type="checkbox"
-            v-model="secim4"
-            title="ssoall"
-            @change="addimgAll"
-          /><span>Sahne Önü İçeri - Teras</span>
-          <input
-            type="checkbox"
-            v-model="secim5"
-            title="mmoall"
-            @change="addimgAll"
-          /><span>Mutfak Önü İçeri - Teras</span>
-          <input
-            type="checkbox"
-            v-model="secim6"
-            title="ddkall"
-            @change="addimgAll"
-          /><span>Doğu Kulaçık İçeri</span>
-          <input
-            type="checkbox"
-            v-model="secim7"
-            title="ddktall"
-            @change="addimgAll"
-          /><span>Doğu Kulaçık Teras</span>
-          <input
-            type="checkbox"
-            v-model="secim8"
-            title="iikyall"
-            @change="addimgAll"
-          /><span>İçeri Kapı Yanı</span>
-          -->
+<map name="image-map">
+    <area data-key="" @click="modalShow" alt="52" title="52" href="" coords="24,522,4,487" shape="rect">
+    <area data-key="" @click="modalShow" alt="60" title="60" href="" coords="65,522,43,487" shape="rect">
+    <area data-key="" @click="modalShow" alt="59" title="59" href="" coords="85,485,107,524" shape="rect">
+    <area data-key="" @click="modalShow" alt="53" title="53" href="" coords="0,404,36,435" shape="rect">
+    <area data-key="" @click="modalShow" alt="54" title="54" href="" coords="2,320,36,352" shape="rect">
+    <area data-key="" @click="modalShow" alt="61" title="61" href="" coords="66,401,85,437" shape="rect">
+    <area data-key="" @click="modalShow" alt="62" title="62" href="" coords="64,318,86,352" shape="rect">
+    <area data-key="" @click="modalShow" alt="58" title="58" href="" coords="107,361,152,397" shape="rect">
+    <area data-key="" @click="modalShow" alt="57" title="57" href="" coords="110,275,151,307" shape="rect">
+    <area data-key="" @click="modalShow" alt="56" title="56" href="" coords="116,199,134,244" shape="rect">
+    <area data-key="" @click="modalShow" alt="55" title="55" href="" coords="32,253,55,234,88,270,65,291" shape="poly">
+    <area data-key="" @click="modalShow" alt="51" title="51" href="" coords="36,546,60,560,45,589,22,576" shape="poly">
+    <area data-key="" @click="modalShow" alt="50" title="50" href="" coords="92,572,116,579,103,629,81,620" shape="poly">
+    <area data-key="" @click="modalShow" alt="B2" title="B2" href="" coords="194,587,215,620" shape="rect">
+    <area data-key="" @click="modalShow" alt="B1" title="B1" href="" coords="272,585,293,623" shape="rect">
+    <area data-key="" @click="modalShow" alt="1" title="1" href="" coords="176,466,203,519" shape="rect">
+    <area data-key="" @click="modalShow" alt="2" title="2" href="" coords="245,463,270,520" shape="rect">
+    <area data-key="" @click="modalShow" alt="3" title="3" href="" coords="359,492,388,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="4" title="4" href="" coords="360,439,388,474" shape="rect">
+    <area data-key="" @click="modalShow" alt="5" title="5" href="" coords="424,493,453,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="6" title="6" href="" coords="424,439,454,475" shape="rect">
+    <area data-key="" @click="modalShow" alt="7" title="7" href="" coords="488,493,518,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="8" title="8" href="" coords="488,440,519,476" shape="rect">
+    <area data-key="" @click="modalShow" alt="9" title="9" href="" coords="558,493,587,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="10" title="10" href="" coords="558,441,587,474" shape="rect">
+    <area data-key="" @click="modalShow" alt="11" title="11" href="" coords="616,496,644,529" shape="rect">
+    <area data-key="" @click="modalShow" alt="12" title="12" href="" coords="614,439,643,473" shape="rect">
+    <area data-key="" @click="modalShow" alt="13" title="13" href="" coords="669,494,699,528" shape="rect">
+    <area data-key="" @click="modalShow" alt="14" title="14" href="" coords="670,441,699,474" shape="rect">
+    <area data-key="" @click="modalShow" alt="15" title="15" href="" coords="746,492,774,539" shape="rect">
+    <area data-key="" @click="modalShow" alt="16" title="16" href="" coords="746,440,774,474" shape="rect">
+    <area data-key="" @click="modalShow" alt="17" title="17" href="" coords="811,493,842,542" shape="rect">
+    <area data-key="" @click="modalShow" alt="18" title="18" href="" coords="812,440,845,474" shape="rect">
+    <area data-key="" @click="modalShow" alt="19" title="19" href="" coords="913,460,945,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="20" title="20" href="" coords="922,351,950,377" shape="rect">
+    <area data-key="" @click="modalShow" alt="21" title="21" href="" coords="990,458,1020,526" shape="rect">
+    <area data-key="" @click="modalShow" alt="22" title="22" href="" coords="977,350,1006,377" shape="rect">
+    <area data-key="" @click="modalShow" alt="23" title="23" href="" coords="1066,460,1100,527" shape="rect">
+    <area data-key="" @click="modalShow" alt="24" title="24" href="" coords="1033,353,1061,379" shape="rect">
+    <area data-key="" @click="modalShow" alt="25" title="25" href="" coords="523,324,542,363" shape="rect">
+    <area data-key="" @click="modalShow" alt="26" title="26" href="" coords="471,327,491,362" shape="rect">
+    <area data-key="" @click="modalShow" alt="30" title="30" href="" coords="813,584,844,615" shape="rect">
+    <area data-key="" @click="modalShow" alt="31" title="31" href="" coords="748,582,777,615" shape="rect">
+    <area data-key="" @click="modalShow" alt="32" title="32" href="" coords="679,576,709,624" shape="rect">
+    <area data-key="" @click="modalShow" alt="33" title="33" href="" coords="622,575,653,622" shape="rect">
+    <area data-key="" @click="modalShow" alt="34" title="34" href="" coords="560,575,590,625" shape="rect">
+    <area data-key="" @click="modalShow" alt="35" title="35" href="" coords="500,584,527,620" shape="rect">
+    <area data-key="" @click="modalShow" alt="36" title="36" href="" coords="421,588,449,621" shape="rect">
+    <area data-key="" @click="modalShow" alt="37" title="37" href="" coords="353,588,385,624" shape="rect">
+    <area data-key="" @click="modalShow" alt="D1" title="D1" href="" coords="1037,583,1066,624" shape="rect">
+    <area data-key="" @click="modalShow" alt="D2" title="D2" href="" coords="933,584,960,623" shape="rect">
+    <area data-key="" @click="modalShow" alt="46" title="46" href="" coords="1136,540,1161,576" shape="rect">
+    <area data-key="" @click="modalShow" alt="47" title="47" href="" coords="1132,592,1158,628" shape="rect">
+    <area data-key="" @click="modalShow" alt="48" title="48" href="" coords="1182,553,1204,537,1235,582,1216,600" shape="poly">
+    <area data-key="" @click="modalShow" alt="43" title="43" href="" coords="1135,477,1169,505" shape="rect">
+    <area data-key="" @click="modalShow" alt="44" title="44" href="" coords="1184,477,1216,505" shape="rect">
+    <area data-key="" @click="modalShow"  alt="45" title="45" href="" coords="1228,474,1260,505" shape="rect">
+</map>
+      
+
+     
+       
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import $ from "jquery";
-
 require("jquery-imagemapster");
+import datepicker from "vue2-datepicker";
 
 export default {
-  name: "FixedTimeList",
-
+  
+  
   data() {
+    
     return {
       secim: null,
       secim1: null,
@@ -602,7 +123,6 @@ export default {
    
     };
   },
-
   created() {},
   mounted() {
     $("img").mapster({
@@ -615,7 +135,6 @@ export default {
     });
     var trh=(new Date().toLocaleDateString().split('.'));
 this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
-
    
   },
   methods: {
@@ -667,7 +186,6 @@ this.getirtarih(trh[2]+"-"+trh[1]+"-"+trh[0]);
       this.showModalId = id;
       this.showModal = true;
     },
-
     selectDate: function (date) {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
