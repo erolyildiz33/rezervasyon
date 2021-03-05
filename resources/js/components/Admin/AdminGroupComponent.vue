@@ -567,12 +567,11 @@ export default {
       masaekle: [],
       date: new Date(),
       gettar: new Date(),
+      sonuc: null,
     };
   },
   created() {
     this.getirtarih(this.selectDate());
-   
-           
   },
   mounted() {
     $("img").mapster({
@@ -593,9 +592,27 @@ export default {
     });
   },
   methods: {
-    masa: function(){
-        this.showModal=true;
+    masa: function () {
+      if (this.masaekle.length > 0) {
+        this.sonuc = false;
+      } else {
+        this.sonuc = true;
+      }
+      if (this.sonuc==false) {
 
+        this.showModalId = this.masaekle.join(", ");
+        this.showModal = true;
+      }else{
+        Swal.fire({
+        title: "Bu masa rezervayonludur",
+        text:
+          "Lütfen başka masa seçiniz.",
+        icon: "warning",
+        
+       
+        })
+       
+      }
     },
 
     getirtarih: function (tarih) {
@@ -606,45 +623,37 @@ export default {
           this.secilimasalar = res.data;
           res.data.map(function (value, index) {
             $("img").mapster("set", true, value.title);
-           
-            
           });
-         
         });
     },
 
     secimekle: function (e) {
-      
-      var bulmasa = jQuery.inArray(e.currentTarget.title, this.masaekle);
-      
-      if (bulmasa<0) {
-         
-        this.masaekle.push(e.currentTarget.title);       
-      } else {
-        var index = this.masaekle.indexOf(e.currentTarget.title);
-        if (index > -1) {
-          this.masaekle.splice(index, 1);
+      let chech = true;
+      jQuery.map(this.secilimasalar, function (n, i) {
+        jQuery.map(n.title.split(","), function (x, i) {
+          if (e.currentTarget.title.trim() == x.trim()) chech = false;
+        });
+      });
+      if (chech) {
+        var bulmasa1 = jQuery.inArray(e.currentTarget.title, this.masaekle);
+
+        if (bulmasa1 < 0) {
+          this.masaekle.push(e.currentTarget.title);
+        } else {
+          var index = this.masaekle.indexOf(e.currentTarget.title);
+          if (index > -1) {
+            this.masaekle.splice(index, 1);
+          }
         }
-        
-      } 
-      console.log(this.masaekle)
-     
-      $("area").mapster("deselect"); 
-      this.selectDate()
+      }
+      $("area").mapster("deselect");
+      this.selectDate();
 
       $("img").mapster("set", true, this.masaekle.toString());
     },
 
     modalShow: function (e) {
-      var item = this.secilimasalar.find(
-        (item) => item.title == e.currentTarget.title
-      );
-      if (item) {
-        this.sonuc = true;
-      } else {
-        this.sonuc = false;
-      }
-      this.showModalId = e.currentTarget.title;
+      this.showModalId = this.masaekle;
       this.showModal = true;
     },
     notBeforeToday(date) {
