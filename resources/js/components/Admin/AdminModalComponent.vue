@@ -69,7 +69,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4" v-if="modalId!='bekliyor'">
                           <date-picker
                             v-model="timevalue"
                             :time-picker-options="{
@@ -82,7 +82,7 @@
                             placeholder="Geliş Saatinizi belirleyiniz"
                           ></date-picker>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" v-if="modalId!='bekliyor'">
                           <div class="form-group">
                             <input
                               type="text"
@@ -96,7 +96,7 @@
 
                       <div class="container">
                         <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-12" v-if="modalId!='bekliyor'">
                             <div class="form-group">
                               <textarea
                                 v-model="text"
@@ -110,7 +110,7 @@
                           </div>
                         </div>
                         <div class="col-lg-12">
-                          <div class="col-md-12 notification-area">
+                          <div class="col-md-12 notification-area" v-if="modalId!='bekliyor'">
                             <div class="form-group">
                               <input
                                 id="sms"
@@ -196,30 +196,24 @@ export default {
   mounted() {},
   methods: {
     store: function () {
-      if (
-        this.notification_type != null &&
-        this.name != null &&
-        this.validEmail(this.email) != false &&
-        this.body != null &&
-        this.phone != null &&
-        this.getTime(this.timevalue) != null
-      ) {
+   
 
         axios
           .post("http://localhost/api/appointment-store", {
             csrf_token: document
               .querySelector('meta[name="csrf-token"]')
               .getAttribute("content"),
+            
             fullName: this.name,
             phone: this.phone,
             email: this.email,
-            body: this.body,
+            body: (this.modalId!="bekliyor")?this.body:"",
             kisi_id: this.kisi.id,
             title: this.modalId,
-            date: new Date(this.tarih).toLocaleDateString(),
-            text: this.text,
-            time: this.getTime(this.timevalue),
-            notification_type: this.notification_type,
+            date: (this.modalId!="bekliyor")?new Date(this.tarih).toLocaleDateString():"",
+            text:  (this.modalId!="bekliyor")?this.text:"",
+            time: (this.modalId!="bekliyor")?this.getTime(this.timevalue):"",
+            notification_type: (this.modalId!="bekliyor")?this.notification_type:"",
             bildirim_notu:this.bildirim_notu,
             user_id:$("#logidUserid").text(),
           })
@@ -231,7 +225,9 @@ export default {
                window.location.href="http://localhost/admin"
             }
           });
-      }
+      
+      if(this.modalId!="bekliyor")
+      {
       this.errors = [];
       if (!this.notification_type) {
         this.errors.push("Bildirim Tipi Seçilmelidir");
@@ -250,6 +246,7 @@ export default {
       }
       if (!this.getTime(this.timevalue)) {
         this.errors.push("Çalışma saati seçilmelidir");
+      }
       }
     },
     notBeforeToday(date) {

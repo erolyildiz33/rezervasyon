@@ -2,14 +2,14 @@
   <div>
     <div class="container">
       <div class="row">
-        <admin-modal
+        <admin-group-modal
           :secilimi="sonuc"
           :modalId="showModalId"
           v-if="showModal"
           :tarih="date"
           :kisi="userid[0]"
           @close="showModal = false"
-        ></admin-modal>
+        ></admin-group-modal>
         <div class="col-md-12">
           <date-picker
             v-model="date"
@@ -572,6 +572,8 @@ export default {
   },
   created() {
     this.getirtarih(this.selectDate());
+    var saat=new Date().toLocaleTimeString().split(":")
+     console.log(saat[0]+":"+saat[1]);
   },
   mounted() {
     $("img").mapster({

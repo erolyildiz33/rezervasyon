@@ -32,17 +32,17 @@ class indexController extends Controller
     }
     public function appointmentStore(Request $request)
     {
-      
-    
-      $returnArray = [];
+
+
+        $returnArray = [];
         $returnArray['status'] = false;
-        $user_name=$request->user_id;
-        $all = $request->except('csrf_token','user_id');
-        
+        $user_name = $request->user_id;
+        $all = $request->except('csrf_token', 'user_id');
 
-        $mydate = Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
+       
+       
 
-        $all['date'] = $mydate;
+       
         $control = Appointment::where('time', $all['date'])->count();
         if ($control != 0) {
             $returnArray['message'] = "Bu Randevu tarihi doludur.";
@@ -50,38 +50,47 @@ class indexController extends Controller
         }
         $all['code'] = substr(md5(uniqid()), 0, 6);
         $all['isActive'] = 1;
-
+        if (isset($all['etkinlikname'])) $all['etkinlik'] = 1;
+        if (isset($all['time'])) $all['time']; else unset($all['time']);
+        if (isset($all['notification_type'])) $all['notification_type']; else unset($all['notification_type']);
+        if (isset($all['body'])) $all['body']; else unset($all['body']);
+        if (isset($all['text'])) $all['text']; else unset($all['text']);
+        if (isset($all['text'])) $all['text']; else unset($all['text']);
+        if (isset($all['date'])) $all['date']=Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d'); else $all['date']= Carbon::today()->format('Y-m-d');
         $create = Appointment::create($all);
+
         if ($create) {
             $returnArray['status'] = true;
             $returnArray['message'] = "Randevunuz Başarı ile Alındı.";
         } else {
             $returnArray['message'] = "Veri Eklenemedi bizimle iletişime geçiniz";
         }
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Appointment",
-        "description"=>$create,
-        "related_id"=>$create->app_id,
-        "type"=>"create"
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Appointment",
+            "description" => $create,
+            "related_id" => $create->app_id,
+            "type" => "create"
         ]);
         return response()->json($returnArray);
     }
     public function getNotStore(Request $request)
     {
-        $user_name=$request->user_id;
-        $all = $request->except('_token','user_id');
-        
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
+
         $veri = [
             'kisi_id' => $all['kisi_id'],
             'not_icerik' => $all['not_icerik'],
         ];
         $id = Not::create($veri);
         $tumlist = $this->getNotList($all['kisi_id']);
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Not",
-        "description"=>$id,
-        "related_id"=>$id->id,
-        "type"=>"create"
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Not",
+            "description" => $id,
+            "related_id" => $id->id,
+            "type" => "create"
         ]);
         return ($tumlist);
     }
@@ -124,34 +133,34 @@ class indexController extends Controller
         if (file_exists($file)) {
             unlink($file);
         }
-      
-        $query=Table::where('id', $all['id'])->delete();
-       
+
+        $query = Table::where('id', $all['id'])->delete();
     }
     public function getEventDelete(Request $request)
     {
-        $user_name=$request->user_id;
-        $all = $request->except('_token','user_id');
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
         $resim = Event::where('id', $all['id'])->get('image');
         $sorgu = Event::find($all['id']);
         $file = public_path('uploads/event/') . DIRECTORY_SEPARATOR . $resim[0]['image'];
         if (file_exists($file)) {
             unlink($file);
         }
-        $query=Event::where('id', $all['id'])->delete();
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Event",
-        "description"=>json_encode($sorgu),
-        "related_id"=>$all['id'],
-        "type"=>"delete"
+        $query = Event::where('id', $all['id'])->delete();
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Event",
+            "description" => json_encode($sorgu),
+            "related_id" => $all['id'],
+            "type" => "delete"
         ]);
     }
 
     public function getTableStore(Request $request)
     {
-     
-        $user_name=$request->user_id;
-        $all = $request->except('_token','user_id');
+
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
 
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
@@ -189,20 +198,21 @@ class indexController extends Controller
 
 
         $id = Table::create($veri)->id;
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Table",
-        "description"=>$id,
-        "related_id"=>$id,
-        "type"=>"create"
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Table",
+            "description" => $id,
+            "related_id" => $id,
+            "type" => "create"
         ]);
-        
-      $getir=Table::orderBy('created_at',"desc")->get();
+
+        $getir = Table::orderBy('created_at', "desc")->get();
         echo  json_encode($getir);
     }
     public function getEventStore(Request $request)
     {
-        $user_name=$request->user_id;
-        $all = $request->except('_token','user_id');
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
 
         $datetime = date("Y-m-d h:i:s");
         $timestamp = strtotime($datetime);
@@ -218,11 +228,12 @@ class indexController extends Controller
             'image' => $image,
         ];
         $veri['id'] = Event::create($veri)->id;
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Event",
-        "description"=> $veri['id'],
-        "related_id"=> $veri['id']->id,
-        "type"=>"create"
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Event",
+            "description" => $veri['id'],
+            "related_id" => $veri['id']->id,
+            "type" => "create"
         ]);
         echo  json_encode($veri);
     }
@@ -269,115 +280,110 @@ class indexController extends Controller
     public function getTableUpdate(Request $request)
     {
         $arr = [];
-        $user_name=$request->user_id;
-        $all = $request->except('_token','user_id');
-        
-       
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
+
+
         $arr = [
-             
+
             'ad' => $all['ad'],
             'soyad' => $all['soyad'],
             'email' => $all['email'],
             'tel' => $all['tel'],
             'notu' => $all['notu'],
             'iptal' => $all['iptal'],
-            
+
             'image' => $all['image'],
             'karaliste' => $all['karaliste'],
             'cinsiyet' => $all['cinsiyet'],
             'misafir_id' => $all['misafir_id'],
-            
-        ];
-      
-      
-        if ($all['dogumtar']!=""){
-            $arr['dogumtar'] =Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
 
-            
+        ];
+
+
+        if ($all['dogumtar'] != "") {
+            $arr['dogumtar'] = Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
         }
-        if ($all['evliliktar']!=""){
-$arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d');
+        if ($all['evliliktar'] != "") {
+            $arr['evliliktar'] = Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->format('Y-m-d');
         }
-        
-        $query=Table::find($all['id'])->update($arr);
-        Log::create(['user_name'=>$user_name,
-        "tablename"=>"Table",
-        "description"=> json_encode($arr),
-        "related_id"=> $all['id'],
-        "type"=>"update"
+
+        $query = Table::find($all['id'])->update($arr);
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Table",
+            "description" => json_encode($arr),
+            "related_id" => $all['id'],
+            "type" => "update"
         ]);
-       
+
         return response()->json(Table::all());
     }
     public function getAppointmentUpdate(Request $request)
     {
         $srr = [];
-        $user_name=$request->user_id;
-        $tum = $request->except('_token','user_id');
-        $veritabani=Appointment::where("app_id",$tum['app_id'])->get()[0];
-        $degisenler=[];
-        if ($veritabani->fullName!=$tum['fullName']&&$tum['fullName']!=null) array_push($degisenler,['fullName' => $tum['fullName']]);
-        if ($veritabani->phone!=$tum['phone']&&$tum['phone']!=null) array_push($degisenler,['phone' => $tum['phone']]);
-        if ($veritabani->email!=$tum['email']&&$tum['email']!=null) array_push($degisenler,['email' => $tum['email']]);
-        if ($veritabani->text!=$tum['text']&&$tum['text']!=null) array_push($degisenler,['text' => $tum['text']]);
-        if ($veritabani->body!=$tum['body']&&$tum['body']!=null) array_push($degisenler,['body' => $tum['body']]);
-        if ($veritabani->date!=Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d')&&$tum['date']!=null) array_push($degisenler,['date' => $tum['date']]);
-        if ($veritabani->time!=$tum['time']&&$tum['time']!=null) array_push($degisenler,['time' => $tum['time']]);
-        if ($veritabani->title!=$tum['title']&&$tum['title']!=null) array_push($degisenler,['title' => $tum['title']]);
-        
+        $user_name = $request->user_id;
+        $tum = $request->except('_token', 'user_id');
+        $veritabani = Appointment::where("app_id", $tum['app_id'])->get()[0];
+        $degisenler = [];
+        if ($veritabani->fullName != $tum['fullName'] && $tum['fullName'] != null) array_push($degisenler, ['fullName' => $tum['fullName']]);
+        if ($veritabani->phone != $tum['phone'] && $tum['phone'] != null) array_push($degisenler, ['phone' => $tum['phone']]);
+        if ($veritabani->email != $tum['email'] && $tum['email'] != null) array_push($degisenler, ['email' => $tum['email']]);
+        if ($veritabani->text != $tum['text'] && $tum['text'] != null) array_push($degisenler, ['text' => $tum['text']]);
+        if ($veritabani->body != $tum['body'] && $tum['body'] != null) array_push($degisenler, ['body' => $tum['body']]);
+        if ($veritabani->date != Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d') && $tum['date'] != null) array_push($degisenler, ['date' => $tum['date']]);
+        if ($veritabani->time != $tum['time'] && $tum['time'] != null) array_push($degisenler, ['time' => $tum['time']]);
+        if ($veritabani->title != $tum['title'] && $tum['title'] != null) array_push($degisenler, ['title' => $tum['title']]);
+
         $srr = [
-            
+
             'fullName' => $tum['fullName'],
             'phone' => $tum['phone'],
             'email' => $tum['email'],
-            'isSend'=>0,
+            'isSend' => 0,
             'text' => $tum['text'],
             'body' => $tum['body'],
-        	'degisenler'=>json_encode($degisenler),
-          
-           'notification_type'=>$tum['notification_type'],
+            'degisenler' => json_encode($degisenler),
+
+            'notification_type' => $tum['notification_type'],
             'bildirim_notu' => $tum['bildirim_notu'],
-           
+
         ];
-        $onbes=Carbon::now()->addMinutes(15)->toTimeString();
-        $simdi=Carbon::now()->toTimeString();
-        $bugun=Carbon::now()->today();
-        
-        if( $tum['date']>$bugun){
-            $srr["isGone"]=2;
+        $onbes = Carbon::now()->addMinutes(15)->toTimeString();
+        $simdi = Carbon::now()->toTimeString();
+        $bugun = Carbon::now()->today();
+
+        if ($tum['date'] > $bugun) {
+            $srr["isGone"] = 2;
+        } elseif ($tum['date'] < $bugun) {
+            $srr["isGone"] = 0;
+        } else {
+            if ($tum['time'] <= $onbes && $tum['time'] >= $simdi) {
+                $srr["isGone"] = 1;
+            } elseif ($tum['time'] > $onbes && $tum['time'] >= $simdi) {
+                $srr["isGone"] = 2;
+            } else {
+                $srr["isGone"] = 0;
+            }
         }
-        elseif( $tum['date']<$bugun){
-            $srr["isGone"]=0;
+
+        if ($tum['time'] != null) {
+            $srr['time'] = Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
         }
-        else{
-            if($tum['time']<=$onbes && $tum['time']>=$simdi) {
-                $srr["isGone"]=1;
-        
-              }
-              elseif($tum['time']>$onbes && $tum['time']>=$simdi){
-               $srr["isGone"]=2;
-              }
-              else{
-                $srr["isGone"]=0;
-              }
+        if ($tum['date'] != null) {
+            $srr['date'] = Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d');
         }
-        
-        if($tum['time']!=null){
-             $srr['time'] =Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
+        if ($tum['title'] != null) {
+            $srr['title'] = $tum['title'];
         }
-        if($tum['date']!=null){
-            $srr['date'] =Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d');
-       }
-        if($tum['title']!=null){
-            $srr['title'] =$tum['title'];
-       }
-       
-        $query=Appointment::where("app_id",$tum['app_id'])->update($srr);
-       Log::create(['user_name'=>$user_name,
-        "tablename"=>"Appointment",
-        "description"=>  json_encode($srr),
-        "related_id"=> $tum['app_id'],
-        "type"=>"update"
+
+        $query = Appointment::where("app_id", $tum['app_id'])->update($srr);
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Appointment",
+            "description" =>  json_encode($srr),
+            "related_id" => $tum['app_id'],
+            "type" => "update"
         ]);
         return response()->json(Appointment::all());
     }
@@ -406,7 +412,7 @@ $arr['evliliktar'] =Carbon::createFromFormat('d.m.Y', $all['evliliktar'])->forma
                 'cinsiyet' => $v->cinsiyet,
                 'misafir_id' => $v->misafir_id,
                 'karaliste_gerekce' => $v->karaliste_gerekce,
-                'isGone'=>$v->isGone,
+                'isGone' => $v->isGone,
             ));
         }
         return response()->json($returnArray);

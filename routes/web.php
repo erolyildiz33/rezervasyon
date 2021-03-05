@@ -49,6 +49,8 @@ Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'
     Route::get('/durum','indexController@durum')->name('durum');
 
     Route::get('/profile/{id}','indexController@profile')->name('profile');
+    Route::get('/rapor','indexController@rapor')->name('rapor');
+
 
 
 

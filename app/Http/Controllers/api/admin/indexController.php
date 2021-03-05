@@ -89,19 +89,9 @@ class indexController extends Controller
 
             $returnArray = [];
             /* Waiting */
-            $returnArray['waiting'] = DB::table("appointments")->select("tables.notu", "appointments.*")
-            ->where('isActive', 0)
-            ->where('date',">", Carbon::now()->toDateString())
-            ->orwhere(function($query) {
-                $query->where('date', Carbon::now()->toDateString())
-                      ->where('time',">=", Carbon::now()->toTimeString());
-            })
-       
-           
-         
-           
-            ->join('tables', 'tables.id', '=', 'appointments.kisi_id')
-            ->orderBy('date', 'asc')->paginate(100, ['*'], 'waiting_page');
+            $returnArray['waiting'] = DB::table("appointments")->select("appointments.*")
+            ->where('title', "bekliyor")
+           ->paginate(100, ['*'], 'waiting_page');
             $returnArray['waiting']->getCollection()->transform(function ($value) {
 
                 return $value;

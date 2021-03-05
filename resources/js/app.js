@@ -46,6 +46,8 @@ Vue.component('admin-profile',require('./components/Admin/AdminProfileComponent'
 Vue.component('deneme-table',require('./components/DenemeTable.vue').default);
 Vue.component('admin-durum',require('./components/Admin/AdminDurumComponent.vue').default);
 Vue.component('admin-group',require('./components/Admin/AdminGroupComponent.vue').default);
+Vue.component('admin-rapor',require('./components/Admin/AdminRaporComponent.vue').default);
+
 
 
 
@@ -68,6 +70,8 @@ Vue.component('admin-group',require('./components/Admin/AdminGroupComponent.vue'
 Vue.component('admin-appointment-modal',require('./components/Admin/AdminAppointmentModal').default);
 Vue.component('admin-form',require('./components/Admin/AdminFormComponent').default);
 Vue.component('admin-modal',require('./components/Admin/AdminModalComponent').default);
+Vue.component('admin-group-modal',require('./components/Admin/AdminGroupModalComponent').default);
+
 Vue.component('admin-update-modal',require('./components/Admin/AdminUpdateModalComponent').default);
 Vue.component('admin-rezervation-update-modal',require('./components/Admin/AdminRezervationUpdateModelComponent').default);
 Vue.component('admin-rezervation',require('./components/Admin/AdminRezervationComponent').default);

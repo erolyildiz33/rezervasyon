@@ -139,14 +139,8 @@
                                 <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a>
                             </li>
                             <li>
-                            <div class="dropdown">
-  <button class="dropbtn">Raporlar</button>
-  <div class="dropdown-content">
-  <a href="{{ route('admin.event') }}" class="btn btn-dark">Özel Gün Raporu</a>
-  <a href="{{ route('admin.event') }}" class="btn btn-dark">Müşteri Raporu</a>
-  <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a> 
-  </div>
-</div>
+                            <a href="{{ route('admin.rapor') }}" class="btn btn-dark">Raporlar</a>
+                         
                               
                             </li>
                            
@@ -244,7 +238,8 @@
     <script src="/dist/bootstrap-table.min.js"></script>
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   
    

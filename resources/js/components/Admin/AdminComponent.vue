@@ -52,17 +52,19 @@
           >İptal Edilen Randevular</a
         >
       </li>
+       <li class="nav-item">
+                <a class="nav-link btn btn-default" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="waiting" aria-selected="true">Bekleyen Randevular</a>
+            </li>
+      
     </ul>
     <div class="tab-content" id="myTabContent">
-      <!-- <div class="tab-pane fade in active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+      <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
 
                 <appointment-item @updateOkey="updateOkey" @updateCancel="updateCancel" :data="waiting.data"></appointment-item>
-                <div class="row" style="margin-top:10px;">
-                    <div class="col-md-12">
-
-                    </div>
-                </div>
-            </div>-->
+                <div class="row" style="margin-top: 10px">
+          <div class="col-md-12"></div>
+        </div>
+            </div>
       <div
         class="tab-pane active"
         id="home"

@@ -24,6 +24,9 @@
                           ><span> Tarihi</span></date-picker
                         >
                       </div>
+                       <div>
+          <button class="btn btn-dark mt-2" @click="bekle">Beklemeye Al</button>
+        </div>
         <img src="/img/yeni.jpeg" usemap="#image-map">
 
   <map name="image-map">
@@ -611,6 +614,11 @@ export default {
         $("img").mapster("set", true, value.title);
       });
     });
+    },
+    bekle:function(){
+      this.showModalId = "bekliyor";
+       this.sonuc = false;
+      this.showModal = true;
     },
     modalShow: function (e) {
       var item = this.secilimasalar.find(

@@ -20,6 +20,7 @@
             ><span> Tarihi</span></date-picker
           >
         </div>
+       
         <img src="/img/yeni.jpeg" usemap="#image-map" />
 
         <map name="image-map">
