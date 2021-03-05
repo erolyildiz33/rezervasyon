@@ -70,7 +70,7 @@ class indexController extends Controller
         }
         $data['isSend'] = 0;
         $user_name = $request->user_id;
-        echo(json_encode($data));die();
+       
      (Appointment::where('app_id', $request->id)->update($data));
         Log::create([
             'user_name' => $user_name,

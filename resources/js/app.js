@@ -45,6 +45,7 @@ Vue.component('admin-event-preview',require('./components/Admin/AdminEventPrevie
 Vue.component('admin-profile',require('./components/Admin/AdminProfileComponent').default);
 Vue.component('deneme-table',require('./components/DenemeTable.vue').default);
 Vue.component('admin-durum',require('./components/Admin/AdminDurumComponent.vue').default);
+Vue.component('admin-group',require('./components/Admin/AdminGroupComponent.vue').default);
 
 
 

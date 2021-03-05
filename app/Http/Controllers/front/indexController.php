@@ -25,7 +25,7 @@ class indexController extends Controller
     public function rezervkontrol()
     {
         $all=Appointment::all()->where('isActive',1);
-        $onbes=Carbon::now()->addMinutes(15)->toTimeString();
+        $onbes=Carbon::now()->addMinutes(30)->toTimeString();
         $simdi=Carbon::now()->toTimeString();
         $bugun=Carbon::now()->toDateString();
         foreach ($all as $key=>$value){

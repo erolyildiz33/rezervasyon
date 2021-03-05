@@ -27,6 +27,13 @@ class indexController extends Controller
       
         return view('admin.form')->with('kullanici',$kullanici);
     }
+    public function group($id=null)
+    {
+       
+        $kullanici=Table::where('id',$id)->get();
+      
+        return view('admin.group')->with('kullanici',$kullanici);
+    }
     public function updaterezerv($id=null)
     {
         $kullanici=Appointment::where('app_id',$id)->get();

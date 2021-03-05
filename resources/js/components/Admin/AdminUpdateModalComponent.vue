@@ -57,12 +57,33 @@
                     disabled: '#CCCCCC',
                   }"
                 ></toggle-button>
+                 <label>Masa Süslemesi?</label>
+                <toggle-button
+                  :width="85"
+                  :height="30"
+                  style="font-size: 16px"
+                  v-model="secim3"
+                  :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+                  :color="{
+                    checked: '#00FF00',
+                    unchecked: '#FF0000',
+                    disabled: '#CCCCCC',
+                  }"
+                ></toggle-button>
                 <div v-if="secim1">
                   <textarea
                     type="text"
                     class="form-control"
                     v-model="gerekce"
                     placeholder="Karaliste Gerekçesi?"
+                  />
+                </div>
+                 <div v-if="secim3">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    v-model="masasus"
+                    placeholder="Masa Süslemesi"
                   />
                 </div>
                 <div>
@@ -175,6 +196,7 @@ export default {
       notu: this.kisi.notu,
       iptal: this.kisi.iptal,
       gerekce: this.kisi.karaliste_gerekce,
+      masasus:this.kisi.masasus,
       SelectPhoto: true,
       previewImage: null,
       isDisable: true,
@@ -190,6 +212,7 @@ export default {
       secim: this.kisi.misafir_id?true:false,
       secim1: this.kisi.cinsiyet?true:false,
       secim2: this.kisi.karaliste?true:false,
+      secim3:this.kisi.masasus?true:false,
 
       title: null,
       timevalue: null,
@@ -227,6 +250,7 @@ export default {
           misafir_id: this.secim,
           karaliste: this.secim1,
           cinsiyet: this.secim2,
+          masasus:this.secim3,
           karaliste_gerekce: this.gerekce,
            user_id:$("#logidUserid").text(),
         })

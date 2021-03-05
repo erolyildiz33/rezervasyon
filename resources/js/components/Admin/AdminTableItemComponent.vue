@@ -256,13 +256,11 @@ export default {
           formatter: (value, row) => {
             if (row.id != 0) {
               return (
-                '<a class="btn btn-success" href="http://localhost/admin/rezerv/' +
+                '<a class="btn btn-default grupmu" data-kisiid="'+row.id+'"><i class="fa fa-phone"></i></a><a class="btn btn-default" href="http://localhost/admin/profile/' +
                 row.id +
-                '">Rezervasyon Yap</a><a class="btn btn-info" href="http://localhost/admin/profile/' +
+                '"><i class="fa fa-user"></i></a><button data-userid="' +
                 row.id +
-                '">Profil</a><button data-userid="' +
-                row.id +
-                '" class="btn btn-warning kisiguncelle">Kisi Güncelle</button>'
+                '" class="btn btn-default kisiguncelle"><i class="fa fa-edit"></i></button>'
               );
             } else if (row.isActive == 1) {
               return '<span class="bg-green">Onaylı</span>';
@@ -277,8 +275,14 @@ export default {
         showColumns: true,
         showExport: true,
         pagination:true,
+       
+         showFullscreen:true,
+        showToggle:true,
+       
         sidePagination:"client",
         pageList:"[10, 25, 50, 100, 200, All]",
+       
+        
       },
     };
   },
@@ -297,6 +301,32 @@ export default {
 
       ref.getir(id);
     });
+     $(document).on("click", ".grupmu", function () {
+      var geriid = $(this).data("kisiid");
+      Swal.fire({
+        title: "Rezervasyon Tipi",
+       
+        icon: "warning",
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#51ad4c",
+
+        cancelButtonColor: "#d33",
+         cancelButtonText:"İptal",
+        confirmButtonText: "Kişi Rezervasyonu",
+        denyButtonText: "Grup Rezervasyonu",
+      }).then((result) => {
+        if (result.isConfirmed) {
+         window.location.href="http://localhost/admin/rezerv/"+geriid
+        }
+        else if(result.isDenied)
+        {
+
+          window.location.href="http://localhost/admin/group/"+geriid
+        }
+      });
+    })
   },
   methods: {
   tumkayit: function(){

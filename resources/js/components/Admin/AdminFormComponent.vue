@@ -584,7 +584,7 @@ export default {
     $("img").mapster({
       mapKey: "title",
       singleSelect: false,
-      fillColor: "ff0000",
+      fillColor: "00ffee",
       fillOpacity: 1,
       stroke: false,
       isSelectable: false,

@@ -36,7 +36,7 @@ class LoginController extends Controller
         Session::put('user_id', auth()->user()->id);
         return '/admin';
     }
-
+    
     /**
      * Create a new controller instance.
      *

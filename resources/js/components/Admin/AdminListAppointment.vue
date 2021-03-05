@@ -87,11 +87,11 @@ export default {
 
             }
             return (
-              '<input type="checkbox"' +
-              yes + " " + geldi +
-              ' class="durum" data-durumId="' +
-              row.app_id +
-              '">'
+              '<div class="durumum"><input ' +
+                                yes + " " + geldi +
+                                ' class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumId="' +
+                                row.app_id +
+                                '"></div>'
             );
           },
         },
@@ -140,7 +140,7 @@ export default {
                 row.kisi_id +
                 '"><i class="fa fa-user"></i></a><button data-userid="' +
                 row.app_id +
-                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button>'
+                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><a class="btn btn-default" href="http://localhost/detail"><i class="fa fa-check"></i></a>'
               );
             } else if (row.isActive == 2) {
               return (
@@ -172,6 +172,8 @@ export default {
         pagination: true,
         detailView: true,
         sidePagination: "client",
+           showFullscreen:true,
+        showToggle:true,
         width: 200,
         pageList: "[10, 25, 50, 100, 200, All]",
         detailFormatter: function (index, row) {
@@ -270,9 +272,10 @@ export default {
               id: geriid,
               user_id: $("#logidUserid").text(),
             })
-            .then((res) => {});
+           
 
           Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
+           ref.$emit("ustgonder");
         }
       });
     }),
@@ -298,72 +301,15 @@ export default {
                 id: iptalid,
                 user_id: $("#logidUserid").text(),
               })
-              .then((res) => {
-                this.$emit("ustgonder", res);
-              });
-
-            Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success");
+              Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success"); 
+              ref.$emit("ustgonder");
           }
         });
       });
   },
-  watch: {
-    kontrolDurum: function (newValue, oldValue) {
 
-      axios
-        .post(`http://localhost/api/admin/process`, {
-          csrf_token: document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content"),
-          came: newValue == true ? 1 : 0,
-          id: this.kontrolId,
-          user_id: $("#logidUserid").text(),
-        })
-        .then((res) => {});
-      this.$emit("ustgonder");
-    },
-  },
   methods: {
-    bas: function (e) {
 
-      Swal.fire({
-        title: "Müşteri durumu Geldi olarak değiştirelecektir?",
-        text:
-          "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Evet, istiyorum!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.kontrolDurum = e.prop("checked");
-          this.kontrolId = e.data("durumid");
-
-        }
-       else{
-        this.gelenguncel();
-
-       }
-
-        /*    axios
-          .post(`http://localhost/api/admin/process`, {
-            csrf_token: document
-              .querySelector('meta[name="csrf-token"]')
-              .getAttribute("content"),
-            gone: $(this).prop("checked")==true?1:2,
-            id: $(this).data("durumid"),
-            user_id: $("#logidUserid").text(),
-          })
-          .then((res) => {
-       // ref.$emit("ustgonder",res.data);
-
-          });
-       ref.gelenguncel();
-        Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
-       */
-      });
-    },
     YuklemeSonrasi: function () {
       var ref = this;
 
@@ -378,12 +324,32 @@ export default {
         style: "font-size: 10px",
 
       });
-      $('.durum').on("change", function(e) {
+     $('.durumum').on('click', '.toggle', function(e)
+                {
+                    let box=$(this).children(0);
+                    let durum= box.prop("checked");
+                    let durumid=box.data("durumid");
 
-         ref.bas($(this));
+                    e.preventDefault(); e.stopPropagation();
+                    Swal.fire({
+                        title: "Müşteri durumu Geldi olarak değiştirelecektir?",
+                        text:
+                            "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Evet, istiyorum!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
 
 
-});
+                            (durum==true)?box.prop('checked', false).change():box.prop('checked', true).change();
+                        }
+
+
+                    });
+                });
 
 
 

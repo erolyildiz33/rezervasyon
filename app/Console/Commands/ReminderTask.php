@@ -6,7 +6,10 @@ use App\Models\Appointment;
 use App\Models\WorkingHours;
 use Illuminate\Console\Command;
 use App\Mail\MailNotification;
+
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Contracts\Mail\Mailer;
 use SebastianBergmann\Environment\Console;
 
@@ -84,10 +87,11 @@ if(isset($v['degisenler'])){
 
                 //$data['degisenler'] =  "Değişen alanlar: " . substr($degisenStr, 0, -2);
 }
+$lastdate=new Carbon($v['date']);
                 $data  = [
                     'name' => $v['fullName'],
                     'email' => $v['email'],
-                    'date' => $v['date'],
+                    'date' =>$v['date'].'-'.$lastdate->locale('tr')->dayName,
                     'time' => $v['time'],
                     'code' => $v['code'],
                     'title' => $v['title'],

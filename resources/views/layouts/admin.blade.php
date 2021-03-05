@@ -139,7 +139,15 @@
                                 <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.event') }}" class="btn btn-dark">Raporlar</a>
+                            <div class="dropdown">
+  <button class="dropbtn">Raporlar</button>
+  <div class="dropdown-content">
+  <a href="{{ route('admin.event') }}" class="btn btn-dark">Özel Gün Raporu</a>
+  <a href="{{ route('admin.event') }}" class="btn btn-dark">Müşteri Raporu</a>
+  <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a> 
+  </div>
+</div>
+                              
                             </li>
                            
                            
