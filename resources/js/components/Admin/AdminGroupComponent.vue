@@ -568,12 +568,17 @@ export default {
       date: new Date(),
       gettar: new Date(),
       sonuc: null,
+     
     };
   },
   created() {
     this.getirtarih(this.selectDate());
     var saat=new Date().toLocaleTimeString().split(":")
-     console.log(saat[0]+":"+saat[1]);
+      if (this.masaekle.length > 0) {
+        this.sonuc = false;
+      } else {
+        this.sonuc = true;
+      }
   },
   mounted() {
     $("img").mapster({
@@ -647,6 +652,8 @@ export default {
             this.masaekle.splice(index, 1);
           }
         }
+      }else{
+         this.sonuc = true;
       }
       $("area").mapster("deselect");
       this.selectDate();

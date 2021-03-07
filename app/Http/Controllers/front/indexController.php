@@ -12,7 +12,7 @@ class indexController extends Controller
     public function index()
     {
        
-        return view('front.index');
+        return view('auth.login');
     }
     public function detail()
     {

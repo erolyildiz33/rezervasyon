@@ -621,6 +621,7 @@ export default {
   },
   created() {
     this.getirtarih(this.selectDate());
+    //masa kişi sayısını göster burada!!!!
   },
   mounted() {
     $("img").mapster({

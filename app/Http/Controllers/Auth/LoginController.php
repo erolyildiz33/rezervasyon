@@ -29,7 +29,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (auth()->user()->isAdmin != 0) {
-            return 'http://localhost';
+            return 'http://localhost/admin';
         }
         session(['user_name' => auth()->user()->name]);
         session(['user_id' => auth()->user()->id]);

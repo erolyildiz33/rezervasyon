@@ -11,9 +11,11 @@ class indexController extends Controller
 {
     public function index()
     {
+      
+
         return view('admin.index');
     }
-
+   
     public function working()
     {
         return view('admin.working');
@@ -40,6 +42,12 @@ class indexController extends Controller
         $kullanici = Appointment::where('app_id', $id)->get();
 
         return view('admin.updaterezerv')->with('kullanici', $kullanici);
+    }
+    public function updategrouprezerv($id = null)
+    {
+        $kullanici = Appointment::where('app_id', $id)->get();
+
+        return view('admin.updategroup')->with('kullanici', $kullanici);
     }
     public function event()
     {

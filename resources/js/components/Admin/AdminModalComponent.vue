@@ -10,7 +10,31 @@
                 <label>Masa No:</label>
                 {{modalId }}
               </h3>
-
+              <div class="col-md-4">
+  <div class="form-group">
+     <label>Masa Süslemesi İstiyor mu?</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim"
+          :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+  </div>
+   <div v-if="secim">
+          <textarea
+            type="text"
+            class="form-control"
+            v-model="susleme_notu"
+            placeholder="Masa Süsleme Notu"
+          />
+        </div>
+</div>
             </slot>
              <button
                 class="btn btn-danger modal-default-button"
@@ -73,10 +97,11 @@
                           <date-picker
                             v-model="timevalue"
                             :time-picker-options="{
-                              start: '11:30',
+                              start:simdikisaat,
                               step: '00:05',
                               end: '23:30',
                             }"
+                          
                             format="H:mm"
                             type="time"
                             placeholder="Geliş Saatinizi belirleyiniz"
@@ -89,6 +114,16 @@
                               class="form-control"
                               v-model="body"
                               placeholder="Kaç kişi olacağınızı yazınız"
+                            />
+                          </div>
+                        </div>
+                         <div class="col-md-4" v-if="modalId!='bekliyor'">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="hes"
+                              placeholder="HES Kodu yazınız"
                             />
                           </div>
                         </div>
@@ -176,6 +211,7 @@ export default {
   name: "FixedTimeList",
   data() {
     return {
+      simdikisaat:this.timesec(),
       data: [],
       completeForm: true,
       errors: [],
@@ -188,6 +224,9 @@ export default {
       text: "",
       bildirim_notu:this.bildirim_notu,
       timevalue: null,
+      secim:false,
+      susleme_notu:"",
+      hes:null
     };
   },
   created() {
@@ -215,6 +254,9 @@ export default {
             time: (this.modalId!="bekliyor")?this.getTime(this.timevalue):"",
             notification_type: (this.modalId!="bekliyor")?this.notification_type:"",
             bildirim_notu:this.bildirim_notu,
+            susleme_notu:this.susleme_notu,
+            susleme:this.secim,
+            hes_kodu:this.hes,
             user_id:$("#logidUserid").text(),
           })
            .then((res) => {
@@ -241,6 +283,9 @@ export default {
       if (!this.body) {
         this.errors.push("Kişi sayısı girilmelidir");
       }
+      if (!this.hes) {
+        this.errors.push("HES kodu girilmelidir");
+      }
       if (!this.phone) {
         this.errors.push("Telefon numarası Girilmelidir");
       }
@@ -249,6 +294,11 @@ export default {
       }
       }
     },
+    timesec(){
+      let saat=Math.ceil(new Date().toTimeString().split(":")[0]);
+ 
+return  saat+1+':00';
+},
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },

@@ -30,16 +30,21 @@
       </div>
     </div>
 
-    <admin-rezervation-update-modal
-      @kisiguncel="gelenguncel"
+      <admin-rezervation-update-modal
+     
       v-if="showModal"
       :modalId="showModalId"
       :kisi="modalveri"
-      :secilimi="false"
+     
       :secimsaat="secilisaat"
       :secimtarih="secilitarih"
       @close="showModal = false"
     ></admin-rezervation-update-modal>
+      <admin-confirm-modal
+      v-if="showConfirm"
+      :kisi="confid"
+      @close="showConfirm = false"
+    ></admin-confirm-modal>
   </div>
 </template>
 
@@ -52,6 +57,7 @@ export default {
     return {
       showModalId: 0,
       showModal: false,
+      showConfirm:false,
       modalveri: [],
       secimtarih: null,
       secilitarih: null,
@@ -60,6 +66,7 @@ export default {
       date2: null,
       kontrolDurum: null,
       kontrolId: null,
+      confid:null,
       columns: [
         {
           title: "Sıra No",
@@ -70,28 +77,32 @@ export default {
         {
           title: "Geldi mi?",
           formatter: function (value, row, index) {
-
             var yes = null;
-            var geldi=null;
+            var geldi = null;
             if (row.isCame == 1) yes = "checked";
             else yes = "";
-            if(row.date<new Date().toISOString().substring(0, 10)) geldi="disabled"
-            else if(row.date>new Date().toISOString().substring(0, 10)){
-            geldi=""
-            }
-            else{
-              if(row.date==new Date().toISOString().substring(0, 10) && row.time<new Date().toTimeString()) geldi="disabled"
-              else{
-                geldi=""
+            if (row.date < new Date().toISOString().substring(0, 10))
+              geldi = "disabled";
+            else if (row.date > new Date().toISOString().substring(0, 10)) {
+              geldi = "";
+            } else {
+              if (
+                row.date == new Date().toISOString().substring(0, 10) &&
+                row.time < new Date().toTimeString()
+              )
+                geldi = "disabled";
+              else {
+                geldi = "";
               }
-
             }
             return (
               '<div class="durumum"><input ' +
-                                yes + " " + geldi +
-                                ' class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumId="' +
-                                row.app_id +
-                                '"></div>'
+              yes +
+              " " +
+              geldi +
+              ' class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumId="' +
+              row.app_id +
+              '"></div>'
             );
           },
         },
@@ -120,6 +131,7 @@ export default {
           title: "Masa No",
           field: "title",
         },
+        
 
         {
           title: "İşlem",
@@ -140,7 +152,7 @@ export default {
                 row.kisi_id +
                 '"><i class="fa fa-user"></i></a><button data-userid="' +
                 row.app_id +
-                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><a class="btn btn-default" href="http://localhost/detail"><i class="fa fa-check"></i></a>'
+                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="'+row.app_id+'"class="btn btn-default confirm"><i class="fa fa-check"></i></button>'
               );
             } else if (row.isActive == 2) {
               return (
@@ -172,8 +184,8 @@ export default {
         pagination: true,
         detailView: true,
         sidePagination: "client",
-           showFullscreen:true,
-        showToggle:true,
+        showFullscreen: true,
+        showToggle: true,
         width: 200,
         pageList: "[10, 25, 50, 100, 200, All]",
         detailFormatter: function (index, row) {
@@ -182,6 +194,8 @@ export default {
             "<th>Mail</th>" +
             "<th>Rezervasyon Notu</th>" +
             "<th>Müşteri Notu</th>" +
+            "<th>Masa Süsleme</th>" +
+             "<th>Confirm</th>" +
             "<th>Bildirim Türü</th>" +
             "<th>Müşteri Türü</th>" +
             "</thead><tbody><tr>" +
@@ -193,6 +207,12 @@ export default {
             "</td>" +
             "<td>" +
             row.notu +
+            "</td>" +
+             "<td>" +
+            row.susleme_notu +
+            "</td>" +
+             "<td>" +
+           (row.notification_type == 1 ? "Oldu" : "Olmadı") +
             "</td>" +
             "<td>" +
             (row.notification_type == 1 ? "Email" : "SMS") +
@@ -206,7 +226,7 @@ export default {
         rowStyle: function (row) {
           if (row.isGone == 2) {
             return {
-              css: { color: "black", "background-color": "red" },
+              css: { color: "black", "background-color": "yellow" },
             };
           } else if (row.isGone == 1) {
             return {
@@ -229,16 +249,9 @@ export default {
     BootstrapTable,
   },
 
-  created() {
-    if (this.$session.has("secimmasa")) {
-      this.showModalId = this.$session.get("secimmasa");
-      this.modalveri = this.$session.get("kisi");
-      this.secilitarih = this.$session.get("secimtarih");
-      this.secilisaat = this.$session.get("secimsaat");
-      this.showModal = true;
-      this.$session.clear();
-    }
-  },
+ 
+ 
+
   mounted() {
     var ref = this;
 
@@ -247,8 +260,12 @@ export default {
 
       ref.getir(id);
     });
+     $(document).on("click", ".confirm", function () {
+      ref.confid = $(this).data("confirmid");
 
-
+      ref.showConfirm=true;
+    
+    });
 
     $(document).on("click", ".rezervdengerial", function () {
       var geriid = $(this).data("gerial");
@@ -263,19 +280,17 @@ export default {
         confirmButtonText: "Evet, istiyorum!",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .post(`http://localhost/api/admin/process`, {
-              csrf_token: document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content"),
-              type: 1,
-              id: geriid,
-              user_id: $("#logidUserid").text(),
-            })
-           
+          axios.post(`http://localhost/api/admin/process`, {
+            csrf_token: document
+              .querySelector('meta[name="csrf-token"]')
+              .getAttribute("content"),
+            type: 1,
+            id: geriid,
+            user_id: $("#logidUserid").text(),
+          });
 
           Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
-           ref.$emit("ustgonder");
+          ref.$emit("ustgonder");
         }
       });
     }),
@@ -292,24 +307,22 @@ export default {
           confirmButtonText: "Evet, istiyorum!",
         }).then((result) => {
           if (result.isConfirmed) {
-            axios
-              .post(`http://localhost/api/admin/process`, {
-                csrf_token: document
-                  .querySelector('meta[name="csrf-token"]')
-                  .getAttribute("content"),
-                type: 2,
-                id: iptalid,
-                user_id: $("#logidUserid").text(),
-              })
-              Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success"); 
-              ref.$emit("ustgonder");
+            axios.post(`http://localhost/api/admin/process`, {
+              csrf_token: document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+              type: 2,
+              id: iptalid,
+              user_id: $("#logidUserid").text(),
+            });
+            Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success");
+            ref.$emit("ustgonder");
           }
         });
       });
   },
 
   methods: {
-
     YuklemeSonrasi: function () {
       var ref = this;
 
@@ -322,37 +335,31 @@ export default {
         width: "85",
         height: "30",
         style: "font-size: 10px",
-
       });
-     $('.durumum').on('click', '.toggle', function(e)
-                {
-                    let box=$(this).children(0);
-                    let durum= box.prop("checked");
-                    let durumid=box.data("durumid");
+      $(".durumum").on("click", ".toggle", function (e) {
+        let box = $(this).children(0);
+        let durum = box.prop("checked");
+        let durumid = box.data("durumid");
 
-                    e.preventDefault(); e.stopPropagation();
-                    Swal.fire({
-                        title: "Müşteri durumu Geldi olarak değiştirelecektir?",
-                        text:
-                            "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Evet, istiyorum!",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-
-
-                            (durum==true)?box.prop('checked', false).change():box.prop('checked', true).change();
-                        }
-
-
-                    });
-                });
-
-
-
+        e.preventDefault();
+        e.stopPropagation();
+        Swal.fire({
+          title: "Müşteri durumu Geldi olarak değiştirelecektir?",
+          text:
+            "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Evet, istiyorum!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            durum == true
+              ? box.prop("checked", false).change()
+              : box.prop("checked", true).change();
+          }
+        });
+      });
     },
     search() {
       this.$refs.list.filterBy({ date: this.getDates(this.date1, this.date2) });

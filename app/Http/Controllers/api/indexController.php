@@ -39,24 +39,26 @@ class indexController extends Controller
         $user_name = $request->user_id;
         $all = $request->except('csrf_token', 'user_id');
 
-       
-       
 
-       
-        $control = Appointment::where('time', $all['date'])->count();
-        if ($control != 0) {
-            $returnArray['message'] = "Bu Randevu tarihi doludur.";
-            return response()->json($returnArray);
-        }
+
+
+
+
         $all['code'] = substr(md5(uniqid()), 0, 6);
         $all['isActive'] = 1;
         if (isset($all['etkinlikname'])) $all['etkinlik'] = 1;
-        if (isset($all['time'])) $all['time']; else unset($all['time']);
-        if (isset($all['notification_type'])) $all['notification_type']; else unset($all['notification_type']);
-        if (isset($all['body'])) $all['body']; else unset($all['body']);
-        if (isset($all['text'])) $all['text']; else unset($all['text']);
-        if (isset($all['text'])) $all['text']; else unset($all['text']);
-        if (isset($all['date'])) $all['date']=Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d'); else $all['date']= Carbon::today()->format('Y-m-d');
+        if (isset($all['time'])) $all['time'];
+        else unset($all['time']);
+        if (isset($all['notification_type'])) $all['notification_type'];
+        else unset($all['notification_type']);
+        if (isset($all['body'])) $all['body'];
+        else unset($all['body']);
+        if (isset($all['text'])) $all['text'];
+        else unset($all['text']);
+        if (isset($all['text'])) $all['text'];
+        else unset($all['text']);
+        if (isset($all['date'])) $all['date'] = Carbon::createFromFormat('d.m.Y', $all['date'])->format('Y-m-d');
+        else $all['date'] = Carbon::today()->format('Y-m-d');
         $create = Appointment::create($all);
 
         if ($create) {
@@ -437,8 +439,10 @@ class indexController extends Controller
     public function appointmentDetail(Request $request)
     {
         $returnArray = [];
+        $info=[];
         $returnArray['status'] = false;
         $all = $request->except('_token');
+
         $c = Appointment::where('code', $all['code'])->count();
         if ($all['code'] == "") {
             $returnArray['message'] = "Lütfen kodu boş bırakmayınız";
@@ -447,16 +451,26 @@ class indexController extends Controller
 
 
         if ($c == 0) {
-            $returnArray['message'] = "Bu Kodla eşleşen randevu bulunmadı !";
+            $returnArray['message'] = "Bu Kodla eşleşen rezervasyon bulunamadı !";
             return response()->json($returnArray);
         }
 
-        $info = Appointment::where('code', $all['code'])->get();
-        $info[0]['working'] = WorkingHours::getString($info[0]['workingHour']);
-        $info[0]['notification'] = ($info[0]['notification_type'] == NOTIFICATION_EMAIL) ? 'Email' : 'Sms';
-        $returnArray['status'] = true;
-        $returnArray['info'] = $info[0];
-        $returnArray['note'] = AppointmentNote::where('appointmentId', $info[0]['id'])->orderBy('id', 'desc')->get();
+        $info = Appointment::where('app_id', $all['kisiid'])->where('code', $all['code'])->get();
+       
+        if (isset($info)) {
+            $returnArray['status'] = true;
+            $returnArray['info'] = $info[0];
+            
+        }else{
+           
+            $returnArray['message'] = "Yanlış bir kod girdiniz veya bu kod size ait değildir !";
+            return response()->json($returnArray);
+
+            Appointment::where("app_id", $all['kisiid'])->update(['isSend' => 1]);
+
+
+           
+        }
         return response()->json($returnArray);
     }
 }

@@ -23,6 +23,7 @@
     <div class="panel-body mt-3">
       <div id="table">
         <bootstrap-table
+        class="table-responsive"
           :columns="columns"
           :data="data"
           ref="list"
@@ -43,8 +44,8 @@ export default {
       secimtarih: null,
       secilitarih: null,
       secilisaat: null,
-      date1: null,
-      date2: null,
+      date1: new Date().toDateString(),
+      date2: new Date().toDateString(),
       kontrolDurum: null,
       kontrolId: null,
       raporsecim: 0,
@@ -75,9 +76,20 @@ export default {
           field: "email",
         },
         {
-          title: "Tel",
+          title: "Telefon No",
           filterControl: "input",
+         width:"200",
           field: "tel",
+        },
+        {
+          title: "Rezervasyon Tarihi",
+           filterControl: "select",
+          field: "date",
+        },
+        {
+          title: "Masa No",
+          filterControl: "select",
+          field: "title",
         },
         {
           title: "Doğum Tarihi",
@@ -103,7 +115,12 @@ export default {
           title: "Müşteri Notu",
           field: "notu",
         },
+ {
+          title: "Bildirim Tipi",
+          filterControl: "select",
 
+          field: "notification_type",
+        },
         {
           title: "Misafir Tipi",
           filterControl: "select",
@@ -131,9 +148,11 @@ export default {
         searchClearButton: true,
         showFullscreen: true,
         showToggle: true,
-
+        
+ exportTypes: ['excel', 'pdf'],
+ paginationVAlign:"both",
         sidePagination: "client",
-        pageList: "[10, 25, 50, 100, 200, All]",
+        pageList: "[10, 25, All]",
       },
     };
   },
@@ -142,6 +161,7 @@ export default {
   },
   created() {
     this.tumkayit();
+    
   },
 
   mounted() {},

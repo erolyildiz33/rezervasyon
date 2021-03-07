@@ -91,13 +91,22 @@ class indexController extends Controller
             /* Waiting */
             $returnArray['waiting'] = DB::table("appointments")->select("appointments.*")
             ->where('title', "bekliyor")
+            ->orwhere(function($query) {
+                $query->where('title','!=', "bekliyor")
+                      ->where('isActive',0);
+            })
            ->paginate(100, ['*'], 'waiting_page');
             $returnArray['waiting']->getCollection()->transform(function ($value) {
 
                 return $value;
             });
             /* Cancel */
-            $returnArray['cancel'] = DB::table("appointments")->select("tables.notu", "appointments.*")->where('isActive', 2)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date', 'asc')->paginate(100, ['*'], 'cancel_page');
+            $returnArray['cancel'] = DB::table("appointments")->select("tables.notu", "appointments.*")
+            ->orwhere(function($query) {
+                $query->where('title','!=', "bekliyor")
+                      ->where('isActive',2);
+            })
+            ->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date', 'asc')->paginate(100, ['*'], 'cancel_page');
             $returnArray['cancel']->getCollection()->transform(function ($value) {
 
                 return $value;

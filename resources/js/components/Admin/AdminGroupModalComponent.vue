@@ -10,7 +10,31 @@
                 <label>Masa No:</label>
                 {{modalId }}
               </h3>
-
+   <div class="col-md-4">
+  <div class="form-group">
+     <label>Masa Süslemesi İstiyor mu?</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim"
+          :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+  </div>
+   <div v-if="secim">
+          <textarea
+            type="text"
+            class="form-control"
+            v-model="susleme_notu"
+            placeholder="Masa Süsleme Notu"
+          />
+        </div>
+</div>
             </slot>
              <button
                 class="btn btn-danger modal-default-button"
@@ -84,8 +108,8 @@
                             v-model="timevalue"
                             :time-picker-options="{
                               start:simdikisaat,
-                              step: '01:00',
-                              end: '23:00',
+                              step: '00:05',
+                              end: '23:30',
                             }"
                           
                             format="H:mm"
@@ -201,6 +225,8 @@ export default {
       text: "",
       bildirim_notu:this.bildirim_notu,
       timevalue: null,
+      secim:this.kisi.secim,
+      susleme_notu:this.kisi.susleme_notu,
     };
   },
   created() {
@@ -238,6 +264,8 @@ export default {
             notification_type: this.notification_type,
             bildirim_notu:this.bildirim_notu,
             user_id:$("#logidUserid").text(),
+            susleme:this.secim,
+            susleme_notu:this.susleme_notu,
           })
            .then((res) => {
             if (res.data.status) {

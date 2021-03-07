@@ -9,9 +9,34 @@
                 <label>Masa No:</label>
                 {{ modalId?modalId:title }}
               </h3>
+              <div class="col-md-4">
+  <div class="form-group">
+     <label>Masa Süslemesi İstiyor mu?</label>
+        <toggle-button
+          :width="85"
+          :height="30"
+          style="font-size: 16px"
+          v-model="secim"
+          :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+          :color="{
+            checked: '#00FF00',
+            unchecked: '#FF0000',
+            disabled: '#CCCCCC',
+          }"
+        ></toggle-button>
+  </div>
+   <div v-if="secim">
+          <textarea
+            type="text"
+            class="form-control"
+            v-model="susleme_notu"
+            placeholder="Masa Süsleme Notu"
+          />
+        </div>
+</div>
               <button
-                class="btn btn-success modal-default-button"
-                @click="rezerv"
+                class="btn btn-success modal-default-button grupmu"
+               :data-kisiid="kisi.app_id"
               >
                 Tarih Değiştir
               </button>
@@ -41,6 +66,16 @@
                       </div>
 
                       <div class="row">
+                         <div class="col-md-4" v-if="kisi.etkinlik==1">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="kisi.etkinlikname"
+                              placeholder="Etkinlik Adı Yazınız"
+                            />
+                          </div>
+                        </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <input
@@ -79,7 +114,7 @@
                             v-model="timevalue"
                             :placeholder="this.kisi.time"
                             :time-picker-options="{
-                              start: '11:30',
+                              start: simdikisaat,
                               step: '00:05',
                               end: '23:30',
                             }"
@@ -94,6 +129,16 @@
                               class="form-control"
                               v-model="body"
                               placeholder="Kaç kişi olacağınızı yazınız"
+                            />
+                          </div>
+                        </div>
+                            <div class="col-md-4" v-if="modalId!='bekliyor'">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="hes"
+                              placeholder="HES Kodu yazınız"
                             />
                           </div>
                         </div>
@@ -192,6 +237,7 @@ export default {
   
   data() {
     return {
+      simdikisaat:this.timesec(),
       data: [],
       completeForm: false,
     kayitno:this.kisi.app_id,
@@ -206,20 +252,51 @@ export default {
       bildirim: this.kisi.bildirim_notu,
       timevalue: this.secimsaat?this.secimsaat:null,
       date: this.secimtarih?this.secimtarih:this.kisi.date,
-      
+       secim:this.kisi.secim,
+      susleme_notu:this.kisi.susleme_notu,
+      hes:this.kisi.hes_kodu,
     };
   },
   created() {
-    
-    
     socket.emit("hello");
   },
   mounted() {
-    
+      $(document).on("click", ".grupmu", function () {
+       
+      var geriid = $(this).data("kisiid");
+      Swal.fire({
+        title: "Rezervasyon Tipi",
+       
+        icon: "warning",
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#51ad4c",
+
+        cancelButtonColor: "#d33",
+         cancelButtonText:"İptal",
+        confirmButtonText: "Kişi Rezervasyonu",
+        denyButtonText: "Grup Rezervasyonu",
+      }).then((result) => {
+        if (result.isConfirmed) {
+         window.location.href="http://localhost/admin/updaterezerv/"+geriid
+        }
+        else if(result.isDenied)
+        {
+
+          window.location.href="http://localhost/admin/updategrouprezerv/"+geriid
+        }
+      });
+       $(".swal2-container").css("z-index", "99999")
+    })
   },
   methods: {
     rezerv: function(){
-      window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.app_id
+      
+
+
+    
+     window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.app_id
     },
     
     uptadeModal: function () {
@@ -240,13 +317,21 @@ export default {
           date:this.date?new Date(this.date).toLocaleDateString():null,
           body: this.body,
           bildirim_notu: this.bildirim,
+            susleme:this.secim,
+            susleme_notu:this.susleme_notu,
+            hes_kodu:this.hes,
            user_id:$("#logidUserid").text(),
         })
         .then((res) => {
           this.$emit("kisiguncel",res.data);
+           window.location.href = "http://localhost/admin";
         });
     },
-
+  timesec(){
+      let saat=Math.ceil(new Date().toTimeString().split(":")[0]);
+ 
+return  saat+1+':00';
+},
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },

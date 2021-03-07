@@ -2,14 +2,7 @@
   <div>
     <div class="container">
       <div class="row">
-        <admin-modal
-          :secilimi="sonuc"
-          :modalId="showModalId"
-          v-if="showModal"
-          :tarih="date"
-          :kisi="userid[0]"
-          @close="showModal = false"
-        ></admin-modal>
+      
         <div class="col-md-12">
           <date-picker
             v-model="date"
@@ -20,7 +13,7 @@
             ><span> Tarihi</span></date-picker
           >
         </div>
-       
+
         <img src="/img/yeni.jpeg" usemap="#image-map" />
 
         <map name="image-map">
@@ -538,9 +531,19 @@
             shape="rect"
           />
         </map>
+
+         <admin-rezervation-update-modal
+     
+      v-if="showModal"
+      :modalId="showModalId"
+      :kisi="kisiback"
+     
+      :secimsaat="secilisaat"
+      :secimtarih="secilitarih"
+      @close="showModal = false"
+    ></admin-rezervation-update-modal>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -548,6 +551,7 @@
 import $ from "jquery";
 require("jquery-imagemapster");
 import datepicker from "vue2-datepicker";
+
 export default {
   props: ["userid"],
 
@@ -565,27 +569,24 @@ export default {
       secilimasalar: null,
       showModalId: 0,
       showModal: false,
-      user:null,
-
+      secilitarih:null,
+      secilisaat:null,
+      user: null,
       date: new Date(),
       gettar: new Date(),
     };
   },
-  created() {
-    if (this.$session.has("secimmasa")) {
 
-        this.showModalId=this.$session.get("secimmasa");
-        this.modalveri=this.$session.get("kisi");
-        this.secilitarih=this.$session.get("secimtarih");
-        this.secilisaat=this.$session.get("secimsaat");
-        this.showModal=false;
-        this.date=this.secilitarih;
+ created() {
+   console.log()
 
-
-    }
     this.getirtarih(this.selectDate());
   },
+
   mounted() {
+
+
+
     $("img").mapster({
       mapKey: "title",
       singleSelect: false,
@@ -594,6 +595,9 @@ export default {
       stroke: false,
       isSelectable: false,
     });
+
+
+
   },
   methods: {
     getirtarih: function (tarih) {
@@ -608,33 +612,24 @@ export default {
         });
     },
     modalShow: function (e) {
-
       var item = this.secilimasalar.find(
         (item) => item.title == e.currentTarget.title
       );
       if (item) {
-
-
       } else {
-        this.$session.start();
-      this.$session.set("kisi", this.userid[0]);
-      this.$session.set("secimtarih", this.date);
-      this.$session.set("secimmasa",e.currentTarget.title);
-      this.$session.set("secimsaat",this.time);
-
-
-     window.location.href = "http://localhost/admin/";
-
+     this.showModalId=e.currentTarget.title
+    this.kisiback=this.userid[0]
+     
+      this.secilisaat=this.userid[0].time
+      this.secilitarih=this.date
+    this.showModal=true
+      
       }
-
-
-
     },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
     addimgAll: function (e) {
-
       if (
         this.secim == true ||
         this.secim1 == true ||
