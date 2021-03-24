@@ -419,6 +419,37 @@ class indexController extends Controller
         }
         return response()->json($returnArray);
     }
+    public function getRaporTableList($id = null)
+    {
+        $returnArray = array();
+        if ($id) {
+            $data = Table::all()->where('id', $id);
+        } else {
+            $data = Table::all();
+        }
+
+        foreach ($data as $k => $v) {
+            array_push($returnArray, array(
+                'id' => $v->id,
+                'ad' => $v->ad,
+                'soyad' => $v->soyad,
+                'email' => $v->email,
+               
+                'tel' => $v->tel,
+                'dogumtar' => $v->dogumtar,
+                'evliliktar' => $v->evliliktar,
+                'notu' => $v->notu,
+                'iptal' => $v->iptal,
+                'image' => $v->image,
+                'karaliste' => $v->karaliste,
+                'cinsiyet' => $v->cinsiyet,
+                'misafir_id' => $v->misafir_id,
+                'karaliste_gerekce' => $v->karaliste_gerekce,
+                'isGone' => $v->isGone,
+            ));
+        }
+        return response()->json($returnArray);
+    }
     public function getEventList()
     {
         $returnArray = array();

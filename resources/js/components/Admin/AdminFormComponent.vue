@@ -27,524 +27,147 @@
                        <div>
           <button class="btn btn-dark mt-2" @click="bekle">Beklemeye Al</button>
         </div>
-        <img src="/img/yeni.jpeg" usemap="#image-map">
 
-  <map name="image-map">
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="52"
-            title="b-k-i-52"
-            href=""
-            coords="24,522,4,487"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="60"
-            title="b-k-i-60"
-            href=""
-            coords="65,522,43,487"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="59"
-            title="b-k-i-59"
-            href=""
-            coords="85,485,107,524"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="53"
-            title="b-k-i-53"
-            href=""
-            coords="0,404,36,435"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="54"
-            title="b-k-i-54"
-            href=""
-            coords="2,320,36,352"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="61"
-            title="b-k-i-61"
-            href=""
-            coords="66,401,85,437"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="62"
-            title="b-k-i-62"
-            href=""
-            coords="64,318,86,352"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="58"
-            title="b-k-i-58"
-            href=""
-            coords="107,361,152,397"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="57"
-            title="b-k-i-57"
-            href=""
-            coords="110,275,151,307"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="56"
-            title="b-k-i-56"
-            href=""
-            coords="116,199,134,244"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="55"
-            title="b-k-i-55"
-            href=""
-            coords="32,253,55,234,88,270,65,291"
-            shape="poly"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="51"
-            title="b-k-i-51"
-            href=""
-            coords="36,546,60,560,45,589,22,576"
-            shape="poly"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="50"
-            title="b-k-i-50"
-            href=""
-            coords="92,572,116,579,103,629,81,620"
-            shape="poly"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="B2"
-            title="b-ö-s-B2"
-            href=""
-            coords="194,587,215,620"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="B1"
-            title="b-ö-s-B1"
-            href=""
-            coords="272,585,293,623"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="1"
-            title="b-ö-i-1"
-            href=""
-            coords="176,466,203,519"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="2"
-            title="b-ö-i-2"
-            href=""
-            coords="245,463,270,520"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="3"
-            title="s-s-i-3"
-            href=""
-            coords="359,492,388,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="4"
-            title="s-s-i-4"
-            href=""
-            coords="360,439,388,474"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="5"
-            title="s-s-i-5"
-            href=""
-            coords="424,493,453,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="6"
-            title="s-s-i-6"
-            href=""
-            coords="424,439,454,475"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="7"
-            title="s-s-i-7"
-            href=""
-            coords="488,493,518,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="8"
-            title="s-s-i-8"
-            href=""
-            coords="488,440,519,476"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="9"
-            title="s-s-i-9"
-            href=""
-            coords="558,493,587,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="10"
-            title="s-s-i-10"
-            href=""
-            coords="558,441,587,474"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="11"
-            title="s-ö-i-11"
-            href=""
-            coords="616,496,644,529"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="12"
-            title="s-ö-i-12"
-            href=""
-            coords="614,439,643,473"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="13"
-            title="s-ö-i-13"
-            href=""
-            coords="669,494,699,528"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="14"
-            title="s-ö-i-14"
-            href=""
-            coords="670,441,699,474"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="15"
-            title="s-ö-i-15"
-            href=""
-            coords="746,492,774,539"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="16"
-            title="s-ö-i-16"
-            href=""
-            coords="746,440,774,474"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="17"
-            title="s-ö-i-17"
-            href=""
-            coords="811,493,842,542"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="18"
-            title="s-ö-i-18"
-            href=""
-            coords="812,440,845,474"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="19"
-            title="m-ö-i-19"
-            href=""
-            coords="913,460,945,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="20"
-            title="m-ö-i-20"
-            href=""
-            coords="922,351,950,377"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="21"
-            title="m-ö-i-21"
-            href=""
-            coords="990,458,1020,526"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="22"
-            title="m-ö-i-22"
-            href=""
-            coords="977,350,1006,377"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="23"
-            title="m-ö-i-23"
-            href=""
-            coords="1066,460,1100,527"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="24"
-            title="m-ö-i-24"
-            href=""
-            coords="1033,353,1061,379"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="25"
-            title="25"
-            href=""
-            coords="523,324,542,363"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="26"
-            title="26"
-            href=""
-            coords="471,327,491,362"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="30"
-            title="s-ö-b-30"
-            href=""
-            coords="813,584,844,615"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="31"
-            title="s-ö-b-31"
-            href=""
-            coords="748,582,777,615"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="32"
-            title="s-ö-b-32"
-            href=""
-            coords="679,576,709,624"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="33"
-            title="s-ö-b-33"
-            href=""
-            coords="622,575,653,622"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="34"
-            title="s-s-b-34"
-            href=""
-            coords="560,575,590,625"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="35"
-            title="s-s-b-35"
-            href=""
-            coords="500,584,527,620"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="36"
-            title="s-s-b-36"
-            href=""
-            coords="421,588,449,621"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="37"
-            title="s-s-b-37"
-            href=""
-            coords="353,588,385,624"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="D1"
-            title="m-ö-s-D1"
-            href=""
-            coords="1037,583,1066,624"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="D2"
-            title="m-ö-s-D2"
-            href=""
-            coords="933,584,960,623"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="46"
-            title="d-k-i-46"
-            href=""
-            coords="1136,540,1161,576"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="47"
-            title="d-k-i-47"
-            href=""
-            coords="1132,592,1158,628"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="48"
-            title="d-k-i-48"
-            href=""
-            coords="1182,553,1204,537,1235,582,1216,600"
-            shape="poly"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="43"
-            title="d-k-i-43"
-            href=""
-            coords="1135,477,1169,505"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="44"
-            title="d-k-i-44"
-            href=""
-            coords="1184,477,1216,505"
-            shape="rect"
-          />
-          <area
-            data-key=""
-            @click="modalShow"
-            alt="45"
-            title="d-k-i-45"
-            href=""
-            coords="1228,474,1260,505"
-            shape="rect"
-          />
-        </map>
+<img src="/renkli.jpg" usemap="#image-map">
 
+<map name="image-map">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-1" title="b-kb-1" href="" coords="216,468,233,486" shape="rect">
+    <area target="" alt="b-kb-2" title="b-kb-2" href="" coords="177,447,193,453,183,482,167,474,167,472,167,473,167,472" shape="poly">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-3" title="b-kb-3" href="" coords="133,429,148,440,138,453,124,442" shape="poly">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-4" title="b-kb-4" href="" coords="117,381,147,399" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-5" title="b-kb-5" href="" coords="115,325,144,340" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-6" title="b-kb-6" href="" coords="147,270,161,261,177,282,163,293" shape="poly">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-7" title="b-kb-7" href="" coords="210,244,228,274" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-8" title="b-kb-8" href="" coords="200,292,244,311" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-9" title="b-kb-9" href="" coords="198,342,244,359" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-10" title="b-kb-10" href="" coords="159,379,189,398" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="b-kb-11" title="b-kb-11" href="" coords="159,319,189,342" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-13" title="m-ö-i-13" href="" coords="296,401,316,444" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-14" title="m-ö-i-14" href="" coords="345,415,362,442" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-15" title="m-ö-i-15" href="" coords="394,415,412,442" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-16" title="m-ö-s-16" href="" coords="266,458,283,479" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-17" title="m-ö-s-17" href="" coords="308,458,326,481" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-18" title="m-ö-s-18" href="" coords="351,458,368,482" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-19" title="m-ö-s-19" href="" coords="396,458,413,479" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-20" title="s-b-i-20" href="" coords="453,458,470,487" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-21" title="s-b-i-21" href="" coords="453,420,473,435" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-22" title="s-b-i-22" href="" coords="453,387,472,403" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-30" title="s-b-i-30" href="" coords="503,457,521,487" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-31" title="s-b-i-31" href="" coords="502,420,523,435" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-32" title="s-b-i-32" href="" coords="502,387,521,403" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-40" title="s-b-i-40" href="" coords="551,458,569,486" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-41" title="s-b-i-41" href="" coords="549,419,570,435" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-42" title="s-b-i-42" href="" coords="549,387,569,404" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-50" title="s-b-i-50" href="" coords="599,457,618,485" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-51" title="s-b-i-51" href="" coords="599,419,617,433" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-b-i-52" title="s-b-i-52" href="" coords="598,388,620,403" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-60" title="s-ö-i-60" href="" coords="646,454,665,486" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-61" title="s-ö-i-61" href="" coords="647,417,668,435" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-62" title="s-ö-i-62" href="" coords="646,386,668,402" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-70" title="s-ö-i-70" href="" coords="697,458,713,486" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-71" title="s-ö-i-71" href="" coords="695,419,718,436" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-72" title="s-ö-i-72" href="" coords="694,387,714,402" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-80" title="s-ö-i-80" href="" coords="742,470,764,487" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-81" title="s-ö-i-81" href="" coords="747,421,768,446" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-82" title="s-ö-i-82" href="" coords="746,387,768,402" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-90" title="s-ö-i-90" href="" coords="791,468,813,486" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-91" title="s-ö-i-91" href="" coords="795,421,818,451" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-92" title="s-ö-i-92" href="" coords="795,388,816,403" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="s-ö-i-100" title="s-ö-i-100" href="" coords="834,469,854,485" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-110" title="m-ö-i-110" href="" coords="889,417,908,446" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-111" title="m-ö-i-111" href="" coords="889,384,908,413" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-112" title="m-ö-i-112" href="" coords="889,347,910,361" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-120" title="m-ö-i-120" href="" coords="936,419,957,444" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-121" title="m-ö-i-121" href="" coords="937,387,956,415" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-122" title="m-ö-i-122" href="" coords="936,348,955,359" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-130" title="m-ö-i-130" href="" coords="984,418,1006,443" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-131" title="m-ö-i-131" href="" coords="985,384,1003,412" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-i-132" title="m-ö-i-132" href="" coords="984,347,1007,360" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-133" title="m-ö-s-133" href="" coords="885,460,904,483" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-134" title="m-ö-s-134" href="" coords="927,462,945,483" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-135" title="m-ö-s-135" href="" coords="971,462,990,483" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="m-ö-s-136" title="m-ö-s-136" href="" coords="1015,461,1034,482" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-150" title="d-kb-150" href="" coords="1069,333,1098,353" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-151" title="d-kb-151" href="" coords="1107,332,1136,353" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-152" title="d-kb-152" href="" coords="1147,332,1175,354" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-153" title="d-kb-153" href="" coords="1069,391,1096,413" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-154" title="d-kb-154" href="" coords="1107,392,1136,411" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-155" title="d-kb-155" href="" coords="1148,392,1176,414" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-156" title="d-kb-156" href="" coords="1116,447,1135,434,1151,458,1134,469" shape="poly">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-157" title="d-kb-157" href="" coords="1070,467,1090,482" shape="rect">
+    <area data-key=""
+            @click="modalShow" alt="d-kb-158" title="d-kb-158" href="" coords="1069,443,1089,458" shape="rect">
+</map>
+
+
+
+
+
+
+     
       </div>
 
     </div>

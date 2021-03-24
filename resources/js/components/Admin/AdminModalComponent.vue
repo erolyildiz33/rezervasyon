@@ -85,7 +85,7 @@
                           <div class="form-group">
                             <input
                               type="text"
-                              v-mask="'90-###-###-##-##'"
+                              v-mask="'###########'"
                               class="form-control"
                               v-model="phone"
                               placeholder="Telefon Numaranızı Yazınız"

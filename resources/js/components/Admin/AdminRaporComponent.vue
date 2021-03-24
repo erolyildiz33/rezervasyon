@@ -83,6 +83,7 @@ export default {
         },
         {
           title: "Rezervasyon Tarihi",
+      
            filterControl: "select",
           field: "date",
         },
@@ -148,6 +149,13 @@ export default {
         searchClearButton: true,
         showFullscreen: true,
         showToggle: true,
+         excelStyles: ['background-color', 'color', 'border-bottom-color', 
+'border-bottom-style', 'border-bottom-width', 'border-top-color', 
+'border-top-style', 'border-top-width', 
+'border-left-color', 'border-left-style', 'border-left-width',
+'border-right-color', 'border-right-style', 'border-right-width',
+'font-family', 'font-size', 'font-weight'],
+backgroundColor:"red",
         
  exportTypes: ['excel', 'pdf'],
  paginationVAlign:"both",
@@ -167,14 +175,14 @@ export default {
   mounted() {},
   methods: {
     tumkayit: function () {
-      axios.get(`http://localhost/api/table-list`).then((res) => {
+      axios.get(`http://localhost/api/table-rapor-list`).then((res) => {
         this.data1 = res.data;
         this.showModal = false;
       });
     },
 
     getir: function (id) {
-      axios.get(`http://localhost/api/table-list/` + id).then((res) => {
+      axios.get(`http://localhost/api/table-rapor-list/` + id).then((res) => {
         this.kisi = res.data;
         this.showModal = true;
       });

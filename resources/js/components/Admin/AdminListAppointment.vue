@@ -188,6 +188,7 @@ export default {
         showToggle: true,
         width: 200,
         pageList: "[10, 25, 50, 100, 200, All]",
+       
         detailFormatter: function (index, row) {
           return (
             "<div class='text-center' style='text-align:center; margin-left:50px!important;'><table class='table table-bordered table-hover'><thead>" +

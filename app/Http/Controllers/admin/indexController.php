@@ -6,6 +6,8 @@ use App\Models\Table;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Carbon as SupportCarbon;
 
 class indexController extends Controller
 {
@@ -66,7 +68,7 @@ class indexController extends Controller
     }
    
     public function rapor()
-    {
+    {   
         $hepsi = Appointment::join('tables', 'appointments.kisi_id', '=', 'tables.id')
             ->get(['appointments.*', 'tables.*']);
 
@@ -85,14 +87,20 @@ class indexController extends Controller
                 else   $hepsi[$key]["misafir_id"] = "Yerel";
                
             };
+           
        
             foreach ($hepsi as $key=>$item) {
                
                 if ($item["karaliste"] == 0)   $hepsi[$key]["karaliste"] = "Hayır";
                 else   $hepsi[$key]["karaliste"] = "Evet";
             };
-       
-     
+      
+            foreach ($hepsi as $key=>$item) {
+                Carbon::setLocale('tr_TR');
+                $hepsi[$key]["date"] = Carbon::createFromFormat('Y-m-d',$item['date'])->format('d.m.Y l');
+              
+              
+           };
         return view('admin.rapor')->with('hepsi', $hepsi);
     }
 }

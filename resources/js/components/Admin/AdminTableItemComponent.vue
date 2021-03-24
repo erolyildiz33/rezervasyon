@@ -81,7 +81,7 @@
           class="form-control"
           v-model="tel"
           placeholder="Telefon"
-          v-mask="'90-###-###-##-##'"
+          v-mask="'###########'"
         />
         <textarea
           type="text"

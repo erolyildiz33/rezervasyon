@@ -27,6 +27,8 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/table-store','indexController@getTableStore');
    Route::post('/table-delete','indexController@getTableDelete');
    Route::get('/table-list/{id?}','indexController@getTableList');
+   Route::get('/table-rapor-list/{id?}','indexController@getRaporTableList');
+
    Route::get('/appointment-table/{date?}','indexController@getAppointmentTable');
    Route::post('/event-store','indexController@getEventStore');
    Route::post('/event-delete','indexController@getEventDelete');
