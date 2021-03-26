@@ -23,11 +23,10 @@
     <div class="panel-body mt-3">
       <div id="table">
         <bootstrap-table
-        class="table-responsive"
           :columns="columns"
           :data="data"
-          ref="list"
           :options="options"
+           @on-pre-body="YuklemeSonrasi"
         ></bootstrap-table>
       </div>
     </div>
@@ -49,6 +48,7 @@ export default {
       kontrolDurum: null,
       kontrolId: null,
       raporsecim: 0,
+
       columns: [
         {
           title: "Sıra No",
@@ -61,7 +61,7 @@ export default {
           filterControl: "input",
           field: "fullName",
           footerFormatter: function (data) {
-           return data.length;
+            return data.length;
           },
         },
 
@@ -78,13 +78,13 @@ export default {
         {
           title: "Telefon No",
           filterControl: "input",
-         width:"200",
+          width: "200",
           field: "tel",
         },
         {
           title: "Rezervasyon Tarihi",
-      
-           filterControl: "select",
+
+          filterControl: "select",
           field: "date",
         },
         {
@@ -103,20 +103,22 @@ export default {
         {
           title: "Kaç Kişi",
           field: "body",
-           footerFormatter: function (data) {
-          var toplam=data.map(function (row) {
-          return +row.body
-        }).reduce(function (sum, i) {
-          return sum + i
-        }, 0);
-        return toplam+" Kişi";
+          footerFormatter: function (data) {
+            var toplam = data
+              .map(function (row) {
+                return +row.body;
+              })
+              .reduce(function (sum, i) {
+                return sum + i;
+              }, 0);
+            return toplam + " Kişi";
           },
         },
         {
           title: "Müşteri Notu",
           field: "notu",
         },
- {
+        {
           title: "Bildirim Tipi",
           filterControl: "select",
 
@@ -136,7 +138,6 @@ export default {
         {
           title: "Karaliste Gerekçesi",
           field: "karaliste_gerekce",
-          
         },
       ],
       options: {
@@ -149,18 +150,33 @@ export default {
         searchClearButton: true,
         showFullscreen: true,
         showToggle: true,
-         excelStyles: ['background-color', 'color', 'border-bottom-color', 
-'border-bottom-style', 'border-bottom-width', 'border-top-color', 
-'border-top-style', 'border-top-width', 
-'border-left-color', 'border-left-style', 'border-left-width',
-'border-right-color', 'border-right-style', 'border-right-width',
-'font-family', 'font-size', 'font-weight'],
-backgroundColor:"red",
-        
- exportTypes: ['excel', 'pdf'],
- paginationVAlign:"both",
+        exportTypes: ["excel", "pdf"],
+        paginationVAlign: "both",
         sidePagination: "client",
         pageList: "[10, 25, All]",
+
+        excelStyles: [
+          "background-color:'#ddccaa'",
+          "color",
+          "border-bottom-color",
+          "border-bottom-style",
+          "border-bottom-width",
+          "border-top-color",
+          "border-top-style",
+          "border-top-width",
+          "border-left-color",
+          "border-left-style",
+          "border-left-width",
+          "border-right-color",
+          "border-right-style",
+          "border-right-width",
+          "font-family",
+          "font-size",
+          "font-weight",
+        ],
+     
+
+        
       },
     };
   },
@@ -169,11 +185,22 @@ backgroundColor:"red",
   },
   created() {
     this.tumkayit();
-    
   },
 
-  mounted() {},
+ 
   methods: {
+      YuklemeSonrasi: function () {
+      var ref = this;
+      $("#table").bootstrapTable('insertRow', {
+        index: 0,
+        row: {
+          id: "dnme",
+         colspan:3
+         
+        }
+      })
+ 
+  },
     tumkayit: function () {
       axios.get(`http://localhost/api/table-rapor-list`).then((res) => {
         this.data1 = res.data;

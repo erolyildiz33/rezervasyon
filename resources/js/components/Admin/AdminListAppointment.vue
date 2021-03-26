@@ -30,17 +30,15 @@
       </div>
     </div>
 
-      <admin-rezervation-update-modal
-     
+    <admin-rezervation-update-modal
       v-if="showModal"
       :modalId="showModalId"
       :kisi="modalveri"
-     
       :secimsaat="secilisaat"
       :secimtarih="secilitarih"
       @close="showModal = false"
     ></admin-rezervation-update-modal>
-      <admin-confirm-modal
+    <admin-confirm-modal
       v-if="showConfirm"
       :kisi="confid"
       @close="showConfirm = false"
@@ -57,7 +55,7 @@ export default {
     return {
       showModalId: 0,
       showModal: false,
-      showConfirm:false,
+      showConfirm: false,
       modalveri: [],
       secimtarih: null,
       secilitarih: null,
@@ -66,7 +64,7 @@ export default {
       date2: null,
       kontrolDurum: null,
       kontrolId: null,
-      confid:null,
+      confid: null,
       columns: [
         {
           title: "Sıra No",
@@ -131,7 +129,6 @@ export default {
           title: "Masa No",
           field: "title",
         },
-        
 
         {
           title: "İşlem",
@@ -152,7 +149,9 @@ export default {
                 row.kisi_id +
                 '"><i class="fa fa-user"></i></a><button data-userid="' +
                 row.app_id +
-                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="'+row.app_id+'"class="btn btn-default confirm"><i class="fa fa-check"></i></button>'
+                '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="' +
+                row.app_id +
+                '"class="btn btn-default confirm"><i class="fa fa-check"></i></button>'
               );
             } else if (row.isActive == 2) {
               return (
@@ -188,7 +187,7 @@ export default {
         showToggle: true,
         width: 200,
         pageList: "[10, 25, 50, 100, 200, All]",
-       
+
         detailFormatter: function (index, row) {
           return (
             "<div class='text-center' style='text-align:center; margin-left:50px!important;'><table class='table table-bordered table-hover'><thead>" +
@@ -196,7 +195,7 @@ export default {
             "<th>Rezervasyon Notu</th>" +
             "<th>Müşteri Notu</th>" +
             "<th>Masa Süsleme</th>" +
-             "<th>Confirm</th>" +
+            "<th>Confirm</th>" +
             "<th>Bildirim Türü</th>" +
             "<th>Müşteri Türü</th>" +
             "</thead><tbody><tr>" +
@@ -209,11 +208,11 @@ export default {
             "<td>" +
             row.notu +
             "</td>" +
-             "<td>" +
+            "<td>" +
             row.susleme_notu +
             "</td>" +
-             "<td>" +
-           (row.notification_type == 1 ? "Oldu" : "Olmadı") +
+            "<td>" +
+            (row.notification_type == 1 ? "Oldu" : "Olmadı") +
             "</td>" +
             "<td>" +
             (row.notification_type == 1 ? "Email" : "SMS") +
@@ -225,22 +224,30 @@ export default {
           );
         },
         rowStyle: function (row) {
-          if (row.isGone == 2) {
-            return {
-              css: { color: "black", "background-color": "yellow" },
-            };
-          } else if (row.isGone == 1) {
-            return {
-              css: { color: "white", "background-color": "orange" },
-            };
-          } else if (row.isGone == 3) {
-            return {
-              css: { color: "white", "background-color": "green" },
-            };
-          } else {
-            return {
-              css: { color: "black", "background-color": "white" },
-            };
+          if (row.isCame == 0) {
+            if (row.isGone == 1) {
+              return {
+                css: { color: "black", "background-color": "white" },
+              };
+            } else {
+              if (row.color == 2) {
+                return {
+                  css: { color: "black", "background-color": "orange" },
+                };
+              } else if (row.color == 1) {
+                return {
+                  css: { color: "white", "background-color": "green" },
+                };
+              } else if (row.color == 3) {
+                return {
+                  css: { color: "black", "background-color": "white" },
+                };
+              } else {
+                return {
+                  css: { color: "black", "background-color": "white" },
+                };
+              }
+            }
           }
         },
       },
@@ -250,9 +257,6 @@ export default {
     BootstrapTable,
   },
 
- 
- 
-
   mounted() {
     var ref = this;
 
@@ -261,11 +265,10 @@ export default {
 
       ref.getir(id);
     });
-     $(document).on("click", ".confirm", function () {
+    $(document).on("click", ".confirm", function () {
       ref.confid = $(this).data("confirmid");
 
-      ref.showConfirm=true;
-    
+      ref.showConfirm = true;
     });
 
     $(document).on("click", ".rezervdengerial", function () {
