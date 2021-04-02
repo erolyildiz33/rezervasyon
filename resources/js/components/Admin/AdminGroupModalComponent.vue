@@ -111,7 +111,7 @@
                               step: '00:05',
                               end: '23:30',
                             }"
-                          
+                           value-type="format"
                             format="H:mm"
                             type="time"
                             placeholder="Geliş Saatinizi belirleyiniz"
@@ -139,7 +139,7 @@
                                 class="form-control"
                                 cols="30"
                                 rows="5"
-                                placeholder="Notunuzu Giriniz"
+                                placeholder="Rezervasyon Notu Giriniz"
                               ></textarea>
                             </div>
                           </div>
@@ -260,7 +260,7 @@ export default {
             title: this.modalId,
             date: new Date(this.tarih).toLocaleDateString(),
             text: this.text,
-            time: this.getTime(this.timevalue),
+            time: this.timevalue,
             notification_type: this.notification_type,
             bildirim_notu:this.bildirim_notu,
             user_id:$("#logidUserid").text(),

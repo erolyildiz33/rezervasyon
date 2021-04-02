@@ -158,11 +158,16 @@ export default {
   },
   created() {
     this.getData();
+    
     socket.on("admin_appointment_list", () => {
 
       this.getData();
     });
 
+socket.on("rowupdate", (id) => {
+
+     console.log(id);
+    });
 
   },
 

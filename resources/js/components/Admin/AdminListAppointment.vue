@@ -48,6 +48,7 @@
 
 <script>
 require("bootstrap4-toggle");
+
 export default {
   props: ["data"],
 
@@ -77,15 +78,18 @@ export default {
           formatter: function (value, row, index) {
             var yes = null;
             var geldi = null;
+
             if (row.isCame == 1) yes = "checked";
             else yes = "";
-            if (row.date < new Date().toISOString().substring(0, 10))
+            if (row.date.substring(0, 10) < new Date().toLocaleDateString())
               geldi = "disabled";
-            else if (row.date > new Date().toISOString().substring(0, 10)) {
+            else if (
+              row.date.substring(0, 10) > new Date().toLocaleDateString()
+            ) {
               geldi = "";
             } else {
               if (
-                row.date == new Date().toISOString().substring(0, 10) &&
+                row.date.substring(0, 10) == new Date().toLocaleDateString() &&
                 row.time < new Date().toTimeString()
               )
                 geldi = "disabled";
@@ -209,7 +213,7 @@ export default {
             row.notu +
             "</td>" +
             "<td>" +
-            row.susleme_notu +
+            (row.susleme == 1 ? row.susleme_notu : "yok") +
             "</td>" +
             "<td>" +
             (row.notification_type == 1 ? "Oldu" : "Olmadı") +
@@ -224,31 +228,31 @@ export default {
           );
         },
         rowStyle: function (row) {
-          if (row.isCame == 0) {
-            if (row.isGone == 1) {
+          // if (row.isCame == 0) {
+          if (row.isGone == 1) {
+            return {
+              css: { color: "black", "background-color": "white" },
+            };
+          } else {
+            if (row.color == 2) {
+              return {
+                css: { color: "black", "background-color": "orange" },
+              };
+            } else if (row.color == 1) {
+              return {
+                css: { color: "white", "background-color": "green" },
+              };
+            } else if (row.color == 3) {
               return {
                 css: { color: "black", "background-color": "white" },
               };
             } else {
-              if (row.color == 2) {
-                return {
-                  css: { color: "black", "background-color": "orange" },
-                };
-              } else if (row.color == 1) {
-                return {
-                  css: { color: "white", "background-color": "green" },
-                };
-              } else if (row.color == 3) {
-                return {
-                  css: { color: "black", "background-color": "white" },
-                };
-              } else {
-                return {
-                  css: { color: "black", "background-color": "white" },
-                };
-              }
+              return {
+                css: { color: "black", "background-color": "white" },
+              };
             }
           }
+          //  }
         },
       },
     };
@@ -258,6 +262,10 @@ export default {
   },
 
   mounted() {
+ 
+
+       
+  
     var ref = this;
 
     $(document).on("click", ".rezervguncelle", function () {
@@ -311,16 +319,19 @@ export default {
           confirmButtonText: "Evet, istiyorum!",
         }).then((result) => {
           if (result.isConfirmed) {
-            axios.post(`http://localhost/api/admin/process`, {
-              csrf_token: document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content"),
-              type: 2,
-              id: iptalid,
-              user_id: $("#logidUserid").text(),
-            });
+            axios
+              .post(`http://localhost/api/admin/process`, {
+                csrf_token: document
+                  .querySelector('meta[name="csrf-token"]')
+                  .getAttribute("content"),
+                type: 2,
+                id: iptalid,
+                user_id: $("#logidUserid").text(),
+              })
+              .then((res) => {
+                ref.$emit("ustgonder");
+              });
             Swal.fire("İptal Edildi!", "Rezervasyon iptal edildi.", "success");
-            ref.$emit("ustgonder");
           }
         });
       });
@@ -342,28 +353,92 @@ export default {
       });
       $(".durumum").on("click", ".toggle", function (e) {
         let box = $(this).children(0);
-        let durum = box.prop("checked");
+        let durum = box.prop("checked") ? false : true;
         let durumid = box.data("durumid");
 
         e.preventDefault();
         e.stopPropagation();
-        Swal.fire({
-          title: "Müşteri durumu Geldi olarak değiştirelecektir?",
-          text:
-            "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Evet, istiyorum!",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            durum == true
-              ? box.prop("checked", false).change()
-              : box.prop("checked", true).change();
-          }
-        });
+        if ($(this).attr("disabled") != "disabled") {
+          Swal.fire({
+            title: "Müşteri durumu Geldi olarak değiştirelecektir?",
+            text:
+              "Uyarı !!!Müşteri durumunu değiştirdiğinizde durumu tekrar değiştiremezsiniz!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, istiyorum!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              axios
+                .post(`http://localhost/api/admin/process`, {
+                  csrf_token: document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                  came: 1,
+                  id: durumid,
+                  state: durum,
+                  user_id: $("#logidUserid").text(),
+                })
+                .then((res) => {
+                  Swal.fire(
+                    "Müşteri Geldi!",
+                    "Müşteri geldi olarak kayıt edildi.",
+                    "success"
+                  );
+                  ref.$emit("ustgonder");
+                });
+            }
+          });
+        }
       });
+    },
+    createErrorToast: function (id, length, Baslik, toastMessage) {
+      this.createToast(id, length, Baslik, toastMessage);
+    },
+
+    createToast: function (id, length, Baslik, toastMessage) {
+      var icerik = $("#" + id).html();
+      var toastContainer = this.createToastContainer(length);
+      this.createToastHeader(Baslik, toastContainer);
+      this.createToastContent(toastContainer, toastMessage);
+      this.initToast(id, toastContainer);
+      this.destroyToast(id, icerik, toastContainer);
+    },
+
+    createToastContainer: function (length) {
+      var toastContainer = $('<td colspan="' + length + '"><div></div></td>');
+      toastContainer.addClass("toastContainer");
+      toastContainer.addClass("toastContainerError");
+      return toastContainer;
+    },
+
+    createToastHeader: function (Baslik, toastContainer) {
+      var toastHeader = $("<div></div>");
+      toastHeader.addClass("toastHeader");
+      toastHeader.html(Baslik);
+      toastContainer.append(toastHeader);
+    },
+
+    createToastContent: function (toastContainer, toastMessage) {
+      var toastContent = $("<div></div>");
+      toastContent.addClass("toastContent");
+      toastContent.html(toastMessage);
+      toastContainer.append(toastContent);
+    },
+    initToast: function (id, toastContainer) {
+      toastContainer.hide(function () {
+        $("#" + id).html(toastContainer);
+        toastContainer.fadeIn(500);
+      });
+    },
+    destroyToast: function (id, icerik, toastContainer) {
+      setTimeout(function () {
+        toastContainer.fadeOut(500, function () {
+          toastContainer.remove();
+          $("#" + id).append(icerik);
+        });
+      }, 5000);
     },
     search() {
       this.$refs.list.filterBy({ date: this.getDates(this.date1, this.date2) });

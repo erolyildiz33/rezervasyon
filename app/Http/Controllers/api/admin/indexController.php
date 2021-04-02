@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Mockery\Matcher\Type;
+use Illuminate\Support\Facades\Mail;
 
 class indexController extends Controller
 {
@@ -59,21 +60,75 @@ class indexController extends Controller
         $type = "";
         if ($request->type) {
             $data["isActive"] = $request->type;
-            if ($request->type == 1) $type = "iptal";
-            else $type = "gerial";
+            if ($request->type == 1) {
+                $type = "iptal";
+                $data['isCame'] = 0;
+            } else {
+                $type = "gerial";
+                $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+                $fullname = $kisi->ad . " " . $kisi->soyad;
+
+                $datamail  = [
+                    'name' => $fullname,
+                    'email' => $kisi->email,
+                    'status' => 'iptal',
+
+                ];
+
+                try {
+
+
+                    Mail::send('email', $datamail, function ($message) use ($datamail) {
+                        $message->to($datamail['email'], $datamail['name'])->subject('Rezervasyon İptali');
+                        $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
+                    });
+                } catch (\Exception $e) {
+                }
+            };
         }
         if ($request->came) {
 
             $data["isCame"] = $request->came;
             if ($request->came == 0) {
                 $type = "Gelmedi";
-                $data['isGone'] = 2;
-            } else {
-                $type = "Geldi";
-                $data['isGone'] = 3;
+                $data['color'] = 2;
+                $data['isCame'] = 0;
+            } elseif ($request->came == 1) {
+                if ($request->state == true) {
+                    $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+                    $fullname = $kisi->ad . " " . $kisi->soyad;
+
+                    $datamail  = [
+                        'name' => $fullname,
+                        'email' => $kisi->email,
+                        'status' => 'update',
+
+                    ];
+
+                    try {
+
+
+                        Mail::send('email', $datamail, function ($message) use ($datamail) {
+                            $message->to($datamail['email'], $datamail['name'])->subject('Rezervasyon Güncelleme');
+                            $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
+                        });
+                    } catch (\Exception $e) {
+                    } 
+                    $type = "Geldi";
+                $data['color'] = 3;
+                $data['isCame'] = 1;
+                }else{
+                    $type = "Gelmedi";
+                    $data['color'] = 2;
+                    $data['isCame'] = 0;
+                }
+               
             }
+            $data['isCame'] = ($request->state == true) ? 1 : 0;
+            $data['isSend'] = 0;
+            echo $data['isCame'];
         }
-        $data['isSend'] = 0;
+
         $user_name = $request->user_id;
 
         (Appointment::where('app_id', $request->id)->update($data));
@@ -103,7 +158,8 @@ class indexController extends Controller
                 ->paginate(100, ['*'], 'waiting_page');
             foreach ($returnArray['waiting'] as $key => $item) {
                 $returnArray['waiting'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
-                $returnArray['last_list'][$key]->isGone = 1;
+                $returnArray['waiting'][$key]->isGone = 1;
+                $returnArray['waiting'][$key]->_id="row".$item->app_id;
             }
             $returnArray['waiting']->getCollection()->transform(function ($value) {
 
@@ -117,9 +173,11 @@ class indexController extends Controller
                 })
                 ->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date', 'asc')->paginate(100, ['*'], 'cancel_page');
 
-
+/*AppointmentNote*/
             foreach ($returnArray['cancel'] as $key => $item) {
+                $returnArray['cancel'][$key]->_id="row".$item->app_id;
                 $returnArray['cancel'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
+                $returnArray['cancel'][$key]->_id="row".$item->app_id;
             }
 
 
@@ -131,7 +189,9 @@ class indexController extends Controller
             $returnArray['list'] = DB::table("appointments")->select("tables.notu", "appointments.*")->where('isActive', 1)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->where('date', '>', date("Y-m-d"))->orderBy('time', 'asc')->paginate(100, ['*'], 'list_page');
             foreach ($returnArray['list'] as $key => $item) {
                 $returnArray['list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
+                $returnArray['list'][$key]->_id="row".$item->app_id;
             }
+            
             $returnArray['list']->getCollection()->transform(function ($value) {
 
                 return $value;
@@ -154,6 +214,7 @@ class indexController extends Controller
             foreach ($returnArray['last_list'] as $key => $item) {
                 $returnArray['last_list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
                 $returnArray['last_list'][$key]->isGone = 2;
+                $returnArray['last_list'][$key]->_id="row".$item->app_id;
             }
             $returnArray['last_list']->getCollection()->transform(function ($value) {
 
@@ -170,12 +231,12 @@ class indexController extends Controller
                 ->orderBy('time', 'asc')->paginate(100, ['*'], 'today_page');
             foreach ($returnArray['today_list'] as $key => $item) {
                 $returnArray['today_list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
+                $returnArray['today_list'][$key]->_id="row".$item->app_id;
                 if ($returnArray['today_list'][$key]->time < Carbon::now()) {
                     $returnArray['today_list'][$key]->isGone = 2;
-                }else{
+                } else {
                     $returnArray['today_list'][$key]->isGone = 1;
                 }
-
             }
             $returnArray['today_list']->getCollection()->transform(function ($value) {
 

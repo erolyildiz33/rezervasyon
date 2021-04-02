@@ -66,7 +66,6 @@ Vue.component('admin-rapor', require('./components/Admin/AdminRaporComponent.vue
 
 
 
-
 Vue.component('admin-appointment-modal', require('./components/Admin/AdminAppointmentModal').default);
 Vue.component('admin-form', require('./components/Admin/AdminFormComponent').default);
 Vue.component('admin-modal', require('./components/Admin/AdminModalComponent').default);

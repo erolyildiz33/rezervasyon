@@ -21,14 +21,14 @@
       </div>
     </div>
     <div class="panel-body mt-3">
-      <div id="table">
-        <bootstrap-table
-          :columns="columns"
-          :data="data"
-          :options="options"
-           @on-pre-body="YuklemeSonrasi"
-        ></bootstrap-table>
-      </div>
+      <button>Ekle</button>
+      <bootstrap-table
+        :columns="columns"
+        :data="data"
+        id="table"
+        :options="options"
+        @on-pre-body="YuklemeSonrasi"
+      ></bootstrap-table>
     </div>
   </div>
 </template>
@@ -156,7 +156,7 @@ export default {
         pageList: "[10, 25, All]",
 
         excelStyles: [
-          "background-color:'#ddccaa'",
+          "background-color",
           "color",
           "border-bottom-color",
           "border-bottom-style",
@@ -174,9 +174,12 @@ export default {
           "font-size",
           "font-weight",
         ],
-     
-
-        
+          responseHandler(res) {
+          res.rows.forEach((row) => {
+            row._name = "deneme";
+          });
+          return res;
+        },
       },
     };
   },
@@ -187,20 +190,13 @@ export default {
     this.tumkayit();
   },
 
- 
   methods: {
-      YuklemeSonrasi: function () {
+    YuklemeSonrasi: function () {
       var ref = this;
-      $("#table").bootstrapTable('insertRow', {
-        index: 0,
-        row: {
-          id: "dnme",
-         colspan:3
-         
-        }
-      })
- 
-  },
+      $("#table").bootstrapTable({
+      
+      });
+    },
     tumkayit: function () {
       axios.get(`http://localhost/api/table-rapor-list`).then((res) => {
         this.data1 = res.data;

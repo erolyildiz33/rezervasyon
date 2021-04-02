@@ -176,7 +176,7 @@ class indexController extends Controller
             'soyad' => $all['soyad'],
             'email' => $all['email'],
             'tel' => $all['tel'],
-
+            'cinsiyet'=>$all['cinsiyet'],
             'notu' => $all['notu'],
             'iptal' => $all['iptal'],
             'image' => $image,
@@ -190,6 +190,7 @@ class indexController extends Controller
 
 
         ];
+       
 
         if (isset($all['dogumtar'])) {
             $veri['dogumtar'] = Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
@@ -334,7 +335,7 @@ class indexController extends Controller
         if ($veritabani->text != $tum['text'] && $tum['text'] != null) array_push($degisenler, ['text' => $tum['text']]);
         if ($veritabani->body != $tum['body'] && $tum['body'] != null) array_push($degisenler, ['body' => $tum['body']]);
         if ($veritabani->date != Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d') && $tum['date'] != null) array_push($degisenler, ['date' => $tum['date']]);
-        if ($veritabani->time != $tum['time'] && $tum['time'] != null) array_push($degisenler, ['time' => $tum['time']]);
+        if ($veritabani->time != $tum['time'] &&($tum['time'] != null|| $tum['time']!='Invalid Date')) array_push($degisenler, ['time' => $tum['time']]);
         if ($veritabani->title != $tum['title'] && $tum['title'] != null) array_push($degisenler, ['title' => $tum['title']]);
 
         $srr = [
@@ -346,7 +347,7 @@ class indexController extends Controller
             'text' => $tum['text'],
             'body' => $tum['body'],
             'degisenler' => json_encode($degisenler),
-
+            'time' => $tum['time'],
             'notification_type' => $tum['notification_type'],
             'bildirim_notu' => $tum['bildirim_notu'],
 
@@ -355,23 +356,9 @@ class indexController extends Controller
         $simdi = Carbon::now()->toTimeString();
         $bugun = Carbon::now()->today();
 
-        if ($tum['date'] > $bugun) {
-            $srr["isGone"] = 2;
-        } elseif ($tum['date'] < $bugun) {
-            $srr["isGone"] = 0;
-        } else {
-            if ($tum['time'] <= $onbes && $tum['time'] >= $simdi) {
-                $srr["isGone"] = 1;
-            } elseif ($tum['time'] > $onbes && $tum['time'] >= $simdi) {
-                $srr["isGone"] = 2;
-            } else {
-                $srr["isGone"] = 0;
-            }
-        }
+       
 
-        if ($tum['time'] != null) {
-            $srr['time'] = Carbon::createFromFormat('H:i:s', $tum['time'])->format('H:i');
-        }
+      
         if ($tum['date'] != null) {
             $srr['date'] = Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d');
         }

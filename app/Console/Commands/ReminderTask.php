@@ -57,45 +57,48 @@ class ReminderTask extends Command
         foreach ($list as $k => $v) {
             if ($v['notification_type'] == NOTIFICATION_EMAIL) {
                 $degisenStr = "";
-if(isset($v['degisenler'])){
-                foreach (json_decode($v['degisenler']) as $k => $value) {
-                  
-                    foreach ($value as $key => $valu) {
-                        $remind=null;
-                        switch ($key) {
-                            case 'fullName':
-                                $remind= "Adı Soyadı";
-                                break;
-                            case 'email':
-                                $remind= "E-Posta";
-                                break;
-                            case 'date':
-                                $remind= "Tarih";
-                                break;
-                            case 'time':
-                               
-                                $remind= "Saat";
-                                break;
-                          
-                            case 'body':
-                                $remind= "Kişi";
-                                break;
-                        }
-                        $degisenStr .= strval(strval($remind) . "=" . strval($valu) . ", ");
-                    }
-                }
+               
+                if (isset($v['degisenler'])) {
+                    foreach (json_decode($v['degisenler']) as $k => $value) {
 
-                //$data['degisenler'] =  "Değişen alanlar: " . substr($degisenStr, 0, -2);
-}
-$lastdate=new Carbon($v['date']);
+                        foreach ($value as $key => $valu) {
+                            $remind = null;
+                            switch ($key) {
+                                case 'fullName':
+                                    $remind = "Adı Soyadı";
+                                    break;
+                                case 'email':
+                                    $remind = "E-Posta";
+                                    break;
+                                case 'date':
+                                    $remind = "Tarih";
+                                    break;
+                                case 'time':
+
+                                    $remind = "Saat";
+                                    break;
+
+                                case 'body':
+                                    $remind = "Kişi";
+                                    break;
+                            }
+                            $degisenStr .= strval(strval($remind) . "=" . strval($valu) . ", ");
+                        }
+                    }
+
+                    //$data['degisenler'] =  "Değişen alanlar: " . substr($degisenStr, 0, -2);
+                }
+                $lastdate = new Carbon($v['date']);
+
                 $data  = [
                     'name' => $v['fullName'],
                     'email' => $v['email'],
-                    'date' =>$v['date'].'-'.$lastdate->locale('tr')->dayName,
+                    'date' => $v['date'] . '-' . $lastdate->locale('tr')->dayName,
                     'time' => $v['time'],
                     'code' => $v['code'],
                     'title' => $v['title'],
                     'body' => $v['body'],
+                   
                 ];
 
                 try {

@@ -7,36 +7,36 @@
             <slot name="header">
               <h3 slot="header">
                 <label>Masa No:</label>
-                {{ modalId?modalId:title }}
+                {{ modalId ? modalId : title }}
               </h3>
               <div class="col-md-4">
-  <div class="form-group">
-     <label>Masa Süslemesi İstiyor mu?</label>
-        <toggle-button
-          :width="85"
-          :height="30"
-          style="font-size: 16px"
-          v-model="secim"
-          :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
-          :color="{
-            checked: '#00FF00',
-            unchecked: '#FF0000',
-            disabled: '#CCCCCC',
-          }"
-        ></toggle-button>
-  </div>
-   <div v-if="secim">
-          <textarea
-            type="text"
-            class="form-control"
-            v-model="susleme_notu"
-            placeholder="Masa Süsleme Notu"
-          />
-        </div>
-</div>
+                <div class="form-group">
+                  <label>Masa Süslemesi İstiyor mu?</label>
+                  <toggle-button
+                    :width="85"
+                    :height="30"
+                    style="font-size: 16px"
+                    v-model="secim"
+                    :labels="{ checked: 'Evet', unchecked: 'Hayır' }"
+                    :color="{
+                      checked: '#00FF00',
+                      unchecked: '#FF0000',
+                      disabled: '#CCCCCC',
+                    }"
+                  ></toggle-button>
+                </div>
+                <div v-if="secim">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    v-model="susleme_notu"
+                    placeholder="Masa Süsleme Notu"
+                  />
+                </div>
+              </div>
               <button
                 class="btn btn-success modal-default-button grupmu"
-               :data-kisiid="kisi.app_id"
+                :data-kisiid="kisi.app_id"
               >
                 Tarih Değiştir
               </button>
@@ -51,7 +51,6 @@
           <div class="modal-body">
             <slot name="body">
               <div>
-              
                 <div v-if="!secilimi">
                   <div v-if="!completeForm">
                     <div class="container">
@@ -66,7 +65,7 @@
                       </div>
 
                       <div class="row">
-                         <div class="col-md-4" v-if="kisi.etkinlik==1">
+                        <div class="col-md-4" v-if="kisi.etkinlik == 1">
                           <div class="form-group">
                             <input
                               type="text"
@@ -112,13 +111,13 @@
                         <div class="col-md-4">
                           <date-picker
                             v-model="timevalue"
-                            :placeholder="this.kisi.time"
                             :time-picker-options="{
                               start: simdikisaat,
                               step: '00:05',
                               end: '23:30',
                             }"
                             format="HH:mm"
+                            value-type="format"
                             type="time"
                           ></date-picker>
                         </div>
@@ -129,16 +128,6 @@
                               class="form-control"
                               v-model="body"
                               placeholder="Kaç kişi olacağınızı yazınız"
-                            />
-                          </div>
-                        </div>
-                            <div class="col-md-4" v-if="modalId!='bekliyor'">
-                          <div class="form-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="hes"
-                              placeholder="HES Kodu yazınız"
                             />
                           </div>
                         </div>
@@ -233,14 +222,21 @@ var socket = io("http://localhost:3000");
 import datepicker from "vue2-datepicker";
 
 export default {
-  props: ["modalId", "kisi","secimtarih","secimmasa","secimsaat","secilimi"],
-  
+  props: [
+    "modalId",
+    "kisi",
+    "secimtarih",
+    "secimmasa",
+    "secimsaat",
+    "secilimi",
+  ],
+  name: "FixedTimeList",
   data() {
     return {
-      simdikisaat:this.timesec(),
+      simdikisaat: this.timesec(),
       data: [],
       completeForm: false,
-    kayitno:this.kisi.app_id,
+      kayitno: this.kisi.app_id,
       errors: [],
       notification_type: null,
       title: this.kisi.title,
@@ -250,23 +246,26 @@ export default {
       phone: this.kisi.phone,
       text: this.kisi.text,
       bildirim: this.kisi.bildirim_notu,
-      timevalue: this.secimsaat?this.secimsaat:null,
-      date: this.secimtarih?this.secimtarih:this.kisi.date,
-       secim:this.kisi.secim,
-      susleme_notu:this.kisi.susleme_notu,
-      hes:this.kisi.hes_kodu,
+      timevalue: this.secimsaat
+        ? this.secimsaat
+        :
+            this.kisi.time,
+         
+      date: this.secimtarih ? this.secimtarih : this.kisi.date,
+      secim: this.kisi.secim,
+      susleme_notu: this.kisi.susleme_notu,
+      hes: this.kisi.hes_kodu,
     };
   },
   created() {
     socket.emit("hello");
   },
   mounted() {
-      $(document).on("click", ".grupmu", function () {
-       
+    $(document).on("click", ".grupmu", function () {
       var geriid = $(this).data("kisiid");
       Swal.fire({
         title: "Rezervasyon Tipi",
-       
+
         icon: "warning",
         showCancelButton: true,
         showDenyButton: true,
@@ -274,31 +273,27 @@ export default {
         denyButtonColor: "#51ad4c",
 
         cancelButtonColor: "#d33",
-         cancelButtonText:"İptal",
+        cancelButtonText: "İptal",
         confirmButtonText: "Kişi Rezervasyonu",
         denyButtonText: "Grup Rezervasyonu",
       }).then((result) => {
         if (result.isConfirmed) {
-         window.location.href="http://localhost/admin/updaterezerv/"+geriid
-        }
-        else if(result.isDenied)
-        {
-
-          window.location.href="http://localhost/admin/updategrouprezerv/"+geriid
+          window.location.href =
+            "http://localhost/admin/updaterezerv/" + geriid;
+        } else if (result.isDenied) {
+          window.location.href =
+            "http://localhost/admin/updategrouprezerv/" + geriid;
         }
       });
-       $(".swal2-container").css("z-index", "99999")
-    })
+      $(".swal2-container").css("z-index", "99999");
+    });
   },
   methods: {
-    rezerv: function(){
-      
-
-
-    
-     window.location.href="http://localhost/admin/updaterezerv/"+this.kisi.app_id
+    rezerv: function () {
+      window.location.href =
+        "http://localhost/admin/updaterezerv/" + this.kisi.app_id;
     },
-    
+
     uptadeModal: function () {
       axios
         .post("http://localhost/api/appointment-update", {
@@ -310,28 +305,28 @@ export default {
           fullName: this.name,
           email: this.email,
           phone: this.phone,
-          title: this.modalId?this.modalId:null,
+          title: this.modalId ? this.modalId : null,
           text: this.text,
           notification_type: this.notification_type,
-          time:this.timevalue?new Date(this.timevalue).toLocaleTimeString():null,
-          date:this.date?new Date(this.date).toLocaleDateString():null,
+          time: this.timevalue,
+          date: this.date ? new Date(this.date).toLocaleDateString() : null,
           body: this.body,
           bildirim_notu: this.bildirim,
-            susleme:this.secim,
-            susleme_notu:this.susleme_notu,
-            hes_kodu:this.hes,
-           user_id:$("#logidUserid").text(),
+          susleme: this.secim,
+          susleme_notu: this.susleme_notu,
+          hes_kodu: this.hes,
+          user_id: $("#logidUserid").text(),
         })
         .then((res) => {
-          this.$emit("kisiguncel",res.data);
-           window.location.href = "http://localhost/admin";
+          this.$emit("kisiguncel", res.data);
+          window.location.href = "http://localhost/admin";
         });
     },
-  timesec(){
-      let saat=Math.ceil(new Date().toTimeString().split(":")[0]);
- 
-return  saat+1+':00';
-},
+    timesec() {
+      let saat = Math.ceil(new Date().toTimeString().split(":")[0]);
+
+      return saat + 1 + ":00";
+    },
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },

@@ -21,6 +21,11 @@ Route::group(['prefix'=>'cron'],function (){
 
 
 
+Route::get('add-notification', function() {
+    broadcast(new \App\Events\NotificationEvent);
+    return 'Bildirim Gönderildi.';
+});
+
 
 
 Route::get('/', 'front\indexController@index')->name("anasayfa");
@@ -53,8 +58,7 @@ Route::group(['namespace'=>'admin','prefix'=>'admin','as'=>'admin.','middleware'
 
     Route::get('/profile/{id}','indexController@profile')->name('profile');
     Route::get('/rapor','indexController@rapor')->name('rapor');
-
-
+   
 
 
 });

@@ -118,14 +118,9 @@
                   type="text"
                   class="form-control"
                   v-model="notu"
-                  placeholder="Notu"
+                  placeholder="Müşteri Tanımı"
                 />
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="iptal"
-                  placeholder="iptal ettiği rezervasyon"
-                />
+               
                 <div>
                   <label>Özel Gün Bilgileri:</label>
                 </div>

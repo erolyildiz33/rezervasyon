@@ -117,16 +117,7 @@
                             />
                           </div>
                         </div>
-                         <div class="col-md-4" v-if="modalId!='bekliyor'">
-                          <div class="form-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="hes"
-                              placeholder="HES Kodu yazınız"
-                            />
-                          </div>
-                        </div>
+                       
                       </div>
 
                       <div class="container">
@@ -283,9 +274,7 @@ export default {
       if (!this.body) {
         this.errors.push("Kişi sayısı girilmelidir");
       }
-      if (!this.hes) {
-        this.errors.push("HES kodu girilmelidir");
-      }
+     
       if (!this.phone) {
         this.errors.push("Telefon numarası Girilmelidir");
       }

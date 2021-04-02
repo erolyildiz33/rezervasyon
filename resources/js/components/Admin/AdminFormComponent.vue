@@ -33,7 +33,8 @@
 <map name="image-map">
     <area data-key=""
             @click="modalShow" alt="b-kb-1" title="b-kb-1" href="" coords="216,468,233,486" shape="rect">
-    <area target="" alt="b-kb-2" title="b-kb-2" href="" coords="177,447,193,453,183,482,167,474,167,472,167,473,167,472" shape="poly">
+    <area data-key=""
+    @click="modalShow" alt="b-kb-2" title="b-kb-2" href="" coords="177,447,193,453,183,482,167,474,167,472,167,473,167,472" shape="poly">
     <area data-key=""
             @click="modalShow" alt="b-kb-3" title="b-kb-3" href="" coords="133,429,148,440,138,453,124,442" shape="poly">
     <area data-key=""
