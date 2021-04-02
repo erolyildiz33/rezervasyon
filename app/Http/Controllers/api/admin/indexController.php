@@ -19,8 +19,9 @@ class indexController extends Controller
     public function getAppointmentTable($datee = '')
     {
         // $all = $request->except('csrf_token');
-        return  Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
+        return Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
     }
+
     public function detailStore(Request $request)
     {
         $returnArray = [];
@@ -68,7 +69,7 @@ class indexController extends Controller
                 $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                 $fullname = $kisi->ad . " " . $kisi->soyad;
 
-                $datamail  = [
+                $datamail = [
                     'name' => $fullname,
                     'email' => $kisi->email,
                     'status' => 'iptal',
@@ -98,7 +99,7 @@ class indexController extends Controller
                     $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                     $fullname = $kisi->ad . " " . $kisi->soyad;
 
-                    $datamail  = [
+                    $datamail = [
                         'name' => $fullname,
                         'email' => $kisi->email,
                         'status' => 'update',
@@ -113,16 +114,16 @@ class indexController extends Controller
                             $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
                         });
                     } catch (\Exception $e) {
-                    } 
+                    }
                     $type = "Geldi";
-                $data['color'] = 3;
-                $data['isCame'] = 1;
-                }else{
+                    $data['color'] = 3;
+                    $data['isCame'] = 1;
+                } else {
                     $type = "Gelmedi";
                     $data['color'] = 2;
                     $data['isCame'] = 0;
                 }
-               
+
             }
             $data['isCame'] = ($request->state == true) ? 1 : 0;
             $data['isSend'] = 0;
@@ -159,7 +160,7 @@ class indexController extends Controller
             foreach ($returnArray['waiting'] as $key => $item) {
                 $returnArray['waiting'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
                 $returnArray['waiting'][$key]->isGone = 1;
-                $returnArray['waiting'][$key]->_id="row".$item->app_id;
+                $returnArray['waiting'][$key]->_id = "row" . $item->app_id;
             }
             $returnArray['waiting']->getCollection()->transform(function ($value) {
 
@@ -173,11 +174,11 @@ class indexController extends Controller
                 })
                 ->join('tables', 'tables.id', '=', 'appointments.kisi_id')->orderBy('date', 'asc')->paginate(100, ['*'], 'cancel_page');
 
-/*AppointmentNote*/
+            /*AppointmentNote*/
             foreach ($returnArray['cancel'] as $key => $item) {
-                $returnArray['cancel'][$key]->_id="row".$item->app_id;
+                $returnArray['cancel'][$key]->_id = "row" . $item->app_id;
                 $returnArray['cancel'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
-                $returnArray['cancel'][$key]->_id="row".$item->app_id;
+                $returnArray['cancel'][$key]->_id = "row" . $item->app_id;
             }
 
 
@@ -189,16 +190,14 @@ class indexController extends Controller
             $returnArray['list'] = DB::table("appointments")->select("tables.notu", "appointments.*")->where('isActive', 1)->join('tables', 'tables.id', '=', 'appointments.kisi_id')->where('date', '>', date("Y-m-d"))->orderBy('time', 'asc')->paginate(100, ['*'], 'list_page');
             foreach ($returnArray['list'] as $key => $item) {
                 $returnArray['list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
-                $returnArray['list'][$key]->_id="row".$item->app_id;
+                $returnArray['list'][$key]->_id = "row" . $item->app_id;
             }
-            
+
             $returnArray['list']->getCollection()->transform(function ($value) {
 
                 return $value;
             });
             /* Last List */
-
-
 
 
             $returnArray['last_list'] = DB::table("appointments")->select("tables.notu", "appointments.*")->where('isActive', 1)
@@ -207,14 +206,12 @@ class indexController extends Controller
                     $query->where('date', Carbon::now()->toDateString())
                         ->where('time', "<=", Carbon::createFromFormat('H:i:s', '02:00:00')->toTimeString());
                 })
-
-
                 ->join('tables', 'tables.id', '=', 'appointments.kisi_id')
                 ->orderBy('time', 'asc')->paginate(100, ['*'], 'last_page');
             foreach ($returnArray['last_list'] as $key => $item) {
                 $returnArray['last_list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
                 $returnArray['last_list'][$key]->isGone = 2;
-                $returnArray['last_list'][$key]->_id="row".$item->app_id;
+                $returnArray['last_list'][$key]->_id = "row" . $item->app_id;
             }
             $returnArray['last_list']->getCollection()->transform(function ($value) {
 
@@ -227,11 +224,10 @@ class indexController extends Controller
                     $query->where('date', Carbon::now()->toDateString())
                         ->where('time', ">=", Carbon::createFromFormat('H:i:s', '02:00:00')->toTimeString());
                 })
-
                 ->orderBy('time', 'asc')->paginate(100, ['*'], 'today_page');
             foreach ($returnArray['today_list'] as $key => $item) {
                 $returnArray['today_list'][$key]->date = Carbon::createFromFormat('Y-m-d', $item->date)->format('d.m.Y l');
-                $returnArray['today_list'][$key]->_id="row".$item->app_id;
+                $returnArray['today_list'][$key]->_id = "row" . $item->app_id;
                 if ($returnArray['today_list'][$key]->time < Carbon::now()) {
                     $returnArray['today_list'][$key]->isGone = 2;
                 } else {
@@ -244,7 +240,7 @@ class indexController extends Controller
             });
             return response()->json($returnArray);
         } else {
-            return  response()->json(Appointment::where('app_id', $id)->get());
+            return response()->json(Appointment::where('app_id', $id)->get());
         }
     }
 
@@ -252,10 +248,6 @@ class indexController extends Controller
     public function getWaitingList()
     {
         $data = Appointment::where('isActive', 0)
-
-
-
-
             ->orderBy('time', 'asc')->paginate(100);
         $data->getCollection()->transform(function ($value) {
 

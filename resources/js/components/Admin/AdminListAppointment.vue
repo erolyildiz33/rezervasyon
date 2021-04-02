@@ -48,7 +48,7 @@
 
 <script>
 require("bootstrap4-toggle");
-
+var socket = io("http://localhost:3000");
 export default {
   props: ["data"],
 
@@ -260,12 +260,36 @@ export default {
   components: {
     BootstrapTable,
   },
+created(){
 
+    socket.on("rowupdate", (cid) => {
+
+        var id=$("#row"+cid).val();
+
+
+
+        var length = 0;
+        $("tr:first").find("td,th").each(function(){
+            var colspan = $(this).attr("colspan");
+            if(typeof colspan !== "undefined" && colspan > 0){
+                length += parseInt(colspan);
+            }else{
+                length += 1;
+            }
+        });
+        this.createErrorToast(id,length,"Baslik","mesajınız");
+
+//
+// $("#"+id).prepend('<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+//     '  <span aria-hidden="true">&times;</span>\n' +
+//     '</button>');
+
+    });
+},
   mounted() {
- 
 
-       
-  
+
+
     var ref = this;
 
     $(document).on("click", ".rezervguncelle", function () {
@@ -398,7 +422,7 @@ export default {
     },
 
     createToast: function (id, length, Baslik, toastMessage) {
-      var icerik = $("#" + id).html();
+      var icerik = $("#row" + id).html();
       var toastContainer = this.createToastContainer(length);
       this.createToastHeader(Baslik, toastContainer);
       this.createToastContent(toastContainer, toastMessage);
@@ -428,7 +452,7 @@ export default {
     },
     initToast: function (id, toastContainer) {
       toastContainer.hide(function () {
-        $("#" + id).html(toastContainer);
+        $("#row" + id).html(toastContainer);
         toastContainer.fadeIn(500);
       });
     },
@@ -436,7 +460,7 @@ export default {
       setTimeout(function () {
         toastContainer.fadeOut(500, function () {
           toastContainer.remove();
-          $("#" + id).append(icerik);
+          $("#row" + id).append(icerik);
         });
       }, 5000);
     },

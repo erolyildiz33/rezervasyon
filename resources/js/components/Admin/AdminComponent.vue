@@ -55,7 +55,7 @@
        <li class="nav-item">
                 <a class="nav-link btn btn-default" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="waiting" aria-selected="true">Bekleyen Randevular</a>
             </li>
-      
+
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+
 var socket = io("http://localhost:3000");
 export default {
   data() {
@@ -158,16 +158,13 @@ export default {
   },
   created() {
     this.getData();
-    
+
     socket.on("admin_appointment_list", () => {
 
       this.getData();
     });
 
-socket.on("rowupdate", (id) => {
 
-     console.log(id);
-    });
 
   },
 

@@ -16,14 +16,17 @@ class indexController extends Controller
 
         return view('auth.login');
     }
+
     public function detail()
     {
         return view('front.detail');
     }
+
     public function deneme()
     {
         return view('front.working');
     }
+
     public function rezervkontrol()
     {
 
@@ -34,9 +37,6 @@ class indexController extends Controller
         foreach ($all as $key => $value) {
             Appointment::where("app_id", $value['app_id'])->update(["isGone" => 2]);
             $dbsaat = Carbon::create($value['time']);
-
-
-
             if ($value['date'] < $bugun) {
 
                 Appointment::where("app_id", $value['app_id'])->update(["color" => 2]);
@@ -75,7 +75,7 @@ class indexController extends Controller
         }
         // dd($time);
         /* foreach ($all as $k=>$v){
-           
+
             Appointment::find($v['id'])->update(['isActive'=>2]);
         }*/
     }

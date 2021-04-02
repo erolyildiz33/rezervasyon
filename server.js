@@ -18,10 +18,9 @@ redis.subscribe('channel');
 
 
 redis.on('message', function (channel, message) {
-    console.log(channel);
-    console.log(message);
+
     message  = JSON.parse(message);
-    io.emit("rowupdate", message.data.message);
+    io.emit("rowupdate", message.data.message.rowid);
   });
 
 io.on('connection',(socket)=>{
