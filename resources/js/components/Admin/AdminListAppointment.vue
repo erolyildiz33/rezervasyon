@@ -48,6 +48,8 @@
 
 <script>
 require("bootstrap4-toggle");
+
+
 var socket = io("http://localhost:3000");
 export default {
   props: ["data"],
@@ -260,37 +262,74 @@ export default {
   components: {
     BootstrapTable,
   },
-created(){
 
-    socket.on("rowupdate", (cid) => {
-
-        var id=$("#row"+cid).val();
-
-
-
-        var length = 0;
-        $("tr:first").find("td,th").each(function(){
-            var colspan = $(this).attr("colspan");
-            if(typeof colspan !== "undefined" && colspan > 0){
-                length += parseInt(colspan);
-            }else{
-                length += 1;
-            }
-        });
-        this.createErrorToast(id,length,"Baslik","mesajınız");
-
-//
-// $("#"+id).prepend('<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
-//     '  <span aria-hidden="true">&times;</span>\n' +
-//     '</button>');
-
-    });
-},
   mounted() {
-
-
-
     var ref = this;
+    socket.on("rowupdate", (cid) => {
+      var id = $("#row" + cid).val();
+
+      var mylength = 0;
+      $("#row" + cid + ":first")
+        .find("td,th")
+        .each(function () {
+          var colspan = $(this).attr("colspan");
+          if (typeof colspan !== "undefined" && colspan > 0) {
+            mylength += parseInt(colspan);
+          } else {
+            mylength += 1;
+          }
+        });
+
+      $("#row" + cid).html(
+        '<td colspan="' +
+          mylength +
+          '"><div class="alert alert-danger alert-dismissible">' +
+          '<button type="button" class="close alertclose"' +
+          ' data-cid="' +
+          cid +
+          '" data-dismiss="alert" aria-hidden="true">×</button>' +
+          '<h5><i class="icon fa fa-exclamation-triangle"></i> Uyarı!</h5>' +
+          "Rezervasyonun zamanı geçmiştir." +
+          "</div></td>"
+      );
+      // $("#"+id).prepend('<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+      //     '  <span aria-hidden="true">&times;</span>\n' +
+      //     '</button>');
+    });
+
+    $(document).on("click", ".alertclose", function () {
+      var id = $(this).data("cid");
+      var icerik = "";
+      axios.get(`http://localhost/api/admin/all/` + id).then((res) => {
+        icerik =
+          '<td><a class="detail-icon" href="#"><i class="fa fa-plus"></i></a</td>'+
+          '<td style="color: black; background-color: orange; ">1</td>'+
+          '<td style="color: black; background-color: orange; ">'+
+          '<div class="durumum"><div class="toggle btn btn-danger off btn-lg font-size: 10px disabled" data-toggle="toggle" role="button" disabled="disabled" style="width: 85px; height: 30px;"><input disabled="" class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumid="' +
+          res.data[0].app_id +
+          '"><div class="toggle-group"><label for="" class="btn btn-success btn-lg toggle-on" style="line-height: 27.0375px;">Evet</label><label for="" class="btn btn-danger btn-lg toggle-off" style="line-height: 27.0375px;">Hayır</label><span class="toggle-handle btn btn-light btn-lg"></span></div></div></div></td>'+
+          '<td style="color: black; background-color: orange; ">' +
+          res.data[0].fullName +
+          '</td>'+
+          '<td style="color: black; background-color: orange; ">'+res.data[0].phone+'</td><td style="color: black; background-color: orange; ">' +
+          res.data[0].date +
+          '</td>'+
+          '<td style="color: black; background-color: orange; ">12:00:00</td><td style="color: black; background-color: orange; ">3</td><td style="color: black; background-color: orange; ">b-kb-10</td><td style="color: black; background-color: orange; "><a class="btn btn-default iptal" data-iptalid="' +
+          res.data[0].kisi_id +
+          '"><i class="fa fa-undo"></i></a><a class="btn btn-default" href="http://localhost/admin/profile/' +
+          res.data[0].kisi_id +
+          '"><i class="fa fa-user"></i></a><button data-userid="' +
+          res.data[0].kisi_id +
+          '" class="btn btn-default rezervguncelle"><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="' +
+          res.data[0].app_id +
+          '" class="btn btn-default confirm"><i class="fa fa-check"></i></button></td>';
+
+        $("#row" + id).html(icerik);
+       
+      });
+     
+   
+    });
 
     $(document).on("click", ".rezervguncelle", function () {
       var id = $(this).data("userid");
@@ -417,53 +456,7 @@ created(){
         }
       });
     },
-    createErrorToast: function (id, length, Baslik, toastMessage) {
-      this.createToast(id, length, Baslik, toastMessage);
-    },
 
-    createToast: function (id, length, Baslik, toastMessage) {
-      var icerik = $("#row" + id).html();
-      var toastContainer = this.createToastContainer(length);
-      this.createToastHeader(Baslik, toastContainer);
-      this.createToastContent(toastContainer, toastMessage);
-      this.initToast(id, toastContainer);
-      this.destroyToast(id, icerik, toastContainer);
-    },
-
-    createToastContainer: function (length) {
-      var toastContainer = $('<td colspan="' + length + '"><div></div></td>');
-      toastContainer.addClass("toastContainer");
-      toastContainer.addClass("toastContainerError");
-      return toastContainer;
-    },
-
-    createToastHeader: function (Baslik, toastContainer) {
-      var toastHeader = $("<div></div>");
-      toastHeader.addClass("toastHeader");
-      toastHeader.html(Baslik);
-      toastContainer.append(toastHeader);
-    },
-
-    createToastContent: function (toastContainer, toastMessage) {
-      var toastContent = $("<div></div>");
-      toastContent.addClass("toastContent");
-      toastContent.html(toastMessage);
-      toastContainer.append(toastContent);
-    },
-    initToast: function (id, toastContainer) {
-      toastContainer.hide(function () {
-        $("#row" + id).html(toastContainer);
-        toastContainer.fadeIn(500);
-      });
-    },
-    destroyToast: function (id, icerik, toastContainer) {
-      setTimeout(function () {
-        toastContainer.fadeOut(500, function () {
-          toastContainer.remove();
-          $("#row" + id).append(icerik);
-        });
-      }, 5000);
-    },
     search() {
       this.$refs.list.filterBy({ date: this.getDates(this.date1, this.date2) });
     },
