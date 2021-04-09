@@ -236,10 +236,13 @@ export default {
     };
   },
   created() {
-    this.getirtarih(this.selectDate());
+   this.selectDate();
+
+
     //masa kişi sayısını göster burada!!!!
   },
   mounted() {
+     
     $("img").mapster({
       mapKey: "title",
       singleSelect: false,
@@ -292,10 +295,7 @@ export default {
       var gelentarih=this.date.toLocaleDateString();
       var gidentarih=gelentarih.split('.')
       var gonder=gidentarih[2]+"-"+gidentarih[1]+"-"+gidentarih[0];
-
-
-
-this.getirtarih(gonder);
+      this.getirtarih(gonder);
 
 
     },

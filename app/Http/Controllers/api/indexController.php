@@ -27,8 +27,19 @@ class indexController extends Controller
 
     public function getAppointmentTable($datee = '')
     {
+       $mydate=$datee;
         // $all = $request->except('csrf_token');
-        return  Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
+        //return  Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
+        return Appointment::where('isActive', 1)->where('date', $datee)
+        ->where(function ($query) {
+        $query->where('title', '!=', null)->where('isUp',  0);})
+
+        
+        
+       
+        ->get('title');
+        //echo \json_encode();
+
     }
     public function appointmentStore(Request $request)
     {

@@ -26,7 +26,24 @@ class indexController extends Controller
     {
         return view('front.working');
     }
+    public function notification($id)
+    {
 
+        return view('front.notification')->with('id', $id);
+    }
+    public function getNotificationStore(Request $request)
+    {
+        $all = $request->except('_token');
+        if (Appointment::where('app_id', $all['app_id'])->get()[0]->notification_text != null) {
+            $veri = [
+                'notification_text' => $all['text'],
+
+
+            ];
+            Appointment::where('app_id', $all['app_id'])->update($veri);
+           // event(new NotificationEvent("bildirim",1));
+        }
+    }
     public function rezervkontrol()
     {
 

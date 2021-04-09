@@ -205,7 +205,7 @@ export default {
     };
   },
   created() {
-    this.getirtarih(this.selectDate());
+    this.selectDate();
   },
   mounted() {
     $("img").mapster({

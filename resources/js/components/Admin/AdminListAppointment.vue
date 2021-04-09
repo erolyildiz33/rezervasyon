@@ -49,7 +49,6 @@
 <script>
 require("bootstrap4-toggle");
 
-
 var socket = io("http://localhost:3000");
 export default {
   props: ["data"],
@@ -80,34 +79,52 @@ export default {
           formatter: function (value, row, index) {
             var yes = null;
             var geldi = null;
-
-            if (row.isCame == 1) yes = "checked";
-            else yes = "";
-            if (row.date.substring(0, 10) < new Date().toLocaleDateString())
-              geldi = "disabled";
-            else if (
-              row.date.substring(0, 10) > new Date().toLocaleDateString()
-            ) {
-              geldi = "";
-            } else {
-              if (
-                row.date.substring(0, 10) == new Date().toLocaleDateString() &&
-                row.time < new Date().toTimeString()
-              )
-                geldi = "disabled";
-              else {
-                geldi = "";
+            var icerik;
+            var dt = row.date.substring(0, 10).split(".");
+            var nt1 = new Date().toLocaleString().split(" ");
+            var nt2=nt1[0].split(".");
+           
+        
+            if (new Date(dt[2],dt[1],dt[0]) > new Date(nt2[2],nt2[1],nt2[0])) 
+            icerik="gelecek";
+            else if (new Date(dt[2],dt[1],dt[0]) == new Date(nt2[2],nt2[1],nt2[0]))
+           
+            icerik="geçmiş";
+            else {
+              let isup = row.isUp;
+              if (isup == 0) {
+                if (row.isCame == 1) yes = "checked";
+                else yes = "";
+                if (new Date(dt[2],dt[1],dt[0]) < new Date(nt2[2],nt2[1],nt2[0]))
+                  geldi = "disabled";
+                else if (
+                  new Date(dt[2],dt[1],dt[0]) > new Date(nt2[2],nt2[1],nt2[0])
+                ) {
+                  geldi = "";
+                } else {
+                  if (
+                    new Date(dt[2],dt[1],dt[0]) ==
+                       new Date(nt2[2],nt2[1],nt2[0]) &&
+                    row.time < new Date().toTimeString()
+                  )
+                    geldi = "disabled";
+                  else {
+                    geldi = "";
+                  }
+                }
+                icerik =
+                  '<div class="durumum"><input ' +
+                  yes +
+                  " " +
+                  geldi +
+                  ' class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumId="' +
+                  row.app_id +
+                  '"></div>';
+              } else {
+                icerik = "Kalktı";
               }
             }
-            return (
-              '<div class="durumum"><input ' +
-              yes +
-              " " +
-              geldi +
-              ' class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumId="' +
-              row.app_id +
-              '"></div>'
-            );
+            return icerik;
           },
         },
         {
@@ -148,6 +165,13 @@ export default {
                 '"><i class="fa fa-cancel"></i></a>'
               );
             } else if (row.isActive == 1) {
+              var iskalk = "";
+              row.isUp == 0 && row.isCame == 1
+                ? (iskalk =
+                    '<button data-kalkid="' +
+                    row.app_id +
+                    '"class="btn btn-default kalk"><i class="fa fa-hand-paper-o"></i></button>')
+                : (iskalk = "");
               return (
                 '<a class="btn btn-default iptal" data-iptalid="' +
                 row.app_id +
@@ -157,7 +181,8 @@ export default {
                 row.app_id +
                 '" class="btn btn-default rezervguncelle" ><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="' +
                 row.app_id +
-                '"class="btn btn-default confirm"><i class="fa fa-check"></i></button>'
+                '"class="btn btn-default confirm"><i class="fa fa-check"></i></button>' +
+                iskalk
               );
             } else if (row.isActive == 2) {
               return (
@@ -302,18 +327,20 @@ export default {
       var icerik = "";
       axios.get(`http://localhost/api/admin/all/` + id).then((res) => {
         icerik =
-          '<td><a class="detail-icon" href="#"><i class="fa fa-plus"></i></a</td>'+
-          '<td style="color: black; background-color: orange; ">1</td>'+
-          '<td style="color: black; background-color: orange; ">'+
+          '<td><a class="detail-icon" href="#"><i class="fa fa-plus"></i></a</td>' +
+          '<td style="color: black; background-color: orange; ">1</td>' +
+          '<td style="color: black; background-color: orange; ">' +
           '<div class="durumum"><div class="toggle btn btn-danger off btn-lg font-size: 10px disabled" data-toggle="toggle" role="button" disabled="disabled" style="width: 85px; height: 30px;"><input disabled="" class="toggle-option durum" type="checkbox" data-toggle="toggle" data-durumid="' +
           res.data[0].app_id +
-          '"><div class="toggle-group"><label for="" class="btn btn-success btn-lg toggle-on" style="line-height: 27.0375px;">Evet</label><label for="" class="btn btn-danger btn-lg toggle-off" style="line-height: 27.0375px;">Hayır</label><span class="toggle-handle btn btn-light btn-lg"></span></div></div></div></td>'+
+          '"><div class="toggle-group"><label for="" class="btn btn-success btn-lg toggle-on" style="line-height: 27.0375px;">Evet</label><label for="" class="btn btn-danger btn-lg toggle-off" style="line-height: 27.0375px;">Hayır</label><span class="toggle-handle btn btn-light btn-lg"></span></div></div></div></td>' +
           '<td style="color: black; background-color: orange; ">' +
           res.data[0].fullName +
-          '</td>'+
-          '<td style="color: black; background-color: orange; ">'+res.data[0].phone+'</td><td style="color: black; background-color: orange; ">' +
+          "</td>" +
+          '<td style="color: black; background-color: orange; ">' +
+          res.data[0].phone +
+          '</td><td style="color: black; background-color: orange; ">' +
           res.data[0].date +
-          '</td>'+
+          "</td>" +
           '<td style="color: black; background-color: orange; ">12:00:00</td><td style="color: black; background-color: orange; ">3</td><td style="color: black; background-color: orange; ">b-kb-10</td><td style="color: black; background-color: orange; "><a class="btn btn-default iptal" data-iptalid="' +
           res.data[0].kisi_id +
           '"><i class="fa fa-undo"></i></a><a class="btn btn-default" href="http://localhost/admin/profile/' +
@@ -322,19 +349,50 @@ export default {
           res.data[0].kisi_id +
           '" class="btn btn-default rezervguncelle"><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="' +
           res.data[0].app_id +
-          '" class="btn btn-default confirm"><i class="fa fa-check"></i></button></td>';
+          '" class="btn btn-default confirm"><i class="fa fa-check"></i></button><button data-kalkid="' +
+          res.data[0].app_id +
+          '" class="btn btn-default kalk"><i class="fa fa-hand-paper-o"></i></button></td>';
 
         $("#row" + id).html(icerik);
-       
       });
-     
-   
+      $("#table").bootstrapTable();
     });
 
     $(document).on("click", ".rezervguncelle", function () {
       var id = $(this).data("userid");
 
       ref.getir(id);
+    });
+    $(document).on("click", ".kalk", function () {
+      var id = $(this).data("kalkid");
+      Swal.fire({
+        title: "Müşteriyi kalktı olarak onaylıyor musunuz?",
+        text:
+          "Müşteri kalktı olarak işaretlenecek ve masa boş duruma getirelecektir.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Evet, onaylıyorum!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.post(`http://localhost/api/admin/process`, {
+            csrf_token: document
+              .querySelector('meta[name="csrf-token"]')
+              .getAttribute("content"),
+            kalkan: 1,
+            id: id,
+            user_id: $("#logidUserid").text(),
+          })  .then((res) => {
+            ref.$emit("ustgonder");
+             Swal.fire("Müşteri kalktı!", "Masa boş olarak ayarlandı.", "success");
+          });
+
+        
+          
+        }
+      });
+     
     });
     $(document).on("click", ".confirm", function () {
       ref.confid = $(this).data("confirmid");
@@ -362,10 +420,11 @@ export default {
             type: 1,
             id: geriid,
             user_id: $("#logidUserid").text(),
-          });
+          })  .then((res) => {
 
           Swal.fire("Geri Alındı!", "Rezervasyon geri alındı.", "success");
           ref.$emit("ustgonder");
+          })
         }
       });
     }),

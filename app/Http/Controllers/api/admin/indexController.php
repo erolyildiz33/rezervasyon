@@ -19,7 +19,14 @@ class indexController extends Controller
     public function getAppointmentTable($datee = '')
     {
         // $all = $request->except('csrf_token');
-        return Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
+        return Appointment::where('isActive', 1)->where('date', $datee)
+        ->where(function ($query) {
+        $query->where('title', '!=', null)->where('isUp',  0);})
+
+        
+        
+       
+        ->get('title');
     }
 
     public function detailStore(Request $request)
@@ -66,7 +73,7 @@ class indexController extends Controller
                 $data['isCame'] = 0;
             } else {
                 $type = "gerial";
-                $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+                $kisi = Table::where('id',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                 $fullname = $kisi->ad . " " . $kisi->soyad;
 
                 $datamail = [
@@ -87,7 +94,7 @@ class indexController extends Controller
                 }
             };
         }
-        if ($request->came) {
+        else if ($request->came) {
 
             $data["isCame"] = $request->came;
             if ($request->came == 0) {
@@ -96,13 +103,15 @@ class indexController extends Controller
                 $data['isCame'] = 0;
             } elseif ($request->came == 1) {
                 if ($request->state == true) {
-                    $kisi = Table::find(Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+                    $kisi = Table::where('id,',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                     $fullname = $kisi->ad . " " . $kisi->soyad;
+                  
 
                     $datamail = [
                         'name' => $fullname,
                         'email' => $kisi->email,
                         'status' => 'update',
+                       
 
                     ];
 
@@ -128,6 +137,35 @@ class indexController extends Controller
             $data['isCame'] = ($request->state == true) ? 1 : 0;
             $data['isSend'] = 0;
             echo $data['isCame'];
+        }
+        else if($request->kalkan==1){
+            $data['isUp']=1;
+            Appointment::where('app_id', $request->id)->update($data);
+           
+            $kisi = Table::where('id',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+            $fullname = $kisi->ad . " " . $kisi->soyad;
+            $appid=$request->id;
+            $datamail = [
+                'name' => $fullname,
+                'email' => $kisi->email,
+                'id'=>$appid,
+                'status' => 'up',
+
+            ];
+
+            try {
+
+
+                Mail::send('email', $datamail, function ($message) use ($datamail) {
+                    $message->to($datamail['email'], $datamail['name'])->subject('Rezervasyon Güncelleme');
+                    $message->from('uygarsarioglu@gmail.com', 'Mersin Roof14 Divan');
+                });
+            } catch (\Exception $e) {
+            }
+
+
+
+
         }
 
         $user_name = $request->user_id;
@@ -155,6 +193,7 @@ class indexController extends Controller
                 ->orwhere(function ($query) {
                     $query->where('title', '!=', "bekliyor")
                         ->where('isActive', 0);
+                       
                 })
                 ->paginate(100, ['*'], 'waiting_page');
             foreach ($returnArray['waiting'] as $key => $item) {
@@ -201,11 +240,12 @@ class indexController extends Controller
 
 
             $returnArray['last_list'] = DB::table("appointments")->select("tables.notu", "appointments.*")->where('isActive', 1)
+                     
                 ->where('date', '<', Carbon::now()->toDateString())
                 ->orwhere(function ($query) {
                     $query->where('date', Carbon::now()->toDateString())
                         ->where('time', "<=", Carbon::createFromFormat('H:i:s', '02:00:00')->toTimeString());
-                })
+                }) 
                 ->join('tables', 'tables.id', '=', 'appointments.kisi_id')
                 ->orderBy('time', 'asc')->paginate(100, ['*'], 'last_page');
             foreach ($returnArray['last_list'] as $key => $item) {
@@ -219,10 +259,14 @@ class indexController extends Controller
             });
             /* Today List */
             $returnArray['today_list'] = DB::table("appointments")->select("tables.notu", "appointments.*")
-                ->where('isActive', 1)->join('tables', 'tables.id', '=', 'appointments.kisi_id')
+                ->where('isActive', 1)->where('isUp',0)->join('tables', 'tables.id', '=', 'appointments.kisi_id')
                 ->where(function ($query) {
                     $query->where('date', Carbon::now()->toDateString())
                         ->where('time', ">=", Carbon::createFromFormat('H:i:s', '02:00:00')->toTimeString());
+                })->orwhere(function ($query) {
+                    $query->where('isUp', 1)->where('isCame',1)->where('date', Carbon::now()->toDateString())
+                    ->where('time', ">=", Carbon::createFromFormat('H:i:s', '02:00:00')->toTimeString());
+                        
                 })
                 ->orderBy('time', 'asc')->paginate(100, ['*'], 'today_page');
             foreach ($returnArray['today_list'] as $key => $item) {

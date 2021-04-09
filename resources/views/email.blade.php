@@ -7,6 +7,7 @@ Rezervasyon kodunuz: " . $code . " olarak size tanımlanmıştır.";
     if(isset($status)){
         if($status=="iptal")echo "Değerli " . $name . " , rezervasyonunuz iptal edilmiştir.";
         elseif($status=="update") echo "Değerli " . $name . " , bizi tercih ettiğiniz için teşekkür ederiz.";
+        elseif($status=="up") echo "Değerli " . $name . " , bizi tercih ettiğiniz için teşekkür ederiz. Hizmet değerlendirmemiz için lütfen <a href='http://localhost/notification/".$id."'> tıklayınız.</a>";
         
 
     }else
