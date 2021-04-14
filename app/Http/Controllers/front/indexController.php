@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Support\Carbon;
 use App\Events\SendMessage;
+use App\Models\Log;
+use App\Models\Notification;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 
 class indexController extends Controller
 {
@@ -34,16 +37,46 @@ class indexController extends Controller
     public function getNotificationStore(Request $request)
     {
         $all = $request->except('_token');
-        if (Appointment::where('app_id', $all['app_id'])->get()[0]->notification_text != null) {
+        $rez = Appointment::where('app_id', $all['app_id'])->get();
+        if ($rez) {
             $veri = [
-                'notification_text' => $all['text'],
-
-
+                'app_id' => $rez[0]->app_id,
+                'not_text' => $all['text'],
+                'rate' => $all['rate'],
             ];
-            Appointment::where('app_id', $all['app_id'])->update($veri);
-           // event(new NotificationEvent("bildirim",1));
+            Notification::insert($veri);
+            // event(new NotificationEvent("bildirim",1));
         }
     }
+    public function getNotificationUpdate(Request $request)
+    {
+        $arr = [];
+        $user_name = $request->user_id;
+        $all = $request->except('_token', 'user_id');
+
+
+        $arr = [
+
+            'id' => $all['id'],
+            'status' => $all['status'],
+          
+        ];
+
+
+       
+
+        Notification::find($all['id'])->update($arr);
+        Log::create([
+            'user_name' => $user_name,
+            "tablename" => "Notification",
+            "description" => json_encode($arr),
+            "related_id" => $all['id'],
+            "type" => "update"
+        ]);
+
+        return response()->json(Notification::all());
+    }
+ 
     public function rezervkontrol()
     {
 

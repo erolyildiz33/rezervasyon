@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 
 class indexController extends Controller
 {
+  
     public function getAppointmentTable($datee = '')
     {
         // $all = $request->except('csrf_token');
@@ -73,6 +74,7 @@ class indexController extends Controller
                 $data['isCame'] = 0;
             } else {
                 $type = "gerial";
+                echo \json_encode(Appointment::where("app_id", $request->id)->get());
                 $kisi = Table::where('id',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                 $fullname = $kisi->ad . " " . $kisi->soyad;
 

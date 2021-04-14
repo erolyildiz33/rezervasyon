@@ -66,6 +66,10 @@ class indexController extends Controller
 
         return view('admin.profile')->with('user', $user[0]);
     }
+    public function mesaj()
+    {
+        return view('admin.mesaj');
+    }
    
     public function rapor()
     {   

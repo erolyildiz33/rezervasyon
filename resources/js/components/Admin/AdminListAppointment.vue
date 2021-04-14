@@ -97,12 +97,16 @@ export default {
                 else yes = "";
                 if (new Date(dt[2],dt[1],dt[0]) < new Date(nt2[2],nt2[1],nt2[0]))
                   geldi = "disabled";
+                
+               
                 else if (
                   new Date(dt[2],dt[1],dt[0]) > new Date(nt2[2],nt2[1],nt2[0])
                 ) {
                   geldi = "";
-                } else {
-                  if (
+                } else 
+                {if(row.isActive==2)
+                  geldi = "disabled";
+                 else if (
                     new Date(dt[2],dt[1],dt[0]) ==
                        new Date(nt2[2],nt2[1],nt2[0]) &&
                     row.time < new Date().toTimeString()
@@ -342,16 +346,12 @@ export default {
           res.data[0].date +
           "</td>" +
           '<td style="color: black; background-color: orange; ">12:00:00</td><td style="color: black; background-color: orange; ">3</td><td style="color: black; background-color: orange; ">b-kb-10</td><td style="color: black; background-color: orange; "><a class="btn btn-default iptal" data-iptalid="' +
-          res.data[0].kisi_id +
+          res.data[0].app_id +
           '"><i class="fa fa-undo"></i></a><a class="btn btn-default" href="http://localhost/admin/profile/' +
           res.data[0].kisi_id +
           '"><i class="fa fa-user"></i></a><button data-userid="' +
           res.data[0].kisi_id +
-          '" class="btn btn-default rezervguncelle"><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button><button data-confirmid="' +
-          res.data[0].app_id +
-          '" class="btn btn-default confirm"><i class="fa fa-check"></i></button><button data-kalkid="' +
-          res.data[0].app_id +
-          '" class="btn btn-default kalk"><i class="fa fa-hand-paper-o"></i></button></td>';
+          '" class="btn btn-default rezervguncelle"><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button></td>';
 
         $("#row" + id).html(icerik);
       });

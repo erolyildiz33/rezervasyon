@@ -115,9 +115,20 @@
             <div class="hs-top">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-2">
-                            <div class="logo">
-                                <a href="./index.html"><img src="/img/logo.png" alt="" width="100" height="70"></a>
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <div class="col-lg-2">
+
+                                    <div class="logo mt-1">
+                                        <a href="./index.html"><img src="/img/logo.png" alt="" width="100" height="70"></a>
+                                    </div>
+
+
+
+                                </div>
+                                <div>
+                                    <admin-bell class="mt-4"/>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -142,7 +153,7 @@
                                         <a href="{{ route('admin.rapor') }}" class="btn btn-dark">Raporlar</a>
 
 
-                                    </li>
+                 
 
 
 
@@ -191,14 +202,14 @@
         <section>
             <div class="container">
 
-                <div id="app">
 
 
-                    <main class="py-14">
-                        @yield('content')
-                    </main>
 
-                </div>
+                <main class="py-14">
+                    @yield('content')
+                </main>
+
+
 
             </div>
         </section>
@@ -233,6 +244,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
     <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <script src="/dist/bootstrap-table.min.js"></script>
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
@@ -244,7 +256,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-
+   
 
 
 

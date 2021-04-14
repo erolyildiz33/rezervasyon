@@ -1,17 +1,22 @@
+
 require('./bootstrap');
 import VueMask from 'v-mask';
 import Button from 'vue-js-toggle-button';
-
+import NotificationBell from 'vue-notification-bell'
 import VueStepWizard from 'vue-step-wizard';
 import 'vue-step-wizard/dist/vue-step-wizard.css';
 import VueSession from 'vue-session';
 
+import { DropdownPlugin } from 'bootstrap-vue'
+
 
 window.Vue = require('vue');
-
+Vue.use(DropdownPlugin)
 Vue.use(VueStepWizard);
 Vue.use(Button);
 Vue.use(VueMask);
+Vue.use(NotificationBell);
+
 
 
 Vue.use(VueSession);
@@ -77,25 +82,22 @@ Vue.component('admin-group-update', require('./components/Admin/AdminGroupUpdate
 
 Vue.component('admin-update-modal', require('./components/Admin/AdminUpdateModalComponent').default);
 Vue.component('admin-rezervation-update-modal', require('./components/Admin/AdminRezervationUpdateModelComponent').default);
-
+Vue.component('admin-mesaj', require('./components/Admin/AdminMesajComponent').default);
 Vue.component('admin-rezervation', require('./components/Admin/AdminRezervationComponent').default);
 Vue.component('admin-confirm-modal', require('./components/Admin/AdminConfirmModalComponent').default);
-
+Vue.component('admin-bell', require('./components/Admin/AdminBellComponent').default);
 
 Vue.component('appointment-form', require('./components/RandevuFormComponent').default);
 Vue.component('appointment-detail', require('./components/RandevuDetailComponent').default);
+
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */ 
 
  const app = new Vue({
     el: '#app',
+  
 })

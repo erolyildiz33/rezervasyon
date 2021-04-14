@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Models\Not;
 use App\Models\Log;
+use App\Models\Notification;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Carbon;
 use function GuzzleHttp\Promise\all;
@@ -27,17 +29,18 @@ class indexController extends Controller
 
     public function getAppointmentTable($datee = '')
     {
-       $mydate=$datee;
+        $mydate = $datee;
         // $all = $request->except('csrf_token');
         //return  Appointment::where('isActive', 1)->where('date', $datee)->where('title', '!=', null)->get('title');
         return Appointment::where('isActive', 1)->where('date', $datee)
-        ->where(function ($query) {
-        $query->where('title', '!=', null)->where('isUp',  0);})
+            ->where(function ($query) {
+                $query->where('title', '!=', null)->where('isUp',  0);
+            })
 
-        
-        
-       
-        ->get('title');
+
+
+
+            ->get('title');
         //echo \json_encode();
 
     }
@@ -187,7 +190,7 @@ class indexController extends Controller
             'soyad' => $all['soyad'],
             'email' => $all['email'],
             'tel' => $all['tel'],
-            'cinsiyet'=>$all['cinsiyet'],
+            'cinsiyet' => $all['cinsiyet'],
             'notu' => $all['notu'],
             'iptal' => $all['iptal'],
             'image' => $image,
@@ -201,7 +204,7 @@ class indexController extends Controller
 
 
         ];
-       
+
 
         if (isset($all['dogumtar'])) {
             $veri['dogumtar'] = Carbon::createFromFormat('d.m.Y', $all['dogumtar'])->format('Y-m-d');
@@ -222,6 +225,22 @@ class indexController extends Controller
 
         $getir = Table::orderBy('created_at', "desc")->get();
         echo  json_encode($getir);
+    }
+    public function getBellList()
+    {
+        $veri = Notification::join('appointments', 'appointments.app_id', '=', 'notifications.app_id')->join('tables', 'appointments.kisi_id', '=', 'tables.id')->where('notifications.status', 0)->get();
+        foreach ($veri as $k => $v) {
+            $veri[$k]['not_created_at'] = tool($v->not_created_at);
+        }
+        return response()->json($veri, JSON_UNESCAPED_UNICODE);
+    }
+    public function getMesajList()
+    {
+        $mesajlar=Notification::join('appointments', 'appointments.app_id', '=', 'notifications.app_id')->join('tables', 'appointments.kisi_id', '=', 'tables.id')->where('notifications.status', 0)
+        ->orwhere(function ($query) {
+            $query->where('status', 1);
+        })->get();    
+        return response()->json($mesajlar, JSON_UNESCAPED_UNICODE);
     }
     public function getEventStore(Request $request)
     {
@@ -346,7 +365,7 @@ class indexController extends Controller
         if ($veritabani->text != $tum['text'] && $tum['text'] != null) array_push($degisenler, ['text' => $tum['text']]);
         if ($veritabani->body != $tum['body'] && $tum['body'] != null) array_push($degisenler, ['body' => $tum['body']]);
         if ($veritabani->date != Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d') && $tum['date'] != null) array_push($degisenler, ['date' => $tum['date']]);
-        if ($veritabani->time != $tum['time'] &&($tum['time'] != null|| $tum['time']!='Invalid Date')) array_push($degisenler, ['time' => $tum['time']]);
+        if ($veritabani->time != $tum['time'] && ($tum['time'] != null || $tum['time'] != 'Invalid Date')) array_push($degisenler, ['time' => $tum['time']]);
         if ($veritabani->title != $tum['title'] && $tum['title'] != null) array_push($degisenler, ['title' => $tum['title']]);
 
         $srr = [
@@ -367,9 +386,9 @@ class indexController extends Controller
         $simdi = Carbon::now()->toTimeString();
         $bugun = Carbon::now()->today();
 
-       
 
-      
+
+
         if ($tum['date'] != null) {
             $srr['date'] = Carbon::createFromFormat('d.m.Y', $tum['date'])->format('Y-m-d');
         }
@@ -432,7 +451,7 @@ class indexController extends Controller
                 'ad' => $v->ad,
                 'soyad' => $v->soyad,
                 'email' => $v->email,
-               
+
                 'tel' => $v->tel,
                 'dogumtar' => $v->dogumtar,
                 'evliliktar' => $v->evliliktar,
@@ -468,7 +487,7 @@ class indexController extends Controller
     public function appointmentDetail(Request $request)
     {
         $returnArray = [];
-        $info=[];
+        $info = [];
         $returnArray['status'] = false;
         $all = $request->except('_token');
 
@@ -485,20 +504,16 @@ class indexController extends Controller
         }
 
         $info = Appointment::where('app_id', $all['kisiid'])->where('code', $all['code'])->get();
-       
+
         if (isset($info)) {
             $returnArray['status'] = true;
             $returnArray['info'] = $info[0];
-            
-        }else{
-           
+        } else {
+
             $returnArray['message'] = "Yanlış bir kod girdiniz veya bu kod size ait değildir !";
             return response()->json($returnArray);
 
             Appointment::where("app_id", $all['kisiid'])->update(['isSend' => 1]);
-
-
-           
         }
         return response()->json($returnArray);
     }

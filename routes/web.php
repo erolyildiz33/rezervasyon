@@ -34,9 +34,9 @@ Route::get('/', 'front\indexController@index')->name("anasayfa");
 Route::get('/detail', 'front\indexController@detail')->name('detail');
 Route::get('/working', 'front\indexController@deneme')->name('working');
 Route::get('/rezervkontrol', 'front\indexController@rezervkontrol')->name('rezervkontrol');
-Route::post('/notification/{id}', 'front\indexController@notification')->name('notification');
-Route::post('/notification-store', 'front\indexController@getNotificationStore');
-
+Route::get('/notification/{id}', 'front\indexController@notification')->name('notification');
+Route::post('/notification-store', 'front\indexController@getNotificationStore')->name('notification_store');
+Route::post('/notification-update', 'front\indexController@getNotificationUpdate')->name('notification-update');
 
 Auth::routes();
 
@@ -54,7 +54,7 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.', 'mi
     Route::get('/group/{id}', 'indexController@group')->name('group');
     Route::get('/updaterezerv/{id}', 'indexController@updaterezerv')->name('updaterezerv');
     Route::get('/updategrouprezerv/{id}', 'indexController@updategrouprezerv')->name('updategrouprezerv');
-
+    Route::get('/mesaj', 'indexController@mesaj')->name('mesaj');
 
     Route::get('/event', 'indexController@event')->name('event');
     Route::get('/durum', 'indexController@durum')->name('durum');

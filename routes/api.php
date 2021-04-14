@@ -37,6 +37,11 @@ Route::group(['namespace'=>'api'],function (){
    Route::post('/not-store','indexController@getNotStore');
    Route::post('/table-update','indexController@getTableUpdate');
    Route::post('/appointment-update','indexController@getAppointmentUpdate');
+   Route::get('/bell-list','indexController@getBellList');
+   Route::get('/mesaj-list','indexController@getMesajList');
+   Route::post('/notification-update','indexController@getNotificationUpdate');
+
+ 
 
 
    

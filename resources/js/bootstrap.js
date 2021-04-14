@@ -6,9 +6,10 @@ window.io = require('socket.io-client');
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.Popper = require('popper.js').default;
+try { 
     window.$ = window.jQuery = require('jquery');
+    window.Popper = require('popper.js').default;
+   
 
     require('bootstrap');
 } catch (e) {}
