@@ -26,6 +26,10 @@ class indexController extends Controller
     {
         echo  $date;
     }
+    public function getWidgetList()
+    {
+        
+    }
 
     public function getAppointmentTable($datee = '')
     {

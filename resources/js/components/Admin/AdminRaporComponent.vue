@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="panel-body mt-3">
-      <button>Ekle</button>
+      
       <bootstrap-table
         :columns="columns"
         :data="data"

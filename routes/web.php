@@ -61,4 +61,10 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.', 'mi
 
     Route::get('/profile/{id}', 'indexController@profile')->name('profile');
     Route::get('/rapor', 'indexController@rapor')->name('rapor');
+   
+    Route::get('/widget', 'indexController@widget')->name('widget');
+    Route::get('/bugun', 'indexController@bugun')->name('bugun');
+    Route::get('/gecmis', 'indexController@gecmis')->name('gecmis');
+    Route::get('/geribildirim', 'indexController@geribildirim')->name('geribildirim');
+
 });

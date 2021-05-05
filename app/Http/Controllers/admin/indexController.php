@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Table;
 use App\Models\Appointment;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -66,11 +68,77 @@ class indexController extends Controller
 
         return view('admin.profile')->with('user', $user[0]);
     }
+    public function widget()
+    {
+        return view('admin.widget');
+    }
     public function mesaj()
     {
         return view('admin.mesaj');
     }
-   
+    public function bugun()
+    {
+        $bugunrapor = DB::table("appointments")->select("tables.*", "appointments.*")
+       ->join('tables', 'tables.id', '=', 'appointments.kisi_id')
+        ->where('date', Carbon::now()->toDateString())
+               
+     
+        ->orderBy('time', 'asc')->get();
+    
+        foreach ($bugunrapor as $key=>$item) {
+        
+            Carbon::setLocale('tr_TR');
+            $bugunrapor[$key]->date = Carbon::createFromFormat('Y-m-d',$item->date)->format('d.m.Y l');
+          
+          
+       };
+    $bugun=json_encode($bugunrapor);
+
+
+             return view('admin.bugun')->with('bugun',$bugun);
+    }
+    public function gecmis()
+    {
+        $gecmisrapor = DB::table("appointments")->select("tables.*", "appointments.*")
+       ->join('tables', 'tables.id', '=', 'appointments.kisi_id')
+        ->where('date','<', Carbon::now()->toDateString())
+               
+     
+        ->orderBy('time', 'asc')->get();
+    
+        foreach ($gecmisrapor as $key=>$item) {
+        
+            Carbon::setLocale('tr_TR');
+            $gecmisrapor[$key]->date = Carbon::createFromFormat('Y-m-d',$item->date)->format('d.m.Y l');
+          
+          
+       };
+    $gecmis=json_encode($gecmisrapor);
+
+
+             return view('admin.gecmis')->with('gecmis',$gecmis);
+    }
+    public function geribildirim()
+    {
+        $gerirapor = DB::table("appointments")->select("tables.*", "appointments.*","notifications.*")
+       ->join('tables', 'tables.id', '=', 'appointments.kisi_id')->join('notifications', 'notifications.app_id', '=', 'appointments.app_id')
+       ->where('notifications.status','!=',2)
+               
+     
+        ->orderBy('not_created_at', 'desc')->get();
+    
+        foreach ($gerirapor as $key=>$item) {
+        
+            Carbon::setLocale('tr_TR');
+            $gerirapor[$key]->date = Carbon::createFromFormat('Y-m-d',$item->date)->format('d.m.Y l');
+          
+          
+       };
+    $geri=json_encode($gerirapor);
+
+
+             return view('admin.geribildirim')->with('geri',$geri);
+    }
     public function rapor()
     {   
         $hepsi = Appointment::join('tables', 'appointments.kisi_id', '=', 'tables.id')

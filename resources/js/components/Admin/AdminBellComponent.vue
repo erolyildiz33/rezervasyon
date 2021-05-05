@@ -225,7 +225,7 @@ a.dropdown-menu-header {
     >
       <i
         class="fa fa-bell-o"
-        style="font-size: 20px; float: left; color: black"
+        style="font-size: 20px; float: left; color: grey"
       >
       </i>
     </a>
@@ -244,7 +244,7 @@ a.dropdown-menu-header {
       >
 
         <li v-for="item in items">
-          <span @click="mesajdetay(item.id)"  style="text-decoration:none">
+          <span @click="mesajdetay(item.not_id)"  style="text-decoration:none">
            {{item.fullName}}<br/><span style="float: left;
     font-style: italic;
     font-size: small;
@@ -286,10 +286,12 @@ export default {
   methods:{
     mesajdetay: function(id){
    
-          axios.post(`http://localhost/front/notification-update`,{
+          axios.post(`http://localhost/notification-update`,{
             status:1,
-            id:id
+            id:id,
+            user_id: $("#logidUserid").text(),
           }).then((res) => {
+            window.location.href="http://localhost/admin/mesaj"
             
     
     });

@@ -133,6 +133,9 @@ export default {
         },
         {
           title: "Adı Soyadı",
+          footerFormatter: function (data) {
+            return data.length;
+          },
           field: "fullName",
         },
         {
@@ -151,6 +154,16 @@ export default {
         {
           title: "Kişi",
           field: "body",
+            footerFormatter: function (data) {
+            var toplam = data
+              .map(function (row) {
+                return +row.body;
+              })
+              .reduce(function (sum, i) {
+                return sum + i;
+              }, 0);
+            return toplam;
+          },
         },
         {
           title: "Masa No",
@@ -215,6 +228,7 @@ export default {
         showColumns: true,
         virtualScroll: true,
         showExport: true,
+        showFooter: true,
         pagination: true,
         detailView: true,
         sidePagination: "client",

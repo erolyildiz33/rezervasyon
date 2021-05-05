@@ -60,38 +60,38 @@
         </div>
         <input
           type="text"
-          class="form-control"
+          class="form-control mt-2"
           v-model="ad"
           placeholder="Adı"
         />
         <input
           type="text"
-          class="form-control"
+          class="form-control mt-2"
           v-model="soyad"
           placeholder="Soyadı"
         />
         <input
           type="text"
-          class="form-control"
+          class="form-control mt-2"
           v-model="email"
           placeholder="Mail"
         />
         <input
           type="text"
-          class="form-control"
+          class="form-control mt-2"
           v-model="tel"
           placeholder="Telefon"
           v-mask="'###########'"
         />
         <textarea
           type="text"
-          class="form-control"
+          class="form-control mt-2"
           v-model="notu"
           placeholder="Müşteri Tanımı"
         />
        
         <div>
-          <label>Özel Gün Bilgileri:</label>
+          <label class="mt-2">Özel Gün Bilgileri:</label>
         </div>
         <span>Doğum Tarihi</span>
         <date-picker
@@ -116,11 +116,12 @@
             accept="image/*"
             @change="uploadImage($event)"
             id="file-input"
+            class="mt-2"
           />
         </div>
         <img
           :src="previewImage"
-          class="uploading-image picture"
+          class="uploading-image picture mt-2"
           style="max-height: 200px"
         />
         <button
@@ -212,40 +213,12 @@ export default {
           title: "Tel",
           field: "tel",
         },
-        {
-          title: "Doğum Tarihi",
-          field: "dogumtar",
-        },
-        {
-          title: "Evlilik Tarihi",
-          field: "evliliktar",
-        },
-        {
-          title: "Müşteri Notu",
-          field: "notu",
-        },
-        {
-          title: "İptal",
-          field: "iptal",
-        },
-        {
-          title: "Misafir Tipi",
-          formatter: function (value, row) {
-            if (row.misafir_id == 0) return "Otel";
-            else return "Yerel";
-          },
-        },
-        {
-          title: "Karaliste",
-          formatter: function (value, row) {
-            if (row.karaliste == 0) return "Hayır";
-            else return "Evet";
-          },
-        },
-        {
-          title: "Karaliste Gerekçesi",
-          field: "karaliste_gerekce",
-        },
+       
+       
+        
+        
+      
+        
         {
           title: "İşlem",
           formatter: (value, row) => {
@@ -270,13 +243,47 @@ export default {
         showColumns: true,
         showExport: true,
         pagination:true,
-       
+        detailView: true,
          showFullscreen:true,
         showToggle:true,
        
         sidePagination:"client",
         pageList:"[10, 25, 50, 100, 200, All]",
-       
+        detailFormatter: function (index, row) {
+          return (
+            "<div class='text-center' style='text-align:center; margin-left:50px!important;'><table class='table table-bordered table-hover'><thead>" +
+           
+            "<th>Müşteri Tipi</th>" +
+            "<th>Müşteri Notu</th>" +
+            "<th>Doğum Tarihi</th>" +
+            "<th>Evlilik Tarihi</th>" +
+             "<th>Karaliste mi?</th>" +
+              "<th>Karaliste Gerekçe</th>" +
+           
+           
+            "</thead><tbody><tr>" +
+           
+            "<td>" +
+            (row.misafir_id==1?"Yerel":"Otel") +
+            "</td>" +
+            "<td>" +
+            row.notu +
+            "</td>" +
+            "<td>" +
+           (row.dogumtar != null ? row.dogumtar:"-") +
+            "</td>" +
+            "<td>" +
+           ( row.evliliktar!= null ? row.evliliktar:"-") +
+            "</td>" +
+            "<td>" +
+            (row.karaliste == 1 ? "Evet" : "Hayır") +
+            "</td>" +
+            "<td>" +
+           (row.karaliste_gerekce!= null ? row.karaliste_gerekce:"-") +
+            "</td>" +
+            "</tr></tbody></table></div>"
+          );
+        },
         
       },
     };

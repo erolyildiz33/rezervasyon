@@ -2,12 +2,13 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">{{ title }}
-                <button class="btn btn-secondary" @click="showForm"><i class="fa fa-plus"> Yeni Event Ekle</i></button>
+                <button class="btn btn-secondary mt-2" @click="showForm"><i class="fa fa-plus"> Yeni Event Ekle</i></button>
             </div>
             <div v-if="isShow" style="padding:10px;">
-                <input type="text" class="form-control" v-model="inputTable" @keyup="inputcheck"
+                <input type="text" class="form-control mt-2" v-model="inputTable" @keyup="inputcheck"
                        placeholder="Event Adı Yazınız">
                 <date-picker
+                class="mt-2"
 
                           v-model="date"
 
@@ -28,9 +29,10 @@
                           format="H:mm"
                           type="time"
                           placeholder="Event Saati belirleyiniz"
+                          class="mt-2"
                         ></date-picker>
 
-                <div v-if="SelectPhoto">
+                <div v-if="SelectPhoto" class="mt-2">
                     <label for="file-input">Resim Seç</label>
                     <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
                 </div>

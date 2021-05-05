@@ -6,6 +6,7 @@ import NotificationBell from 'vue-notification-bell'
 import VueStepWizard from 'vue-step-wizard';
 import 'vue-step-wizard/dist/vue-step-wizard.css';
 import VueSession from 'vue-session';
+import VueStarRating from 'vue-star-rating';
 
 import { DropdownPlugin } from 'bootstrap-vue'
 
@@ -25,6 +26,7 @@ Vue.use(require('vue-moment'));
 Vue.use(require('vue-resource'));
 Vue.use(require('vue2-datepicker'));
 Vue.use(require('jquery-imagemapster'));
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -52,7 +54,11 @@ Vue.component('deneme-table', require('./components/DenemeTable.vue').default);
 Vue.component('admin-durum', require('./components/Admin/AdminDurumComponent.vue').default);
 Vue.component('admin-group', require('./components/Admin/AdminGroupComponent.vue').default);
 Vue.component('admin-rapor', require('./components/Admin/AdminRaporComponent.vue').default);
-
+Vue.component('admin-bugun', require('./components/Admin/AdminBugunComponent.vue').default);
+Vue.component('admin-widget', require('./components/Admin/AdminWidgetComponent.vue').default);
+Vue.component('admin-gecmis', require('./components/Admin/AdminGecmisComponent.vue').default);
+Vue.component('admin-geribildirim', require('./components/Admin/AdminGeriBildirimComponent.vue').default);
+Vue.component('star-rating', VueStarRating.default);
 
 
 

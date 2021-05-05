@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Events\SendMessage;
 use App\Models\Log;
 use App\Models\Notification;
+use DateTime;
 use Illuminate\Notifications\Notification as NotificationsNotification;
 
 class indexController extends Controller
@@ -54,18 +55,19 @@ class indexController extends Controller
         $user_name = $request->user_id;
         $all = $request->except('_token', 'user_id');
 
-
+        $tarih = date("Y-m-d H:i:s");
         $arr = [
 
-            'id' => $all['id'],
+         
             'status' => $all['status'],
-          
+            'read_at' => $tarih,
+
         ];
 
 
-       
 
-        Notification::find($all['id'])->update($arr);
+
+        Notification::where('not_id', $all['id'])->update($arr);
         Log::create([
             'user_name' => $user_name,
             "tablename" => "Notification",
@@ -76,7 +78,7 @@ class indexController extends Controller
 
         return response()->json(Notification::all());
     }
- 
+
     public function rezervkontrol()
     {
 

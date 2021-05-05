@@ -40,6 +40,8 @@ Route::group(['namespace'=>'api'],function (){
    Route::get('/bell-list','indexController@getBellList');
    Route::get('/mesaj-list','indexController@getMesajList');
    Route::post('/notification-update','indexController@getNotificationUpdate');
+   Route::get('/admin-widget','indexController@getWidgetList');
+
 
  
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,6 +14,9 @@
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Scripts -->
 
 
@@ -27,6 +30,10 @@
 <!-- Styles -->
 
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/widget.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/widget-awesome.css') }}" rel="stylesheet">
+
+
 
 
 
@@ -46,166 +53,88 @@
 </head>
 
 <body>
-    <div id="app">
-        <div class="offcanvas-menu-overlay"></div>
-        <div class="offcanvas-menu-wrapper">
-            <div class="canvas-close">
-                <span class="icon_close"></span>
-            </div>
-            <div class="logo">
-                <a href="./index.html">
-                    <img src="/img/logo.png" alt="">
+<div id="app">
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+<a href="./index.html">
+                    <img src="/img/logo.png" class="rounded-circle" alt="" width="100" height="70">
                 </a>
-            </div>
-            <div id="mobile-menu-wrap"></div>
-            <div class="om-widget">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-                <a href="#" class="hw-btn">Rezevasyon Takip</a>
-            </div>
-            <div class="om-social">
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        @auth
-                        <li>
-                            <a href="{{ route('admin.index') }}">Yönetim Paneli</a>
-                        </li>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto w-100 justify-content-between">
+      <li class="nav-item active">
+      <a href="{{ route('admin.index') }}" class="nav-link">Yönetim Paneli</a>
+       
+      </li>
+      <li class="nav-item">
+      <a href="{{ route('admin.table') }}" class="nav-link">Müşteri Tanımla</a>
+      </li>
+      <li class="nav-item">
+      <a href="{{ route('admin.durum') }}" class="nav-link">Masa Durumu</a>
+      </li>
+      <li class="nav-item">
+      <a href="{{ route('admin.event') }}" class="nav-link">Event Tanımla</a>
+      </li>
+     
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Raporlar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+       
+          <a class="dropdown-item" href="{{ route('admin.rapor') }}">Tüm Rapor</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('admin.bugun') }}">Bugün Raporu</a>
+          <a class="dropdown-item" href="{{ route('admin.gecmis') }}">Geçmiş Raporu</a>
+          <a class="dropdown-item" href="#">İptal Raporu</a>
+          <a class="dropdown-item" href="#">Gelecek Raporu</a>
+          <a class="dropdown-item" href="#">Bekleyen Raporu</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Otel Raporu</a>
+          <a class="dropdown-item" href="#">Yerel Raporu</a>
 
-                        <li>
-                            <a href="{{ route('admin.table') }}">Müşteri Tanımla</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('anasayfa') }}">Rezervasyon Tanımla</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.event') }}">Event Tanımla</a>
-                        </li>
-
-
-                        <li>
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                Çıkış
-                            </a>
-                        </li>
-
-                        <span>Kullanıcı :</span>
-                        <label>{{session()->get('user_id')}}</label>
-
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        @else
-                        <li>
-                            <a href="{{ route('detail') }}">Randevu Takip</a>
-                        </li>
-
-
-                        @endauth
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->
-
-            </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Doğum Günü Raporu</a>
+          <a class="dropdown-item" href="#">Evlilik Günü Raporu</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('admin.geribildirim') }}">Geri Bildirim Raporu</a>
         </div>
-        <!-- Offcanvas Menu Wrapper End -->
-
-        <!-- Header Section Begin -->
-        <header class="header-section">
-            <div class="hs-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between">
-                                <div class="col-lg-2">
-
-                                    <div class="logo mt-1">
-                                        <a href="./index.html"><img src="/img/logo.png" alt="" width="100" height="70"></a>
-                                    </div>
-
-
-
-                                </div>
-                                <div>
-                                    <admin-bell class="mt-4"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="ht-widget">
-                                <ul class="nav navbar-nav">
-                                    @auth
-
-                                    <li>
-                                        <a href="{{ route('admin.index') }}" class="btn btn-dark">Yönetim Paneli</a>
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ route('admin.table') }}" class="btn btn-dark">Müşteri Tanımla</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.durum') }}" class="btn btn-dark">Masa Durumu</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.event') }}" class="btn btn-dark">Event Tanımla</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.rapor') }}" class="btn btn-dark">Raporlar</a>
-
-
-                 
-
-
-
-                                    <li>
-                                        <span>Kullanıcı :</span>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span>Kullanıcı :</span>
                                         <label id="logidUserid">{{session()->get('user_name')}}</label>
-
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}" class="btn btn-danger" onclick="event.preventDefault();
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                             Çıkış
                                         </a>
+        
+      </li>
+                                  
+                                   
+                                      <li>
+                                    <div>
+                                    <admin-bell />
+                                </div>
                                     </li>
-                                    @else
                                     <li>
-                                        <a href="{{ route('detail') }}">Randevu Takip</a>
+                                      
                                     </li>
-
-
-                                    @endauth
-                                </ul>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="canvas-open">
-                        <span class="icon_menu"></span>
-                    </div>
-                </div>
-            </div>
-
-        </header>
-        <!-- Header End -->
-
-        <!-- Hero Section Begin -->
-
-        <!-- Hero Section End -->
-
-        <!-- Search Section Begin -->
-        <section>
+    </ul>
+ 
+  </div>
+</nav>
+<section>
             <div class="container">
 
 
 
 
-                <main class="py-14">
+                <main class="mt-4">
                     @yield('content')
                 </main>
 
@@ -214,23 +143,16 @@
             </div>
         </section>
 
-
-        <!-- Footer Section Begin -->
-
-
-    </div>
-    </footer>
-    <!-- Footer Section End -->
-    <!-- Js Plugins -->
+</div> 
+       
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 
 
 
-
-
-    </div>
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
     <script src="/js/jquery.magnific-popup.min.js"></script>
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/jquery-ui.min.js"></script>
@@ -241,9 +163,9 @@
     <script src="/js/image-uploader.min.js"></script>
     <script src="/js/main.js"></script>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+   
 
     <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <script src="/dist/bootstrap-table.min.js"></script>
