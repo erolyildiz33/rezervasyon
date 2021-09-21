@@ -1,9 +1,9 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/css/bootstrap411.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="/js/jquery321.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script>
+<script src="/sweetalert/dist/sweetalert2.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/VueStarRating.umd.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <?php $appointment = \App\Models\Appointment::where('app_id', $id)->get()[0];
 $kisi = \App\Models\Table::where('id', $appointment->kisi_id)->get()[0];

@@ -105,7 +105,7 @@ class indexController extends Controller
                 $data['isCame'] = 0;
             } elseif ($request->came == 1) {
                 if ($request->state == true) {
-                    $kisi = Table::where('id,',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
+                    $kisi = Table::where('id',Appointment::where("app_id", $request->id)->get()[0]->kisi_id)->get()[0];
                     $fullname = $kisi->ad . " " . $kisi->soyad;
                   
 

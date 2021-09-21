@@ -83,7 +83,7 @@ Vue.component('admin-form', require('./components/Admin/AdminFormComponent').def
 Vue.component('admin-modal', require('./components/Admin/AdminModalComponent').default);
 Vue.component('admin-group-modal', require('./components/Admin/AdminGroupModalComponent').default);
 Vue.component('admin-group-update', require('./components/Admin/AdminGroupUpdateComponent').default);
-
+Vue.component('admin-mesaj-modal', require('./components/Admin/AdminMesajModalComponent').default);
 
 
 Vue.component('admin-update-modal', require('./components/Admin/AdminUpdateModalComponent').default);

@@ -7,16 +7,16 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>{{ config('app.name', 'Roof14ByDivan') }}</title>
-<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet" />
+<link href="/css/fontcss.css" rel="stylesheet" />
 <!-- Latest compiled and minified CSS -->
-<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<link href="/css/dark.css" rel="stylesheet">
 
 
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/css/font-awesome.min.css" rel="stylesheet">
+<link href="/css/font-awesome1.min.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="/css/ionicons.min.css">
 <!-- Scripts -->
 
 
@@ -25,13 +25,14 @@
 
 <!-- Fonts -->
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+<link href="/css/googlecss.css?family=Nunito" rel="stylesheet">
 
 <!-- Styles -->
 
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('/css/widget.css') }}" rel="stylesheet">
 <link href="{{ asset('/css/widget-awesome.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="/sweetalert2/dist/sweetalert2.min.css">
 
 
 
@@ -48,7 +49,7 @@
 <link href="{{ asset('/css/owl.carousel.min.css') }}" rel="stylesheet">
 <link href="{{ asset('/css/magnific-popup.css') }}" rel="stylesheet">
 <link href="{{ asset('/css/slicknav.min.css') }}" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<link href="/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
 </head>
 
@@ -108,11 +109,14 @@
                                         <label id="logidUserid">{{session()->get('user_name')}}</label>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+</form>
+        <button href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                             Çıkış
-                                        </a>
-        
+                                        </button>
+        </div>
       </li>
                                   
                                    
@@ -146,13 +150,13 @@
 </div> 
        
     
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.5.1.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
 
 
 
 
-<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="/js/jquery-2.2.4.js"></script>
     <script src="/js/jquery.magnific-popup.min.js"></script>
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/jquery-ui.min.js"></script>
@@ -167,15 +171,15 @@
 
    
 
-    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="/js/tableExport.min.js"></script>
     <script src="/dist/bootstrap-table.min.js"></script>
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
-    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
-    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/js/bootstrap-table-vue.min.js"></script>
+    <script src="/js/bootstrap-table-export.min.js"></script>
+    <script src="/js/jspdf.min.js"></script>
+    <script src="/js/jspdfpluginautotable.min.js"></script>
+    <script src="/js/bootstrap-table-filter-control.min.js"></script>
+    <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 
    

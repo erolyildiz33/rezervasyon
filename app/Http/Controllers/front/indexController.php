@@ -99,10 +99,12 @@ class indexController extends Controller
                     if ($dbsaat->format('i') < $simdi->format('i')) {
 
                         Appointment::where("app_id", $value['app_id'])->update(["color" => 2]);
+                        if($value['isUp']==0 && $value['isCame']==0)
+                        {
                         $baslik = "rowupdate";
                         $mesaj = array("rowid" => $value['app_id']);
 
-                        event(new NotificationEvent($baslik, $mesaj));
+                        event(new NotificationEvent($baslik, $mesaj));}
                     } else {
 
                         Appointment::where("app_id", $value['app_id'])->update(["color" => 3]);
@@ -110,12 +112,17 @@ class indexController extends Controller
                 } elseif ($dbsaat->format('H') < $simdi->format('H')) {
 
                     if ($dbsaat->format('i') < $simdi->format('i')) {
-
+                       
                         Appointment::where("app_id", $value['app_id'])->update(["color" => 2]);
                     } else {
 
                         Appointment::where("app_id", $value['app_id'])->update(["color" => 3]);
                     }
+                    if($value['isUp']==0 && $value['isCame']==0)
+                   { $baslik = "rowupdate";
+                    $mesaj = array("rowid" => $value['app_id']);
+
+                    event(new NotificationEvent($baslik, $mesaj));}
                 } else {
                     Appointment::where("app_id", $value['app_id'])->update(["color" => 3]);
                 }

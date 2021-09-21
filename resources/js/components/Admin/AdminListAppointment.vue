@@ -169,7 +169,10 @@ export default {
           title: "Masa No",
           field: "title",
         },
-
+{
+          title: "Kodu",
+          field: "code",
+        },
         {
           title: "İşlem",
           formatter: (value, row) => {
@@ -359,12 +362,18 @@ export default {
           '</td><td style="color: black; background-color: orange; ">' +
           res.data[0].date +
           "</td>" +
-          '<td style="color: black; background-color: orange; ">12:00:00</td><td style="color: black; background-color: orange; ">3</td><td style="color: black; background-color: orange; ">b-kb-10</td><td style="color: black; background-color: orange; "><a class="btn btn-default iptal" data-iptalid="' +
+          '</td><td style="color: black; background-color: orange; ">' +
+          res.data[0].time +
+          "</td>" +
+          '<td style="color: black; background-color: orange; ">' +
+          res.data[0].body +'</td><td style="color: black; background-color: orange; ">' +
+          res.data[0].title +'</td><td style="color: black; background-color: orange; ">' +
+          res.data[0].code +'</td><td style="color: black; background-color: orange; "><a class="btn btn-default iptal" data-iptalid="' +
           res.data[0].app_id +
           '"><i class="fa fa-undo"></i></a><a class="btn btn-default" href="http://localhost/admin/profile/' +
           res.data[0].kisi_id +
           '"><i class="fa fa-user"></i></a><button data-userid="' +
-          res.data[0].kisi_id +
+          res.data[0].app_id +
           '" class="btn btn-default rezervguncelle"><i class="fa fa-pencil-square-o" alt="Güncelle"></i> </button></td>';
 
         $("#row" + id).html(icerik);

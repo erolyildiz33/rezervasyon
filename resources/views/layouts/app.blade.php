@@ -8,16 +8,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet"/>
+    <link href="/css/googlecss.css?family=Quicksand:400,500,700&display=swap" rel="stylesheet"/>
     <!-- Latest compiled and minified CSS -->
 
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="/css/googlecss.css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     
@@ -145,13 +145,13 @@
     <script src="js/jquery.richtext.min.js"></script>
     <script src="js/image-uploader.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2" ></script>
+    <script src="js/popper.min.js" ></script>
     
    
     <script src="/dist/bootstrap-table.min.js"></script>
     <script src="/dist/locale/bootstrap-table-tr-TR.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table-vue.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="/js/bootstrap-table-vue.min.js"></script>
+    <script src="/js/bootstrap-table-export.min.js"></script>
    
 
 

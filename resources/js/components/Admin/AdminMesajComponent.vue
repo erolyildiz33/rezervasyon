@@ -36,6 +36,7 @@
 						<div class="padding"></div>
 						
 						<div class="table-responsive">
+						
 							<table class="table" v-for="item in mesajlar">
 								
 								<tbody><tr>
@@ -45,7 +46,7 @@
 									<td class="name"><a href="#">{{item.fullName}}</a></td>
 									<td class="subject"><a href="#">{{item.not_text}} </a></td>
 									<td class="time">{{item.not_created_at}}</td>
-									
+									<td class="time"><button class="btn btn-primary" @click="cevapla(item.email)">Cevapla</button></td>
 								</tr>
 								
 							</tbody></table>
@@ -108,6 +109,12 @@
 	</div>
 	<!-- END INBOX -->
 </div>
+ <admin-mesaj-modal
+      v-if="showModal"
+    
+      @close="showModal = false"
+    ></admin-mesaj-modal>
+   
 </div>
     </div>
 </template>
@@ -342,12 +349,21 @@ export default {
   data() {
        return {
    mesajlar:null,
+   showModal:false,
        }
   },
+  
   created(){
    axios.get(`http://localhost/api/mesaj-list`).then((res) => {
     this.mesajlar=res.data;
     });
-  }
+  },
+   methods: {
+   cevapla:function(mail){
+this.showModal=true
+},
+ 
+}
+ 
   }
 </script>

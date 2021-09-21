@@ -246,6 +246,10 @@ class indexController extends Controller
         })->get();    
         return response()->json($mesajlar, JSON_UNESCAPED_UNICODE);
     }
+    public function getMesajStore()
+    {
+      
+    }
     public function getEventStore(Request $request)
     {
         $user_name = $request->user_id;

@@ -67,6 +67,7 @@
           <div class="row">
               <div class="col-md-12">
                   <div v-for="not in notlar">
+      
                       <p>{{not.not_icerik}}</p>
                   </div>
               </div>
